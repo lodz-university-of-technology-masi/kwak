@@ -17,15 +17,12 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 public class App implements RequestHandler<Object, Object> {
 
     public Object handleRequest(final Object input, final Context context) {
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json");
-        headers.put("X-Custom-Header", "application/json");
         try {
             final String pageContents = this.getPageContents("https://checkip.amazonaws.com");
             String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\", \"tragedia\": \"x\"}", pageContents);
-            return new GatewayResponse(output, headers, 200);
+            return new GatewayResponse<>(output, 200);
         } catch (IOException e) {
-            return new GatewayResponse("{}", headers, 500);
+            return new GatewayResponse<>("{}",500);
         }
     }
 

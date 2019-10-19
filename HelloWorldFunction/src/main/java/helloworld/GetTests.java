@@ -1,33 +1,18 @@
 package helloworld;
 
-import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import com.amazonaws.services.dynamodbv2.document.Item;
-import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-public class GetTests implements RequestHandler<Object, Object> {
-    private final String TABLE_NAME = "Tests";
-    private DynamoDB dynamoDB = new DynamoDBAdapter().getDynamoDB();
+public class GetTests implements RequestHandler<Object, GatewayResponse<List<Test>>> {
+    DynamoDBMapper mapper = new DynamoDBAdapter().getMapper();
 
     @Override
-    public Object handleRequest(Object input, Context context) {
-        Table table = dynamoDB.getTable(TABLE_NAME);
-        Item item = new Item()
-                .withPrimaryKey("Id", "1")
-                .withString("NameXDD", "Najs name");
-
-        table.putItem(item);
-
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json");
-        String output = table.getItem("Id", "1", "NameXDD", null).toJSONPretty();
-        return new GatewayResponse(output, headers, 200);
+    public GatewayResponse<List<Test>> handleRequest(Object input, Context context) {
+        List<Test> tests = mapper.scan(Test.class, new DynamoDBScanExpression());
+        return new GatewayResponse<>(tests, 200);
     }
 }
