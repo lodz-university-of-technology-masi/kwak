@@ -1,11 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  AWS
+  KWAK
 
-  Sample SAM Template for AWS
+  Tests for candidates and HR
 
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 20
@@ -18,14 +17,24 @@ Resources:
       Handler: helloworld.App::handleRequest
       Runtime: java8
       MemorySize: 512
-      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
-        Variables:
-          PARAM1: VALUE
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /hello
+            Method: get
+  GetTestsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: HelloWorldFunction
+      Handler: helloworld.GetTests::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Events:
+        GetTests:
+          Type: Api
+          Properties:
+            Path: /tests
             Method: get
 
 Outputs:
