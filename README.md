@@ -1,5 +1,15 @@
 # KWAK
+# Wymagania
+- Docker Toolbox for Windows / Docker Linux 
+- Python 3.7
+- Java 8
+- IntelliJ IDEA
+- AWS Toolkit plugin for IntelliJ IDEA
+- AWS CLI
+- AWS SAM CLI
 
+Region: eu-central-1
+AWS tokeny do `aws configure`: napiszcie do Konrada. 
 
 ## Jak stworzyć bazę danych?
 1. `docker run -d --name "DynamoDBLocal" -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -inMemory -sharedDb`
@@ -9,9 +19,8 @@
 `docker start DynamoDBLocal`
 
 ## Jak uruchomić backend?
-1. `docker start DynamoDB`
-3. `sam build`
-4. `sam local start-api`
+1. `sam build`
+2. `sam local start-api`
 
 `localhost:3000/tests`
 # AWS
