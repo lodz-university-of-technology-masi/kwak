@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="css/test.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container d-flex p-3 mx-auto flex-column">
+    <header class="mb-auto">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#">Recruitment</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Wyloguj się</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main">
+        <div class="card">
+            <div class="card-body">
+                <r-question content="Test"></r-question>
+                <r-question-counter current="1" total="10"></r-question-counter>
+            </div>
+        </div>
+        <div id="answers"></div>
+    </main>
+
+    <footer class="mt-auto">
+        Recruiter v0.1
+    </footer>
+</div>
+
+<script type="module" src="js/test.js"></script>
+</body>
+</html>
