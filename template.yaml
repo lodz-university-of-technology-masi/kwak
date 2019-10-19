@@ -10,6 +10,19 @@ Globals:
     Timeout: 20
 
 Resources:
+  TestsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Tests
+      AttributeDefinitions:
+        - AttributeName: Id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: Id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -26,6 +39,7 @@ Resources:
   GetTestsFunction:
     Type: AWS::Serverless::Function
     Properties:
+      Policies: AmazonDynamoDBFullAccess
       CodeUri: HelloWorldFunction
       Handler: helloworld.GetTests::handleRequest
       Runtime: java8

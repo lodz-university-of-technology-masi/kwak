@@ -5,11 +5,15 @@
 1. `docker run -d --name "DynamoDBLocal" -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -inMemory -sharedDb`
 2. `aws dynamodb create-table --cli-input-json file://json/create-tests-table.json --endpoint-url http://localhost:8000`
 
+# Jak uruchomić wcześniej stworzoną bazę, gdy nie działa?
+`docker start DynamoDBLocal`
+
 ## Jak uruchomić backend?
 1. `docker start DynamoDB`
 3. `sam build`
 4. `sam local start-api`
 
+`localhost:3000/tests`
 # AWS
 
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
