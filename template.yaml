@@ -28,7 +28,7 @@ Resources:
     Properties:
       Policies: AmazonDynamoDBFullAccess
       CodeUri: RecruitmentAPI
-      Handler: helloworld.GetTests::handleRequest
+      Handler: recruitmentapi.GetTests::handleRequest
       Runtime: java8
       MemorySize: 512
       Events:

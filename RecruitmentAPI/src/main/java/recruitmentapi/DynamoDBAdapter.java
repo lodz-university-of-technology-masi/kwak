@@ -1,4 +1,4 @@
-package helloworld;
+package recruitmentapi;
 
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
