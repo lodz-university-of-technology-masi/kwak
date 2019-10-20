@@ -13,8 +13,12 @@ body {
     max-width: 42em;
 }
 
-.navbar {
+header {
     border-bottom: 1px solid #dcdcdc;
+}
+
+footer {
+    text-align: center;
 }
 
 .navbar-brand {
