@@ -15,10 +15,12 @@ body {
 
 header {
     border-bottom: 1px solid #dcdcdc;
+    margin-bottom: auto;
 }
 
 footer {
     text-align: center;
+    margin-top: auto;
 }
 
 .navbar-brand {
