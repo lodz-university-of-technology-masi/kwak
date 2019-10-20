@@ -8,8 +8,14 @@
 - AWS CLI
 - AWS SAM CLI
 
-Region: eu-central-1
-AWS tokeny do `aws configure`: napiszcie do Konrada. 
+Region: us-east-1
+## Jak skonfigurować AWS CLI?
+1. Zaloguj się na https://aws.amazon.com/education/awseducate/ za pomocą konta studenckiego
+2. Wybierz `My Classroms`
+3. Przejdź do klasy
+4. Wybierz `Account Details`
+5. Skopiuj wyświetloną zawartość do pliku `~/.aws/credentials`
+
 
 ## Jak stworzyć bazę danych?
 1. `docker run -d --name "DynamoDBLocal" -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -inMemory -sharedDb`
