@@ -16,12 +16,12 @@ Region: us-east-1
 4. Wybierz `Account Details`
 5. Skopiuj wyświetloną zawartość do pliku `~/.aws/credentials`
 
-
 ## Jak stworzyć bazę danych?
 1. `docker run -d --name "DynamoDBLocal" -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -inMemory -sharedDb`
-2. `aws dynamodb create-table --cli-input-json file://json/create-tests-table.json --endpoint-url http://localhost:8000`
+2. `aws dynamodb create-table --cli-input-json file://json/create-tests-table.json --endpoint-url http://192.168.99.100:8000`
 
 # Jak uruchomić wcześniej stworzoną bazę, gdy nie działa?
+`docker-machine start`
 `docker start DynamoDBLocal`
 
 ## Jak uruchomić backend?
@@ -29,6 +29,7 @@ Region: us-east-1
 2. `sam local start-api`
 
 `localhost:3000/tests`
+
 # AWS
 
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="RecruitmentAPI:test" external.linked.project.path="$MODULE_DIR$/../../../RecruitmentAPI" external.root.project.path="$MODULE_DIR$/../../../RecruitmentAPI" external.system.id="GRADLE" external.system.module.group="" external.system.module.type="sourceSet" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+<module external.linked.project.id="RecruitmentAPI:test" external.linked.project.path="$MODULE_DIR$/../../RecruitmentAPI" external.root.project.path="$MODULE_DIR$/../../RecruitmentAPI" external.system.id="GRADLE" external.system.module.group="" external.system.module.type="sourceSet" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
-    <output-test url="file://$MODULE_DIR$/../../../RecruitmentAPI/out/test/classes" />
+    <output-test url="file://$MODULE_DIR$/../../RecruitmentAPI/build/classes/java/test" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../RecruitmentAPI/src/test">
-      <sourceFolder url="file://$MODULE_DIR$/../../../RecruitmentAPI/src/test/java" isTestSource="true" />
-    </content>
+    <content url="file://$MODULE_DIR$/../../RecruitmentAPI/src/test" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="RecruitmentAPI.main" />
