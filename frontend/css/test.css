@@ -12,3 +12,11 @@ body {
 .container {
     max-width: 42em;
 }
+
+.navbar {
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
