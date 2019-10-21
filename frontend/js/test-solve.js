@@ -2,9 +2,11 @@ import "./html-component.js";
 import "./components/question-counter.js"
 import "./components/question.js"
 import "./components/answer.js"
+import {getTest} from "./api.js";
 
 let currentQuestion = 0;
 let totalQuestions = 2;
+let test = {};
 
 const questionElem = document.querySelector("r-question");
 const questionCounterElem = document.querySelector("r-question-counter");
@@ -38,33 +40,26 @@ function nextQuestion() {
     loadingSpinner.classList.add("spinner-border-sm");
     nextQuestionButton.disabled = true;
 
-    fetch('https://demo5965341.mockable.io/question/' + (currentQuestion + 1))
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            questionBox.classList.remove("appear");
-            questionBox.classList.add("disappear");
+    // Zapis odpowiedzi
 
-            loadQuestion(data);
+    loadingSpinner.classList.remove("spinner-border");
+    loadingSpinner.classList.remove("spinner-border-sm");
 
-            // Update questions counter
-            currentQuestion++;
-            questionCounterElem.setAttribute("current", currentQuestion);
-            questionCounterElem.setAttribute("total", totalQuestions);
+    questionBox.classList.remove("appear");
+    questionBox.classList.add("disappear");
 
-            nextQuestionButton.disabled = currentQuestion === totalQuestions;
+    loadQuestion(test.questions[currentQuestion]);
 
-            // Restore question after fetching next question
-            questionBox.classList.remove("disappear");
-            questionBox.classList.add("appear");
+    // Update questions counter
+    currentQuestion++;
+    questionCounterElem.setAttribute("current", currentQuestion);
+    questionCounterElem.setAttribute("total", totalQuestions);
 
-            loadingSpinner.classList.remove("spinner-border");
-            loadingSpinner.classList.remove("spinner-border-sm");
-        })
-        .catch(err => {
-            showError(err);
-        });
+    nextQuestionButton.disabled = currentQuestion === totalQuestions;
+
+    // Restore question after fetching next question
+    questionBox.classList.remove("disappear");
+    questionBox.classList.add("appear");
 }
 
 function showError(message) {
@@ -76,4 +71,6 @@ nextQuestionButton.addEventListener('click', function(){
     nextQuestion();
 });
 
+test = getTest(0);
+totalQuestions = test.questions.length;
 nextQuestion();
