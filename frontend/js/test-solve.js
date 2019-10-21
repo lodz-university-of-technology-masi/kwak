@@ -32,6 +32,7 @@ function loadQuestion(question) {
 
 function nextQuestion() {
     // Hide question during fetching next question
+    questionBox.classList.remove("appear");
     questionBox.classList.add("disappear");
 
     fetch('https://demo5965341.mockable.io/question')
