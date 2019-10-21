@@ -12,6 +12,7 @@ const questionBox = document.querySelector("#question");
 const errorBox = document.querySelector("#errorBox");
 const answersElem = document.querySelector("#answers");
 const nextQuestionButton = document.querySelector("#nextQuestion");
+const loadingSpinner = document.querySelector("#loadingSpinner");
 
 function loadQuestion(question) {
     questionElem.setAttribute("title", question.title);
@@ -33,14 +34,18 @@ function loadQuestion(question) {
 
 function nextQuestion() {
     // Hide question during fetching next question
-    questionBox.classList.remove("appear");
-    questionBox.classList.add("disappear");
+    loadingSpinner.classList.add("spinner-border");
+    loadingSpinner.classList.add("spinner-border-sm");
+    nextQuestionButton.disabled = true;
 
     fetch('https://demo5965341.mockable.io/question/' + (currentQuestion + 1))
         .then(response => {
             return response.json();
         })
         .then(data => {
+            questionBox.classList.remove("appear");
+            questionBox.classList.add("disappear");
+
             loadQuestion(data);
 
             // Update questions counter
@@ -48,13 +53,14 @@ function nextQuestion() {
             questionCounterElem.setAttribute("current", currentQuestion);
             questionCounterElem.setAttribute("total", totalQuestions);
 
-            if (currentQuestion === totalQuestions) {
-                nextQuestionButton.disabled = true;
-            }
+            nextQuestionButton.disabled = currentQuestion === totalQuestions;
 
             // Restore question after fetching next question
             questionBox.classList.remove("disappear");
             questionBox.classList.add("appear");
+
+            loadingSpinner.classList.remove("spinner-border");
+            loadingSpinner.classList.remove("spinner-border-sm");
         })
         .catch(err => {
             showError(err);

@@ -34,7 +34,11 @@
                 <r-question-counter current="1" total="10"></r-question-counter>
             </div>
             <div id="answers"></div>
-            <button id="nextQuestion" type="button" class="btn btn-primary btn btn-block mt-2">Następne pytanie</button>
+
+            <button id="nextQuestion" class="btn btn-primary btn btn-block mt-2" type="button">
+                <span id="loadingSpinner" role="status" aria-hidden="true"></span>
+                Następne pytanie
+            </button>
         </div>
     </main>
 
