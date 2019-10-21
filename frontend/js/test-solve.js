@@ -3,22 +3,61 @@ import "./components/question-counter.js"
 import "./components/question.js"
 import "./components/answer.js"
 
-const question = document.querySelector("r-question");
-const question_counter = document.querySelector("r-question-counter");
-const answers = document.querySelector("#answers");
+let currentQuestion = 1;
 
-question.setAttribute("content", "Które z poniższych to owoc?");
-question_counter.setAttribute("total", 1);
-question_counter.setAttribute("current", 1);
+const questionElem = document.querySelector("r-question");
+const questionCounterElem = document.querySelector("r-question-counter");
+const questionBox = document.querySelector("#question");
+const errorBox = document.querySelector("#errorBox");
+const answersElem = document.querySelector("#answers");
+const nextQuestionButton = document.querySelector("#nextQuestion");
 
-const all_answers = [
-    "Jabłko",
-    "Klawiatura",
-    "Samochód"
-];
+function loadQuestion(question) {
+    questionElem.setAttribute("content", question.content);
+    questionElem.setAttribute("code", question.code);
 
-for (const answer of all_answers) {
-    const answer_element = document.createElement("r-answer");
-    answer_element.setAttribute("content", answer);
-    answers.appendChild(answer_element);
+    // Remove existing answers
+    while (answersElem.firstChild) {
+        answersElem.firstChild.remove();
+    }
+
+    // Add answers to div
+    for (const answer of question.answers) {
+        const answerElement = document.createElement("r-answer");
+        answerElement.setAttribute("content", answer.content);
+        answersElem.appendChild(answerElement);
+    }
 }
+
+function nextQuestion() {
+    // Hide question during fetching next question
+    questionBox.classList.add("disappear");
+
+    fetch('https://demo5965341.mockable.io/question')
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            loadQuestion(data);
+
+            // Update questions counter
+            currentQuestion++;
+            questionCounterElem.setAttribute("current", currentQuestion);
+
+            // Restore question after fetching next question
+            questionBox.classList.remove("disappear");
+            questionBox.classList.add("appear");
+        })
+        .catch(err => {
+            showError(err);
+        });
+}
+
+function showError(message) {
+    errorBox.style.display = !message ? "none" : "block";
+    errorBox.innerText = message;
+}
+
+nextQuestionButton.addEventListener('click', function(){
+    nextQuestion();
+});

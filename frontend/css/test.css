@@ -26,3 +26,21 @@ footer {
 .navbar-brand {
     font-weight: bold;
 }
+
+@keyframes disappear {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes appear {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.disappear {
+    animation: disappear 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+}
+
+.appear {
+    animation: appear 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+}

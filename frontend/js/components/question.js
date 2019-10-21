@@ -2,7 +2,7 @@ import {defineElement, HtmlComponent} from "../html-component.js";
 
 export class QuestionElement extends HtmlComponent {
     static get observedAttributes() {
-        return ["content"];
+        return ["content", "code"];
     }
 
     render() {
@@ -12,8 +12,13 @@ export class QuestionElement extends HtmlComponent {
             #content {
                 font-weight: bold;
             }
+            
+            code {
+                display: block;
+            }
         </style>
         <div id="content">Pytanie</div>
+        <code id="code"></code>
         `;
 
         this.shadowRoot.appendChild(template.content.cloneNode(true));
