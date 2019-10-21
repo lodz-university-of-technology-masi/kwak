@@ -4,6 +4,7 @@ import "./components/question.js"
 import "./components/answer.js"
 
 let currentQuestion = 0;
+let totalQuestions = 2;
 
 const questionElem = document.querySelector("r-question");
 const questionCounterElem = document.querySelector("r-question-counter");
@@ -45,6 +46,11 @@ function nextQuestion() {
             // Update questions counter
             currentQuestion++;
             questionCounterElem.setAttribute("current", currentQuestion);
+            questionCounterElem.setAttribute("total", totalQuestions);
+
+            if (currentQuestion === totalQuestions) {
+                nextQuestionButton.disabled = true;
+            }
 
             // Restore question after fetching next question
             questionBox.classList.remove("disappear");
