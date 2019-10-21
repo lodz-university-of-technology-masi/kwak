@@ -16,6 +16,18 @@ Region: us-east-1
 4. Wybierz `Account Details`
 5. Skopiuj wyświetloną zawartość do pliku `~/.aws/credentials`
 
+## Jak pracować z dockerem?
+Jak sprawdzić czy działa baza?
+- `docker ps -a`
+Wolno?
+- Ctrl-C i `docker-machine start`
+Baza exited
+- `docker start DynamoDBLocal`
+Jak sprawdzić czy są tabelki?
+- `aws dynamodb list-tables --endpoint-url http://192.168.99.100:8000`
+Execptions z tabelkami, albo ich nie ma?
+- `aws dynamodb create-table --cli-input-json file://json/create-tests-table.json --endpoint-url http://192.168.99.100:8000`
+
 ## Jak stworzyć bazę danych?
 1. `docker run -d --name "DynamoDBLocal" -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -inMemory -sharedDb`
 2. `aws dynamodb create-table --cli-input-json file://json/create-tests-table.json --endpoint-url http://192.168.99.100:8000`
