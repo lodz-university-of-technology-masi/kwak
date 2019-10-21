@@ -2,22 +2,24 @@ import {defineElement, HtmlComponent} from "../html-component.js";
 
 export class QuestionElement extends HtmlComponent {
     static get observedAttributes() {
-        return ["content", "code"];
+        return ["title", "description", "code"];
     }
 
     render() {
         const template = document.createElement("template");
         template.innerHTML = `
         <style>
-            #content {
+            #title {
                 font-weight: bold;
             }
             
             code {
                 display: block;
+                margin-top: 20px;
             }
         </style>
-        <div id="content">Pytanie</div>
+        <div id="title"></div>
+        <div id="description"></div>
         <code id="code"></code>
         `;
 

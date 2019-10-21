@@ -13,7 +13,8 @@ const answersElem = document.querySelector("#answers");
 const nextQuestionButton = document.querySelector("#nextQuestion");
 
 function loadQuestion(question) {
-    questionElem.setAttribute("content", question.content);
+    questionElem.setAttribute("title", question.title);
+    questionElem.setAttribute("description", question.description);
     questionElem.setAttribute("code", question.code);
 
     // Remove existing answers
