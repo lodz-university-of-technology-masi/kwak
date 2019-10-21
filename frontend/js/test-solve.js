@@ -3,7 +3,7 @@ import "./components/question-counter.js"
 import "./components/question.js"
 import "./components/answer.js"
 
-let currentQuestion = 1;
+let currentQuestion = 0;
 
 const questionElem = document.querySelector("r-question");
 const questionCounterElem = document.querySelector("r-question-counter");
@@ -35,7 +35,7 @@ function nextQuestion() {
     questionBox.classList.remove("appear");
     questionBox.classList.add("disappear");
 
-    fetch('https://demo5965341.mockable.io/question')
+    fetch('https://demo5965341.mockable.io/question/' + (currentQuestion + 1))
         .then(response => {
             return response.json();
         })
@@ -63,3 +63,5 @@ function showError(message) {
 nextQuestionButton.addEventListener('click', function(){
     nextQuestion();
 });
+
+nextQuestion();
