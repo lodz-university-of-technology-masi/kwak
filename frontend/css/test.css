@@ -44,3 +44,13 @@ footer {
 .appear {
     animation: appear 1s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 }
+
+.card {
+    border-radius: 0;
+}
+
+#questionStatus {
+    padding: 8px;
+    background-color: #e5e5e5;
+    border-top: 0;
+}
