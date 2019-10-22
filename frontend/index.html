@@ -1,10 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="">
 <head>
     <meta charset="UTF-8">
-    <title>KWAK</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <!-- link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"-->
+    <link href="css/test.css" rel="stylesheet"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
-    <h1>Kwak</h1>
+<div class="container d-flex p-3 flex-column ">
+    <header>
+        <nav class="navbar navbar-light">
+            <a class="navbar-brand" href="#">Recruiter</a>
+        </nav>
+    </header>
+
+    <main role="main">
+        <div id="errorBox" style="display: none;" class="alert alert-danger" role="alert"></div>
+        <div class="justify-content-center">
+            <form class="col-5">
+                <div class="form-group">
+                    <label for="userMail">Email address</label>
+                    <input type="email" class="form-control" id="userMail" placeholder="Enter email">
+
+                </div>
+                <div class="form-group">
+                    <label for="passwordField">Password</label>
+                    <input type="password" class="form-control" id="passwordField" placeholder="Password">
+                </div>
+
+                <div class="form-group p-3 row">
+                    <div class="float-left btn-group col-3">
+                        <button type="submit" class="btn btn-primary offse">Login</button>
+                    </div>
+                    <div class="float-right btn-group col-9">
+                        <small id="emailHelp" class="form-text text-muted p-3">You don't have account?</small>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        Recruiter v0.1
+    </footer>
+</div>
 </body>
 </html>
