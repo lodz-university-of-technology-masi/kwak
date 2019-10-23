@@ -30,6 +30,7 @@ function loadQuestion(question) {
     for (const answer of question.answers) {
         const answerElement = document.createElement("r-answer");
         answerElement.setAttribute("content", answer.content);
+        answerElement.setAttribute("type", question.type);
         answersElem.appendChild(answerElement);
     }
 }

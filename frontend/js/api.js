@@ -8,8 +8,8 @@ export function getTest(testId) {
                 "title": "title",
                 "description": "description",
                 "code": "code",
-                "type": "",
-                "answers": [{"content": "answer 1"}, {"content": "answer 2"}]
+                "type": "radio",
+                "answers": [{"content": "answer 1"}, {"content": "answer 2"}, {"content": "answer 3"}]
             },
             {
                 "title": "ADAM",
