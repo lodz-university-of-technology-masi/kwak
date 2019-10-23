@@ -13,6 +13,7 @@ const questionCounterElem = document.querySelector("r-question-counter");
 const questionBox = document.querySelector("#question");
 const errorBox = document.querySelector("#errorBox");
 const answersElem = document.querySelector("#answers");
+const prevQuestionButton = document.querySelector("#prevQuestion");
 const nextQuestionButton = document.querySelector("#nextQuestion");
 const loadingSpinner = document.querySelector("#loadingSpinner");
 
@@ -36,6 +37,14 @@ function loadQuestion(question) {
 }
 
 function nextQuestion() {
+    changeQuestion(1);
+}
+
+function prevQuestion() {
+    changeQuestion(-1);
+}
+
+function changeQuestion(direction) {
     // Hide question during fetching next question
     loadingSpinner.classList.add("spinner-border");
     loadingSpinner.classList.add("spinner-border-sm");
@@ -54,14 +63,15 @@ function nextQuestion() {
         questionBox.classList.remove("disappear");
         questionBox.classList.add("appear");
 
-        loadQuestion(test.questions[currentQuestion]);
+        currentQuestion += direction;
+        loadQuestion(test.questions[currentQuestion - 1]);
 
         // Update questions counter
-        currentQuestion++;
         questionCounterElem.setAttribute("current", currentQuestion);
         questionCounterElem.setAttribute("total", totalQuestions);
 
         nextQuestionButton.disabled = currentQuestion === totalQuestions;
+        prevQuestionButton.disabled = currentQuestion === 1;
 
         // Restore question after fetching next question
         questionBox.classList.remove("disappear");
@@ -73,6 +83,10 @@ function showError(message) {
     errorBox.style.display = !message ? "none" : "block";
     errorBox.innerText = message;
 }
+
+prevQuestionButton.addEventListener('click', function(){
+    prevQuestion();
+});
 
 nextQuestionButton.addEventListener('click', function(){
     nextQuestion();
