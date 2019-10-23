@@ -49,18 +49,24 @@ function nextQuestion() {
     questionBox.classList.remove("appear");
     questionBox.classList.add("disappear");
 
-    loadQuestion(test.questions[currentQuestion]);
+    // Just for animation
+    setTimeout(function() {
+        questionBox.classList.remove("disappear");
+        questionBox.classList.add("appear");
 
-    // Update questions counter
-    currentQuestion++;
-    questionCounterElem.setAttribute("current", currentQuestion);
-    questionCounterElem.setAttribute("total", totalQuestions);
+        loadQuestion(test.questions[currentQuestion]);
 
-    nextQuestionButton.disabled = currentQuestion === totalQuestions;
+        // Update questions counter
+        currentQuestion++;
+        questionCounterElem.setAttribute("current", currentQuestion);
+        questionCounterElem.setAttribute("total", totalQuestions);
 
-    // Restore question after fetching next question
-    questionBox.classList.remove("disappear");
-    questionBox.classList.add("appear");
+        nextQuestionButton.disabled = currentQuestion === totalQuestions;
+
+        // Restore question after fetching next question
+        questionBox.classList.remove("disappear");
+        questionBox.classList.add("appear");
+    }, 500);
 }
 
 function showError(message) {
