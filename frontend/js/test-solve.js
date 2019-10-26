@@ -39,14 +39,6 @@ function loadQuestion(question) {
     }
 }
 
-function nextQuestion() {
-    changeQuestion(currentQuestion + 1);
-}
-
-function prevQuestion() {
-    changeQuestion(currentQuestion - 1);
-}
-
 function changeQuestion(questionIdx) {
     // Hide question during fetching next question
     loadingSpinner.classList.add("spinner-border");
@@ -98,13 +90,13 @@ function showError(message) {
 }
 
 prevQuestionButton.addEventListener('click', function(){
-    prevQuestion();
+    changeQuestion(currentQuestion - 1);
 });
 
 nextQuestionButton.addEventListener('click', function(){
-    nextQuestion();
+    changeQuestion(currentQuestion + 1);
 });
 
 test = getTest(0);
 totalQuestions = test.questions.length;
-nextQuestion();
+changeQuestion(currentQuestion + 1);
