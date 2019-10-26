@@ -3,6 +3,7 @@ import "./components/question-counter.js"
 import "./components/question.js"
 import "./components/answer.js"
 import {getTest} from "./api.js";
+import {getAnswers,saveAnswers} from "./storage.js";
 
 let currentQuestion = 0;
 let totalQuestions = 2;
@@ -89,38 +90,6 @@ function changeQuestion(questionIdx) {
         questionBox.classList.remove("disappear");
         questionBox.classList.add("appear");
     }, 350);
-}
-
-function saveAnswers(testId, question, answers) {
-    if (!localStorage.getItem("tests")) {
-        localStorage.setItem("tests", "{}");
-    }
-
-    const tests = JSON.parse(localStorage.getItem("tests"));
-    if (!tests[testId]) {
-        tests[testId] = {};
-    }
-
-    const test = tests[testId];
-    if (!test[question]) {
-        test[question] = [];
-    }
-
-    test[question] = answers;
-    localStorage.setItem("tests", JSON.stringify(tests));
-}
-
-function getAnswers(testId, question) {
-    if (!localStorage.getItem("tests")) {
-        return [];
-    }
-
-    const tests = JSON.parse(localStorage.getItem("tests"));
-    if (!tests[testId] || !tests[testId][question]) {
-        return [];
-    }
-
-    return tests[testId][question];
 }
 
 function showError(message) {
