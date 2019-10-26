@@ -49,6 +49,10 @@ footer {
     border-radius: 0;
 }
 
+.hidden {
+    display: none;
+}
+
 #questionStatus {
     padding: 8px;
     background-color: #e5e5e5;
