@@ -37,14 +37,14 @@ function loadQuestion(question) {
 }
 
 function nextQuestion() {
-    changeQuestion(1);
+    changeQuestion(currentQuestion + 1);
 }
 
 function prevQuestion() {
-    changeQuestion(-1);
+    changeQuestion(currentQuestion - 1);
 }
 
-function changeQuestion(direction) {
+function changeQuestion(questionIdx) {
     // Hide question during fetching next question
     loadingSpinner.classList.add("spinner-border");
     loadingSpinner.classList.add("spinner-border-sm");
@@ -63,8 +63,8 @@ function changeQuestion(direction) {
         questionBox.classList.remove("disappear");
         questionBox.classList.add("appear");
 
-        currentQuestion += direction;
-        loadQuestion(test.questions[currentQuestion - 1]);
+        currentQuestion = questionIdx;
+        loadQuestion(test.questions[questionIdx - 1]);
 
         // Update questions counter
         questionCounterElem.setAttribute("current", currentQuestion);
