@@ -16,6 +16,8 @@ body {
 header {
     border-bottom: 1px solid #dcdcdc;
     margin-bottom: auto;
+    background: #ffffff;
+    border-radius: 10px;
 }
 
 footer {
