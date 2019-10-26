@@ -28,8 +28,10 @@ function loadQuestion(question) {
     }
 
     // Add answers to div
-    for (const answer of question.answers) {
+    for (const answerIdx in question.answers) {
+        const answer = question.answers[answerIdx];
         const answerElement = document.createElement("r-answer");
+        answerElement.setAttribute("answerid", answerIdx);
         answerElement.setAttribute("content", answer.content);
         answerElement.setAttribute("type", question.type);
         answersElem.appendChild(answerElement);
@@ -50,7 +52,10 @@ function changeQuestion(questionIdx) {
     loadingSpinner.classList.add("spinner-border-sm");
     nextQuestionButton.disabled = true;
 
-    // Zapis odpowiedzi
+    // Save answers
+    const answers = [...document.querySelectorAll("r-answer[checked='true']")]
+        .map(x => +x.getAttribute("answerid"));
+    saveAnswers(test.id, currentQuestion, answers);
 
     loadingSpinner.classList.remove("spinner-border");
     loadingSpinner.classList.remove("spinner-border-sm");
@@ -66,6 +71,13 @@ function changeQuestion(questionIdx) {
         currentQuestion = questionIdx;
         loadQuestion(test.questions[questionIdx - 1]);
 
+        // Load answers
+        const answers = getAnswers(test.id, currentQuestion);
+        answers.forEach((id) => {
+            document.querySelector("r-answer[answerid='"+ id +"']")
+                .setChecked(true);
+        });
+
         // Update questions counter
         questionCounterElem.setAttribute("current", currentQuestion);
         questionCounterElem.setAttribute("total", totalQuestions);
@@ -77,6 +89,38 @@ function changeQuestion(questionIdx) {
         questionBox.classList.remove("disappear");
         questionBox.classList.add("appear");
     }, 350);
+}
+
+function saveAnswers(testId, question, answers) {
+    if (!localStorage.getItem("tests")) {
+        localStorage.setItem("tests", "{}");
+    }
+
+    const tests = JSON.parse(localStorage.getItem("tests"));
+    if (!tests[testId]) {
+        tests[testId] = {};
+    }
+
+    const test = tests[testId];
+    if (!test[question]) {
+        test[question] = [];
+    }
+
+    test[question] = answers;
+    localStorage.setItem("tests", JSON.stringify(tests));
+}
+
+function getAnswers(testId, question) {
+    if (!localStorage.getItem("tests")) {
+        return [];
+    }
+
+    const tests = JSON.parse(localStorage.getItem("tests"));
+    if (!tests[testId] || !tests[testId][question]) {
+        return [];
+    }
+
+    return tests[testId][question];
 }
 
 function showError(message) {
