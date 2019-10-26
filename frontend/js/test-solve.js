@@ -76,7 +76,7 @@ function changeQuestion(questionIdx) {
         // Restore question after fetching next question
         questionBox.classList.remove("disappear");
         questionBox.classList.add("appear");
-    }, 500);
+    }, 350);
 }
 
 function showError(message) {

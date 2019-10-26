@@ -38,11 +38,11 @@ footer {
 }
 
 .disappear {
-    animation: disappear 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+    animation: disappear 0.35s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 }
 
 .appear {
-    animation: appear 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+    animation: appear 0.35s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 }
 
 .card {
