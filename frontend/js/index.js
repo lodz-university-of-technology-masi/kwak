@@ -29,13 +29,9 @@ function register() {
 }
 
 function validate() {
-    let isValid = false;
-    let forms = document.getElementsByClassName('needs-validation');
-    Array.prototype.filter.call(forms, function (form) {
-        form.classList.add('was-validated');
-        isValid = form.checkValidity();
-    });
-    return isValid;
+    const form = document.querySelector("form:not(.hidden)");
+    form.classList.add('was-validated');
+    return form.checkValidity();
 }
 
 buttonLogin.addEventListener('click', function () {
