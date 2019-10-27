@@ -9,27 +9,11 @@ const buttonRegister = document.querySelector("#buttonRegister");
 function showLoginForm() {
     loginForm.classList.remove("hidden");
     registerForm.classList.add("hidden");
-
-    buttonLogin.addEventListener('click', function () {
-        login();
-    });
-
-    buttonRegister.addEventListener('click', function () {
-        showRegisterForm();
-    });
 }
 
 function showRegisterForm() {
     loginForm.classList.add("hidden");
     registerForm.classList.remove("hidden");
-
-    buttonPerformRegistration.addEventListener('click', function () {
-        register();
-    });
-
-    buttonCancelRegistration.addEventListener('click', function () {
-        showLoginForm();
-    });
 }
 
 function login() {
@@ -53,5 +37,21 @@ function validate() {
     });
     return isValid;
 }
+
+buttonLogin.addEventListener('click', function () {
+    login();
+});
+
+buttonRegister.addEventListener('click', function () {
+    showRegisterForm();
+});
+
+buttonPerformRegistration.addEventListener('click', function () {
+    register();
+});
+
+buttonCancelRegistration.addEventListener('click', function () {
+    showLoginForm();
+});
 
 showLoginForm();
