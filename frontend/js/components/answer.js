@@ -9,7 +9,7 @@ export class AnswerElement extends HtmlComponent {
 
     setChecked(state, global=true) {
         // Trochę takie obejście problemów z shadowdomem
-        if (global && this.getAttribute('type') === 'radio') {
+        if (global && this.getAttribute('type') === 'single') {
             answerRadios.forEach((answer) => answer.setChecked(false, false));
         }
 
@@ -32,7 +32,7 @@ export class AnswerElement extends HtmlComponent {
                 background-color: #c2dbf7;
             }
             
-            :host([type='radio']) .custom-checkbox {
+            :host([type='single']) .custom-checkbox {
                 display: none;
             }
         </style>
