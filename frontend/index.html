@@ -19,25 +19,34 @@
     <main role="main">
         <div id="errorBox" style="display: none;" class="alert alert-danger" role="alert"></div>
         <div class="d-flex justify-content-center">
+            <div id="userPanelContainer">
+                <r-user-panel id="userPanel"></r-user-panel>
+                <button id="logoutButton" class="btn btn-primary">Logout</button>
+            </div>
             <form id="loginForm" class="form-group needs-validation col-12 col-sm-10 col-md-7 col-lg-5" novalidate>
                 <div>
                     <label for="userLogin">Login</label>
-                    <input type="text" class="form-control mb-2" id="userLogin" placeholder="Enter username" required>
+                    <input type="text" class="form-control mb-2" id="userLogin" name="userLogin" placeholder="Enter username" required>
                     <div class="invalid-feedback">
                         Please input a valid username.
                     </div>
                 </div>
                 <div>
                     <label for="userPassword">Password</label>
-                    <input type="password" class="form-control" id="userPassword" placeholder="Password" required>
+                    <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Password" required>
                     <div class="invalid-feedback">
                         Please input a valid password.
                     </div>
                 </div>
                 <div class="btn-group mt-3 d-flex justify-content-between">
-                    <button id="buttonLogin" type="button" class="btn btn-primary float-left col-4">Login</button>
+                    <button id="buttonLogin" type="button" class="btn btn-primary float-left col-4">
+                        <span>Login</span>
+                        <div class="spinner spinner-border spinner-border-sm hidden" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </button>
                     <small class=" text-muted pr-3 pl-3 text-right ">You don't have account?</small>
-                    <button id="buttonRegister" type="button" class="btn btn-primary col-4">Register</button>
+                    <button id="buttonRegister" type="button" class="btn btn-primary col-4 ">Register</button>
                 </div>
             </form>
 
@@ -62,6 +71,13 @@
                     <input type="text" class="form-control mb-2" id="userLoginR" placeholder="login" required>
                     <div class="invalid-feedback">
                         Please input a valid login.
+                    </div>
+                </div>
+                <div>
+                    <label for="userMailR">E-mail</label>
+                    <input type="email" class="form-control mb-2" id="userMailR" placeholder="john@example.com" required>
+                    <div class="invalid-feedback">
+                        Please input a valid e-mail.
                     </div>
                 </div>
                 <div>

@@ -12,7 +12,6 @@ let test = {};
 const questionElem = document.querySelector("r-question");
 const questionCounterElem = document.querySelector("r-question-counter");
 const questionBox = document.querySelector("#question");
-const errorBox = document.querySelector("#errorBox");
 const answersElem = document.querySelector("#answers");
 const prevQuestionButton = document.querySelector("#prevQuestion");
 const nextQuestionButton = document.querySelector("#nextQuestion");
@@ -82,11 +81,6 @@ function changeQuestion(questionIdx) {
         questionBox.classList.remove("disappear");
         questionBox.classList.add("appear");
     }, 350);
-}
-
-function showError(message) {
-    errorBox.style.display = !message ? "none" : "block";
-    errorBox.innerText = message;
 }
 
 prevQuestionButton.addEventListener('click', function(){
