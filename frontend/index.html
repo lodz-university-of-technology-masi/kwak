@@ -23,6 +23,18 @@
                 <r-user-panel id="userPanel"></r-user-panel>
                 <button id="logoutButton" class="btn btn-primary">Logout</button>
             </div>
+            <form id="confirmationForm" class="form-group needs-validation col-12 col-sm-10 col-md-7 col-lg-5" novalidate>
+                <div>
+                    <label for="confirmationCode">Confirmation code</label>
+                    <input type="text" class="form-control mb-2" id="confirmationCode" name="confirmationCode" placeholder="123 456" required>
+                </div>
+                <button id="confirmationButton" type="button" class="btn btn-primary col-5">
+                    <span>Confirm</span>
+                    <div class="spinner spinner-border spinner-border-sm hidden" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </button>
+            </form>
             <form id="loginForm" class="form-group needs-validation col-12 col-sm-10 col-md-7 col-lg-5" novalidate>
                 <div>
                     <label for="userLogin">Login</label>
@@ -53,7 +65,7 @@
             <form id="registerForm" class="form-group needs-validation col-12 col-sm-10 col-md-7 col-lg-5" novalidate>
                 <div>
                     <label for="userFirstNameR">First name</label>
-                    <input type="text" class="form-control mb-2" id="userFirstNameR" placeholder="Enter first name"
+                    <input type="text" class="form-control mb-2" id="userFirstNameR" name="userFirstNameR" placeholder="Enter first name"
                            required>
                     <div class="invalid-feedback">
                         Please input a valid first name.
@@ -61,35 +73,40 @@
                 </div>
                 <div>
                     <label for="userLastNameR">Last name</label>
-                    <input type="text" class="form-control mb-2" id="userLastNameR" placeholder="last name" required>
+                    <input type="text" class="form-control mb-2" id="userLastNameR" name="userLastNameR" placeholder="last name" required>
                     <div class="invalid-feedback">
                         Please input a valid last name.
                     </div>
                 </div>
                 <div>
                     <label for="userLogin">Login</label>
-                    <input type="text" class="form-control mb-2" id="userLoginR" placeholder="login" required>
+                    <input type="text" class="form-control mb-2" id="userLoginR" name="userLoginR" placeholder="login" required>
                     <div class="invalid-feedback">
                         Please input a valid login.
                     </div>
                 </div>
                 <div>
                     <label for="userMailR">E-mail</label>
-                    <input type="email" class="form-control mb-2" id="userMailR" placeholder="john@example.com" required>
+                    <input type="email" class="form-control mb-2" id="userMailR" name="userMailR" placeholder="john@example.com" required>
                     <div class="invalid-feedback">
                         Please input a valid e-mail.
                     </div>
                 </div>
                 <div>
                     <label for="userPasswordR">Password</label>
-                    <input type="password" class="form-control" id="userPasswordR" placeholder="Password" required>
+                    <input type="password" class="form-control" id="userPasswordR" name="userPasswordR" placeholder="Password" required>
                     <div class="invalid-feedback">
                         Please input a valid password.
                     </div>
                 </div>
                 <div class="btn-group mt-3 d-flex">
                     <button id="buttonCancelRegistration" type="button" class="btn btn-primary mr-1">Cancel</button>
-                    <button id="buttonPerformRegistration" type="button" class="btn btn-primary">Register</button>
+                    <button id="buttonPerformRegistration" type="button" class="btn btn-primary">
+                        <span>Register</span>
+                        <div class="spinner spinner-border spinner-border-sm hidden" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </button>
                 </div>
             </form>
         </div>

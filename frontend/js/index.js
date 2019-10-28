@@ -1,25 +1,29 @@
-import { signUp, logIn as cognitoLogin, getUserAttributes, getUserFromLocalStorage } from "./cognito.js";
+import { signUp, logIn as cognitoLogin, getUserAttributes, getUserFromLocalStorage, confirmRegistration } from "./cognito.js";
 import { showError, clearError } from "./errors.js";
 import './components/user-panel.js';
 
 const loginForm = document.querySelector("#loginForm");
 const registerForm = document.querySelector("#registerForm");
+const confirmationForm = document.querySelector("#confirmationForm");
 const userPanel = document.querySelector("#userPanel");
 const userPanelContainer = document.querySelector("#userPanelContainer");
-const logoutButton = document.querySelector("#logoutButton");
 
 
 const buttonPerformRegistration = document.querySelector("#buttonPerformRegistration");
 const buttonCancelRegistration = document.querySelector("#buttonCancelRegistration");
 const buttonLogin = document.querySelector("#buttonLogin");
 const buttonRegister = document.querySelector("#buttonRegister");
+const confirmationButton = document.querySelector("#confirmationButton");
+const logoutButton = document.querySelector("#logoutButton");
 
+let registeringUser = null;
 
 function showLoginForm() {
     clearError();
     loginForm.classList.remove("hidden");
     registerForm.classList.add("hidden");
     userPanelContainer.classList.add("hidden");
+    confirmationForm.classList.add("hidden");
 }
 
 function showRegisterForm() {
@@ -28,13 +32,20 @@ function showRegisterForm() {
     registerForm.classList.remove("hidden");
 }
 
+// Temporary function to demonstrate logic
 async function showUserPanel(user) {
     loginForm.classList.add("hidden");
     registerForm.classList.add("hidden");
+    confirmationForm.classList.add("hidden");
     userPanelContainer.classList.remove("hidden");
 
     const attributes = await getUserAttributes(user);
     userPanel.setAttribute("name", `${attributes.given_name} ${attributes.family_name}`);
+}
+
+function showConfirmationForm() {
+    registerForm.classList.add("hidden");
+    confirmationForm.classList.remove("hidden");
 }
 
 
@@ -42,15 +53,14 @@ async function login() {
     clearError();
 
     if (validate()) {
-        const formData = new FormData(loginForm);
-        const userLogin = formData.get('userLogin');
-        const userPassword = formData.get('userPassword');
         const spinner = loginForm.querySelector('.spinner')
-
+        spinner.classList.remove("hidden");
         try {
-            spinner.classList.remove("hidden");
-            const user = await cognitoLogin(userLogin, userPassword);
+            const formData = new FormData(loginForm);
+            const user = await cognitoLogin(formData.get('userLogin'), formData.get('userPassword'));
             await showUserPanel(user);
+            loginForm.reset();
+            loginForm.classList.remove("was-validated");
         } catch (error) {
             showError(error.message);
         }
@@ -61,7 +71,35 @@ async function login() {
 
 async function register() {
     if (validate()) {
-        //register
+        const spinner = registerForm.querySelector('.spinner')
+        spinner.classList.remove("hidden");
+        try {
+            const formData = new FormData(registerForm);
+            registeringUser = await signUp(formData.get('userFirstNameR'), formData.get('userLastNameR'), formData.get('userMailR'), formData.get('userLoginR'), formData.get('userPasswordR'));
+            showConfirmationForm();
+            registerForm.reset();
+            registerForm.classList.remove("was-validated");
+        } catch (error) {
+            showError(error.message);
+        }
+        spinner.classList.add("hidden");
+    }
+}
+
+async function confirmUser(user) {
+    clearError();
+    if (validate()) {
+        const spinner = confirmationForm.querySelector(".spinner")
+        spinner.classList.remove("hidden");
+        try {
+            const formData = new FormData(confirmationForm);
+            await confirmRegistration(user, formData.get("confirmationCode"));
+            showLoginForm();
+            confirmationForm.reset();
+        } catch (error) {
+            showError(error.message);
+        }
+        spinner.classList.add("hidden");
     }
 }
 
@@ -93,6 +131,10 @@ logoutButton.addEventListener('click', async () => {
         user.signOut();
     }
     showLoginForm();
+});
+
+confirmationButton.addEventListener('click', async () => {
+    await confirmUser(registeringUser);
 });
 
 
