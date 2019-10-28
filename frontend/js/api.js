@@ -8,15 +8,21 @@ export function getTest(testId) {
                 "title": "title",
                 "description": "description",
                 "code": "code",
-                "type": "radio",
+                "type": "single",
                 "answers": [{"content": "answer 1"}, {"content": "answer 2"}, {"content": "answer 3"}]
             },
             {
                 "title": "ADAM",
                 "description": "1234",
                 "code": "bbb",
-                "type": "",
+                "type": "multi",
                 "answers": [{"content": "1"}, {"content": "2"}]
+            },
+            {
+                "title": "ADAxd",
+                "description": "1234",
+                "code": "bbb",
+                "type": "open",
             }
         ]
     }
