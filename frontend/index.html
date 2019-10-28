@@ -18,12 +18,12 @@
 
     <main role="main">
         <div id="errorBox" style="display: none;" class="alert alert-danger" role="alert"></div>
-        <div class="d-flex justify-content-center">
-            <div id="userPanelContainer">
+        <r-container target="loginForm" class="d-flex justify-content-center">
+            <div id="userPanelContainer" class="hidden">
                 <r-user-panel id="userPanel"></r-user-panel>
                 <button id="logoutButton" class="btn btn-primary">Logout</button>
             </div>
-            <form id="confirmationForm" class="form-group needs-validation col-12 col-sm-10 col-md-7 col-lg-5" novalidate>
+            <form id="confirmationForm" class="form-group needs-validation col-12 col-sm-10 col-md-7 col-lg-5 hidden" novalidate>
                 <div>
                     <label for="confirmationCode">Confirmation code</label>
                     <input type="text" class="form-control mb-2" id="confirmationCode" name="confirmationCode" placeholder="123 456" required>
@@ -35,7 +35,7 @@
                     </div>
                 </button>
             </form>
-            <form id="loginForm" class="form-group needs-validation col-12 col-sm-10 col-md-7 col-lg-5" novalidate>
+            <form id="loginForm" class="form-group needs-validation col-12 col-sm-10 col-md-7 col-lg-5 hidden" novalidate>
                 <div>
                     <label for="userLogin">Login</label>
                     <input type="text" class="form-control mb-2" id="userLogin" name="userLogin" placeholder="Enter username" required>
@@ -62,7 +62,7 @@
                 </div>
             </form>
 
-            <form id="registerForm" class="form-group needs-validation col-12 col-sm-10 col-md-7 col-lg-5" novalidate>
+            <form id="registerForm" class="form-group needs-validation col-12 col-sm-10 col-md-7 col-lg-5 hidden" novalidate>
                 <div>
                     <label for="userFirstNameR">First name</label>
                     <input type="text" class="form-control mb-2" id="userFirstNameR" name="userFirstNameR" placeholder="Enter first name"
@@ -109,7 +109,7 @@
                     </button>
                 </div>
             </form>
-        </div>
+        </r-container>
     </main>
 
     <footer>

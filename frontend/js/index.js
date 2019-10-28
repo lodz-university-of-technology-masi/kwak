@@ -1,6 +1,9 @@
 import { signUp, logIn as cognitoLogin, getUserAttributes, getUserFromLocalStorage, confirmRegistration } from "./cognito.js";
 import { showError, clearError } from "./errors.js";
 import './components/user-panel.js';
+import './components/container.js';
+
+const container = document.querySelector("r-container");
 
 const loginForm = document.querySelector("#loginForm");
 const registerForm = document.querySelector("#registerForm");
@@ -18,47 +21,28 @@ const logoutButton = document.querySelector("#logoutButton");
 
 let registeringUser = null;
 
-function showLoginForm() {
-    clearError();
-    loginForm.classList.remove("hidden");
-    registerForm.classList.add("hidden");
-    userPanelContainer.classList.add("hidden");
-    confirmationForm.classList.add("hidden");
-}
-
-function showRegisterForm() {
-    clearError();
-    loginForm.classList.add("hidden");
-    registerForm.classList.remove("hidden");
-}
-
 // Temporary function to demonstrate logic
-async function showUserPanel(user) {
-    loginForm.classList.add("hidden");
-    registerForm.classList.add("hidden");
-    confirmationForm.classList.add("hidden");
-    userPanelContainer.classList.remove("hidden");
-
+async function loadUserData(user) {
     const attributes = await getUserAttributes(user);
     userPanel.setAttribute("name", `${attributes.given_name} ${attributes.family_name}`);
 }
 
-function showConfirmationForm() {
-    registerForm.classList.add("hidden");
-    confirmationForm.classList.remove("hidden");
+function switchForm(name) {
+    clearError();
+    container.setAttribute("target", name);
 }
-
 
 async function login() {
     clearError();
 
     if (validate()) {
-        const spinner = loginForm.querySelector('.spinner')
+        const spinner = loginForm.querySelector('.spinner');
         spinner.classList.remove("hidden");
         try {
             const formData = new FormData(loginForm);
             const user = await cognitoLogin(formData.get('userLogin'), formData.get('userPassword'));
-            await showUserPanel(user);
+            switchForm("userPanelContainer");
+            await loadUserData(user);
             loginForm.reset();
             loginForm.classList.remove("was-validated");
         } catch (error) {
@@ -71,12 +55,12 @@ async function login() {
 
 async function register() {
     if (validate()) {
-        const spinner = registerForm.querySelector('.spinner')
+        const spinner = registerForm.querySelector('.spinner');
         spinner.classList.remove("hidden");
         try {
             const formData = new FormData(registerForm);
             registeringUser = await signUp(formData.get('userFirstNameR'), formData.get('userLastNameR'), formData.get('userMailR'), formData.get('userLoginR'), formData.get('userPasswordR'));
-            showConfirmationForm();
+            switchForm("confirmationForm");
             registerForm.reset();
             registerForm.classList.remove("was-validated");
         } catch (error) {
@@ -89,12 +73,12 @@ async function register() {
 async function confirmUser(user) {
     clearError();
     if (validate()) {
-        const spinner = confirmationForm.querySelector(".spinner")
+        const spinner = confirmationForm.querySelector(".spinner");
         spinner.classList.remove("hidden");
         try {
             const formData = new FormData(confirmationForm);
             await confirmRegistration(user, formData.get("confirmationCode"));
-            showLoginForm();
+            switchForm("loginForm");
             confirmationForm.reset();
         } catch (error) {
             showError(error.message);
@@ -114,7 +98,7 @@ buttonLogin.addEventListener('click', async function () {
 });
 
 buttonRegister.addEventListener('click', function () {
-    showRegisterForm();
+    switchForm("registerForm");
 });
 
 buttonPerformRegistration.addEventListener('click', async function () {
@@ -122,7 +106,7 @@ buttonPerformRegistration.addEventListener('click', async function () {
 });
 
 buttonCancelRegistration.addEventListener('click', function () {
-    showLoginForm();
+    switchForm("loginForm");
 });
 
 logoutButton.addEventListener('click', async () => {
@@ -130,7 +114,7 @@ logoutButton.addEventListener('click', async () => {
     if (user != null ){
         user.signOut();
     }
-    showLoginForm();
+    switchForm("loginForm");
 });
 
 confirmationButton.addEventListener('click', async () => {
@@ -140,12 +124,12 @@ confirmationButton.addEventListener('click', async () => {
 
 getUserFromLocalStorage().then(async (user) => {
     if (user == null) {
-        showLoginForm();
+        switchForm("loginForm");
         return;
     }
 
-    await showUserPanel(user);
+    await loadUserData(user);
 }).catch(() => {
-    showLoginForm();
+    switchForm("loginForm");
 });
 
