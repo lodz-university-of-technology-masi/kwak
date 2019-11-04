@@ -10,9 +10,10 @@
 </head>
 <body>
 <div class="container d-flex p-3 flex-column ">
-    <header>
-        <nav class="navbar navbar-light">
+    <header class="mb-0 row">
+        <nav class="navbar navbar-light row justify-content-between w-100">
             <a class="navbar-brand" href="#">Recruiter</a>
+            <button id="addNewButton" type="button" class="btn btn-secondary">Create new test</button>
         </nav>
     </header>
 
@@ -24,7 +25,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
-                    <th class="d-none d-md-table-cell"  scope="col">Start date</th>
+                    <th class="d-none d-md-table-cell" scope="col">Start date</th>
                     <th class="d-none d-md-table-cell" scope="col">End date</th>
                     <th scope="col"></th>
                 </tr>
@@ -33,15 +34,15 @@
                 <tr>
                     <th scope="row">id</th>
                     <td id="testName">testName</td>
-                    <td  class="d-none d-md-table-cell" id="startDate">startDate</td>
-                    <td class="d-none d-md-table-cell"  id="endDate">endDate</td>
-                    <td class="text-right"><div class="btn-group ">
-                        <button id="solveButton" type="button" class="btn btn-secondary">Solve</button>
-                        <button id="editButton" type="button" class="btn btn-secondary">Edit</button>
-                        <button id="removeButton" type="button" class="btn btn-secondary">Remove</button>
-                    </div>
-                        </button></td>
-
+                    <td class="d-none d-md-table-cell" id="startDate">startDate</td>
+                    <td class="d-none d-md-table-cell" id="endDate">endDate</td>
+                    <td class="text-right">
+                        <div class="btn-group ">
+                            <button id="solveButton" type="button" class="btn btn-secondary">Solve</button>
+                            <button id="editButton" type="button" class="btn btn-secondary">Edit</button>
+                            <button id="removeButton" type="button" class="btn btn-secondary">Remove</button>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>
