@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panel</title>
+    <!-- link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"-->
+    <link href="css/test.css" rel="stylesheet"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container d-flex p-3 flex-column ">
+    <header>
+        <nav class="navbar navbar-light">
+            <a class="navbar-brand" href="#">Recruiter</a>
+        </nav>
+    </header>
+
+    <main role="main">
+        <div id="errorBox" style="display: none;" class="alert alert-danger" role="alert"></div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th class="d-none d-md-table-cell"  scope="col">Start date</th>
+                    <th class="d-none d-md-table-cell" scope="col">End date</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">id</th>
+                    <td id="testName">testName</td>
+                    <td  class="d-none d-md-table-cell" id="startDate">startDate</td>
+                    <td class="d-none d-md-table-cell"  id="endDate">endDate</td>
+                    <td class="text-right"><div class="btn-group ">
+                        <button id="solveButton" type="button" class="btn btn-secondary">Solve</button>
+                        <button id="editButton" type="button" class="btn btn-secondary">Edit</button>
+                        <button id="removeButton" type="button" class="btn btn-secondary">Remove</button>
+                    </div>
+                        </button></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        Recruiter v0.1
+    </footer>
+</div>
+</body>
+</html>
