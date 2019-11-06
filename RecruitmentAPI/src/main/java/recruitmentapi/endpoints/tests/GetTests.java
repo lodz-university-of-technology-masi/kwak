@@ -12,7 +12,7 @@ import recruitmentapi.model.Test;
 import java.util.List;
 
 public class GetTests implements RequestHandler<GatewayRequest, GatewayResponse<List<Test>>> {
-    DynamoDBMapper mapper = new DynamoDBAdapter().getMapper();
+    private DynamoDBMapper mapper = new DynamoDBAdapter().getMapper();
 
     @Override
     public GatewayResponse<List<Test>> handleRequest(GatewayRequest request, Context context) {

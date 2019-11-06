@@ -9,7 +9,7 @@ import recruitmentapi.GatewayResponse;
 import recruitmentapi.model.Test;
 
 public class AddTest implements RequestHandler<GatewayRequest, GatewayResponse<Test>> {
-    DynamoDBMapper mapper = new DynamoDBAdapter().getMapper();
+    private DynamoDBMapper mapper = new DynamoDBAdapter().getMapper();
 
     @Override
     public GatewayResponse<Test> handleRequest(GatewayRequest request, Context context) {
