@@ -1,0 +1,25 @@
+{
+  "title": "Jakiś test",
+  "lang": "pl",
+  "questions": [
+    {
+      "title": "title",
+      "description": "description",
+      "code": "code",
+      "type": "C",
+      "answers": [{"content": "answer 1"}, {"content": "answer 2"}, {"content": "answer 3"}]
+    },
+    {
+      "title": "ADAM",
+      "description": "1234",
+      "code": "bbb",
+      "type": "L"
+    },
+    {
+      "title": "ADAxd",
+      "description": "1234",
+      "code": "bbb",
+      "type": "O"
+    }
+  ]
+}

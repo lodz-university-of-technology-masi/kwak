@@ -1,17 +1,17 @@
-package recruitmentapi;
+package recruitmentapi.model;
 
-import java.util.ArrayList;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 
+import java.util.List;
+
+@DynamoDBDocument
 public class Question {
 
     private String title;
     private String description;
     private String code;
-    private ArrayList<String> answers;
-
-    private enum Type {
-        single, multi, open;
-    }
+    private String type;
+    private List<Answer> answers;
 
     public String getTitle() {
         return title;
@@ -37,11 +37,19 @@ public class Question {
         this.code = code;
     }
 
-    public ArrayList<String> getAnswers() {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(ArrayList<String> answers) {
+    public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
 }

@@ -28,7 +28,7 @@ Resources:
     Properties:
       Policies: AmazonDynamoDBFullAccess
       CodeUri: RecruitmentAPI
-      Handler: recruitmentapi.GetTests::handleRequest
+      Handler: recruitmentapi.endpoints.tests.GetTests::handleRequest
       Runtime: java8
       MemorySize: 512
       Events:
@@ -37,6 +37,20 @@ Resources:
           Properties:
             Path: /tests
             Method: get
+  AddTestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Policies: AmazonDynamoDBFullAccess
+      CodeUri: RecruitmentAPI
+      Handler: recruitmentapi.endpoints.tests.AddTest::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Events:
+        GetTests:
+          Type: Api
+          Properties:
+            Path: /tests
+            Method: post
 
 Outputs:
   Api:
