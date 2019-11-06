@@ -16,7 +16,7 @@ packaged.yaml
 .idea/**/dictionaries
 .idea/**/shelf
 .idea/inspectionProfiles
-.idea/aws.xml
+.idea/**/aws.xml
 
 # Generated files
 .idea/**/contentModel.xml

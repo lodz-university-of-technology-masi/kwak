@@ -65,6 +65,20 @@ Resources:
           Properties:
             Path: /test/{id}
             Method: put
+  DeleteTestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Policies: AmazonDynamoDBFullAccess
+      CodeUri: RecruitmentAPI
+      Handler: recruitmentapi.endpoints.tests.DeleteTest::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Events:
+        GetTests:
+          Type: Api
+          Properties:
+            Path: /test/{id}
+            Method: delete
 
 Outputs:
   Api:
