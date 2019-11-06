@@ -63,7 +63,7 @@ Resources:
         GetTests:
           Type: Api
           Properties:
-            Path: /test/{id}
+            Path: /tests/{id}
             Method: put
   DeleteTestFunction:
     Type: AWS::Serverless::Function
@@ -77,7 +77,7 @@ Resources:
         GetTests:
           Type: Api
           Properties:
-            Path: /test/{id}
+            Path: /tests/{id}
             Method: delete
 
 Outputs:
