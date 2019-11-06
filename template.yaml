@@ -51,6 +51,20 @@ Resources:
           Properties:
             Path: /tests
             Method: post
+  UpdateTestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Policies: AmazonDynamoDBFullAccess
+      CodeUri: RecruitmentAPI
+      Handler: recruitmentapi.endpoints.tests.UpdateTest::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Events:
+        GetTests:
+          Type: Api
+          Properties:
+            Path: /test/{id}
+            Method: put
 
 Outputs:
   Api:

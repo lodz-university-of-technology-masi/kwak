@@ -12,23 +12,43 @@ import java.util.Map;
  */
 public class GatewayResponse<Response> {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private String body;
-    private final Map<String, String> headers;
+    private String body = "";
+    private Map<String, String> headers;
     private int statusCode;
 
-    public GatewayResponse(final Response body, final int statusCode) {
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json");
+    public GatewayResponse(final int statusCode) {
+        setHeaders();
         this.statusCode = statusCode;
-        this.headers = Collections.unmodifiableMap(new HashMap<>(headers));
+    }
+
+    public GatewayResponse(ErrorMessage errorMessage) {
+        setHeaders();
+        this.statusCode = errorMessage.getStatusCode();
+
+        try {
+            this.body = objectMapper.writeValueAsString(errorMessage);
+        } catch (JsonProcessingException e) {
+            this.body = "Could not serialize Response object to JSON";
+            this.statusCode = 500;
+        }
+    }
+
+    public GatewayResponse(final Response body, final int statusCode) {
+        setHeaders();
+        this.statusCode = statusCode;
 
         try {
             this.body = objectMapper.writeValueAsString(body);
         } catch (JsonProcessingException e) {
-            this.body = "Couldnt serialize Response object to JSON";
+            this.body = "Could not serialize Response object to JSON";
             this.statusCode = 500;
         }
+    }
 
+    private void setHeaders() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+        this.headers = Collections.unmodifiableMap(new HashMap<>(headers));
     }
 
     public String getBody() {
