@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panel</title>
+    <!-- link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"-->
+    <link href="css/test.css" rel="stylesheet"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container d-flex p-3 flex-column ">
+    <header class="mb-3">
+        <nav class="navbar navbar-light row justify-content-between w-100">
+            <a class="navbar-brand" href="#">Recruiter</a>
+            <button id="hideAnswersButton" type="button" class="btn btn-secondary">Return</button>
+        </nav>
+    </header>
+
+    <main role="main">
+        <div id="errorBox" style="display: none;" class="alert alert-danger" role="alert"></div>
+        <r-answers>
+            <div class="table-responsive">
+            <table class="table table-active">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col" class="w-75">Answer text</th>
+                    <th scope="col" class="col-2">Correct</th>
+                    <th scope="col" class="text-right">
+                        <div class="btn-group text-right">
+                            <button id="AddAnswerButton" type="button" class="btn btn-secondary">Add Answer</button>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <r-answer>
+                    <tr>
+                        <th scope="row">id</th>
+                        <td >
+                            <input type="text" class="form-control" id="answerText"/>
+                        </td>
+                        <td>
+                            <select class="form-control" id="isCorrect" >
+                                <option>true</option>
+                                <option selected>false</option>
+                            </select>
+                        </td>
+                        <td style="width: min-content">
+                            <button id="removeAnswer" type="button" class="btn btn-secondary">Remove</button>
+                        </td>
+                    </tr>
+                </r-answer>
+                </tbody>
+            </table>
+            </div>
+        </r-answers>
+    </main>
+
+    <footer>
+        Recruiter v0.1
+    </footer>
+</div>
+</body>
+</html>
