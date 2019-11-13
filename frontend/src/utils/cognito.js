@@ -1,4 +1,4 @@
-import './dist/amazon-cognito-identity.js';
+import * as AmazonCognitoIdentity from "amazon-cognito-identity-js";
 
 const poolData = {
     UserPoolId: 'us-east-1_39RRFUwM7',
