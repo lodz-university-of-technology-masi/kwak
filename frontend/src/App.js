@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Test } from './components/pages/Test.js';
 import { Login } from './components/pages/login/LoginPage.js';
-import './test.css';
+import {PanelAdmin} from "./components/pages/adminPanel/PanelAdmin";
 
 function App() {
   return (
@@ -16,9 +16,10 @@ function App() {
 
             <main role="main">
                 <Switch>
-                    <Route exact path="/test" component={Test} />
-                    <Route path="/" component={Login} />
-                </Switch>
+                <Route exact path="/test" component={Test} />
+                <Route path="/" component={PanelAdmin} />
+                <Route path="/" component={Login} />
+            </Switch>
             </main>
 
             <footer>
