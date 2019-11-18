@@ -1,6 +1,5 @@
 import React from 'react';
 import './../../../errors.css'
-import './../../../test.css'
 import { Route, Switch } from 'react-router-dom'
 import {PanelTests} from "./tests/PanelTests";
 import {PanelQuestions} from "./questions/PanelQuestions";

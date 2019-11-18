@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Test } from './components/pages/Test.js';
 import { Login } from './components/pages/login/LoginPage.js';
 import {PanelAdmin} from "./components/pages/adminPanel/PanelAdmin";
+import "./test.css";
 
 function App() {
   return (
