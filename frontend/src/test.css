@@ -63,7 +63,7 @@ footer {
 
 .fade-enter.fade-enter-active {
     opacity: 1;
-    transition: opacity 500ms ease-in;
+    transition: opacity 400ms ease-in;
 }
 
 .fade-leave {
