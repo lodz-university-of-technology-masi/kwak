@@ -4,9 +4,13 @@ import {getTest} from "../../../../utils/api";
 import {ContainerQuestion} from "./ContainerQuestion";
 
 export class PanelQuestions extends React.Component {
-    state = {
-        test: getTest(this.props.location.state.testId)
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            test: getTest(this.props.location.state.testId)
+        };
+    }
 
     removeHandler(index) {
         let newTest = Object.create(this.state.test);
@@ -19,7 +23,8 @@ export class PanelQuestions extends React.Component {
         newTest.questions.push({"title": "", "description": "", "code": "", "type": ""});
         this.setState({test: newTest});
     }
-    returnHandler(){
+
+    returnHandler() {
         this.props.history.push({
             pathname: '/admin',
         });
@@ -36,13 +41,16 @@ export class PanelQuestions extends React.Component {
         newTest.questions[index].type = newQuestionType;
         this.setState({tests: newTest});
     }
-    showAnswersHandler(questionId){
-        let testId=this.props.location.state.testId;
+
+    showAnswersHandler(questionId) {
+        let testId = this.props.location.state.testId;
         this.props.history.push({
             pathname: '/answers',
-            search:'?testId='+testId+"&questionId="+questionId,
-            state: { answers: this.state.test.questions[questionId].answers,
-            testId: testId}
+            search: '?testId=' + testId + "&questionId=" + questionId,
+            state: {
+                answers: this.state.test.questions[questionId].answers,
+                testId: testId
+            }
         });
     }
 

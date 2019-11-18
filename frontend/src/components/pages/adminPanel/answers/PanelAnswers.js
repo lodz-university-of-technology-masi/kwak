@@ -1,11 +1,16 @@
 import React from 'react';
 import {HeaderAnswers} from "./HeaderAnswers";
 import {ContainerAnswer} from "./ContainerAnswer";
+
 export class PanelAnswers extends React.Component {
-    state = {
-        answers: this.props.location.state.answers
-    };
-    testId=this.props.location.state.testId;
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            answers: this.props.location.state.answers,
+            testId: this.props.location.state.testId
+        };
+    }
 
     removeHandler(index) {
         let newAnswers = [...this.state.answers];
@@ -18,12 +23,13 @@ export class PanelAnswers extends React.Component {
         newAnswers.push({"content": "", "isCorrect": false});
         this.setState({answers: newAnswers});
     }
-    returnHandler(){
+
+    returnHandler() {
         this.props.history.push({
             pathname: '/questions',
-            search:'?testId='+this.testId,
-            state:{
-                testId:this.testId
+            search: '?testId=' + this.state.testId,
+            state: {
+                testId: this.state.testId
             }
         });
     }
@@ -46,14 +52,14 @@ export class PanelAnswers extends React.Component {
                 <table className="table table-striped">
                     <thead>
                     <HeaderAnswers addHandler={this.addHandler.bind(this)}
-                                     returnHandler={this.returnHandler.bind(this)}/>
+                                   returnHandler={this.returnHandler.bind(this)}/>
                     </thead>
                     <tbody>
                     {this.state.answers.map((item, index) => {
                         return <ContainerAnswer key={index} id={index} entry={item}
-                                                  removeHandler={this.removeHandler.bind(this)}
-                                                  changeAnswerTextHandler={this.changeAnswerTextHandler.bind(this)}
-                                                  changeAnswerIsCorrectHandler={this.changeAnswerIsCorrectHandler.bind(this)}/>
+                                                removeHandler={this.removeHandler.bind(this)}
+                                                changeAnswerTextHandler={this.changeAnswerTextHandler.bind(this)}
+                                                changeAnswerIsCorrectHandler={this.changeAnswerIsCorrectHandler.bind(this)}/>
                     })}
                     </tbody>
                 </table>

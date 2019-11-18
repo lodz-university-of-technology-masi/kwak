@@ -5,10 +5,14 @@ import {HeaderTests} from ".././tests/HeaderTests";
 import {getAllTests} from "../../../../utils/api";
 
 export class PanelTests extends React.Component {
+    constructor(props) {
+        super(props);
 
-        state={
+        this.state = {
             tests: [],
         };
+    }
+
     componentDidMount() {
         this.setState({tests: getAllTests()});
     }
@@ -19,21 +23,23 @@ export class PanelTests extends React.Component {
         this.setState({tests: newTests});
     }
 
-    addHandler(){
+    addHandler() {
         let newTests = [...this.state.tests];
-        newTests.push({"id":this.state.tests.length.toString(),"description":"","language":"PL"});
+        newTests.push({"id": this.state.tests.length.toString(), "description": "", "language": "PL"});
         this.setState({tests: newTests});
     }
-    editHandler(index){
+
+    editHandler(index) {
         this.props.history.push({
             pathname: '/questions',
-            search:'?testId='+index,
-            state: { testId: index }
+            search: '?testId=' + index,
+            state: {testId: index}
         });
     }
-    changeDescriptionHandler(index, newDescription){
+
+    changeDescriptionHandler(index, newDescription) {
         let newTests = [...this.state.tests];
-        newTests[index].description=newDescription;
+        newTests[index].description = newDescription;
         this.setState({tests: newTests});
     }
 
@@ -41,17 +47,16 @@ export class PanelTests extends React.Component {
         return (
             <div className="table-responsive">
                 <table className="table table-striped">
-
                     <thead>
-                    <HeaderTests addHandler={this.addHandler.bind(this)}/>
+                        <HeaderTests addHandler={this.addHandler.bind(this)}/>
                     </thead>
                     <tbody>
-                    {this.state.tests.map((item, index) => {
-                        return <ContainerTest key={index} id={index} entry={item}
-                                              removeHandler={this.removeHandler.bind(this)}
-                                              changeHandler={this.changeDescriptionHandler.bind(this)}
-                                              editHandler={this.editHandler.bind(this)}/>
-                    })}
+                        {this.state.tests.map((item, index) => {
+                            return <ContainerTest key={index} id={index} entry={item}
+                                                  removeHandler={this.removeHandler.bind(this)}
+                                                  changeHandler={this.changeDescriptionHandler.bind(this)}
+                                                  editHandler={this.editHandler.bind(this)}/>
+                        })}
                     </tbody>
                 </table>
             </div>
