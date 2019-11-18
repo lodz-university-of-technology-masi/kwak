@@ -4,7 +4,7 @@ import { QuestionCounter } from '../QuestionCounter.js'
 import { AnswerList } from "../AnswerList.js";
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { getTest } from "../../utils/api.js";
-import {getAnswers,saveAnswers} from "../../utils/storage.js";
+import { getAnswers, saveAnswers } from "../../utils/storage.js";
 
 export class Test extends React.Component {
     constructor(props) {
@@ -12,7 +12,7 @@ export class Test extends React.Component {
         this.state = {
             currentQuestion: 0,
             test: null,
-            responses: null,
+            responses: [],
         };
 
         this.prevQuestion = this.prevQuestion.bind(this);
@@ -22,7 +22,12 @@ export class Test extends React.Component {
 
     // Load test data
     componentDidMount() {
-        this.setState({test: getTest(0)});
+        const test = getTest(0);
+
+        this.setState({
+            test: test,
+            responses: getAnswers(test.id, this.state.currentQuestion)
+        });
     }
 
     changeQuestion(idx) {

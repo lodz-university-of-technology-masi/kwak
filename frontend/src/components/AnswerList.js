@@ -11,6 +11,11 @@ export class AnswerList extends React.Component {
         this.onSelectionChange = this.onSelectionChange.bind(this);
     }
 
+    static getDerivedStateFromProps(props, state) {
+        state["selected"] = props.responses;
+        return state;
+    }
+
     onSelectionChange(id, value) {
         let newSelected;
 
