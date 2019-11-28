@@ -8,15 +8,14 @@ export function getTest(testId) {
                 "title": "title",
                 "description": "description",
                 "code": "code",
-                "type": "O",
+                "type": "Z",
                 "answers": [{"content": "answer 1", "isCorrect":false}, {"content": "answer 2","isCorrect":true}, {"content": "answer 3","isCorrect":false}]
             },
             {
                 "title": "ADAM",
                 "description": "1234",
                 "code": "bbb",
-                "type": "Z",
-                "answers": [{"content": "1", "isCorrect":false}, {"content": "2", "isCorrect":true}]
+                "type": "O"
             },
             {
                 "title": "ADAxd",
