@@ -95,6 +95,32 @@ Resources:
             RestApiId: !Ref KwakApi
             Path: /tests/{id}
             Method: delete
+  GetCandidatesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Policies:
+        - PolicyName: GiveAccessToCognito
+          PolicyDocument:
+            Statement:
+              - Effect: "Allow"
+                Action: [
+                  "cognito-idp:AdminInitiateAuth",
+                  "cognito-idp:DescribeUserPool",
+                  "cognito-idp:DescribeUserPoolClient",
+                  "cognito-idp:ListUserPoolClients",
+                  "cognito-idp:ListUserPools"
+                ]
+      CodeUri: RecruitmentAPI
+      Handler: recruitmentapi.endpoints.candidates.GetCandidates::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Events:
+        GetTests:
+          Type: Api
+          Properties:
+            RestApiId: !Ref KwakApi
+            Path: /candidates
+            Method: get
 
 Outputs:
   Api:
