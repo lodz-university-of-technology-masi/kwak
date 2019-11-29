@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../../../errors.css'
 import {ContainerTest} from ".././tests/ContainerTest";
 import {HeaderTests} from ".././tests/HeaderTests";
 import {getAllTests} from "../../../../utils/api";
