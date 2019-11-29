@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Switch, Link} from "react-router-dom";
-import {PanelTests} from "./tests/PanelTests";
+import PanelTests from "./tests/PanelTests";
 
 
 export default function AdminHome(props) {

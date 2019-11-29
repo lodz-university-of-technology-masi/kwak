@@ -1,64 +1,77 @@
 import React from 'react';
-import {ContainerTest} from ".././tests/ContainerTest";
-import {HeaderTests} from ".././tests/HeaderTests";
-import {getAllTests} from "../../../../utils/api";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useRouteMatch,
+    useParams,
+    withRouter
+} from "react-router-dom";
 
-export class PanelTests extends React.Component {
+import {ContainerTest} from ".././tests/ContainerTest";
+import HeaderTests from ".././tests/HeaderTests";
+import {getAllTests} from "../../../../utils/api";
+import AddTest from "./AddTest";
+
+class PanelTests extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             tests: [],
         };
+
+        this.removeHandler = this.removeHandler.bind(this);
+        this.editHandler = this.editHandler.bind(this);
+        this.addHandler = this.addHandler.bind(this);
     }
 
     componentDidMount() {
         this.setState({tests: getAllTests()});
     }
 
-    removeHandler(index) {
-        let newTests = [...this.state.tests];
-        newTests.splice(index, 1);
-        this.setState({tests: newTests});
-    }
-
-    addHandler() {
-        let newTests = [...this.state.tests];
-        newTests.push({"id": this.state.tests.length.toString(), "description": "", "language": "PL"});
-        this.setState({tests: newTests});
-    }
-
-    editHandler(index) {
-        this.props.history.push({
-            pathname: '/questions',
-            search: '?testId=' + index,
-            state: {testId: index}
+    removeHandler(testId) {
+        const {tests} = this.state;
+        this.setState({
+            tests: tests.filter(test => test.id !== testId)
         });
     }
 
-    changeDescriptionHandler(index, newDescription) {
-        let newTests = [...this.state.tests];
-        newTests[index].description = newDescription;
-        this.setState({tests: newTests});
+    addHandler() {
+
+    }
+
+    editHandler(testId) {
+
     }
 
     render() {
+        const {match} = this.props;
         return (
-            <div className="table-responsive">
-                <table className="table table-striped">
-                    <thead>
-                        <HeaderTests addHandler={this.addHandler.bind(this)}/>
-                    </thead>
-                    <tbody>
-                        {this.state.tests.map((item, index) => {
-                            return <ContainerTest key={index} id={index} entry={item}
-                                                  removeHandler={this.removeHandler.bind(this)}
-                                                  changeHandler={this.changeDescriptionHandler.bind(this)}
-                                                  editHandler={this.editHandler.bind(this)}/>
-                        })}
-                    </tbody>
-                </table>
-            </div>
+            <Switch>
+                <Route path={`${match.path}/add`}>
+                    <AddTest />
+                </Route>
+                <Route path={match.path}>
+                    <div className="table-responsive">
+                        <table className="table table-striped">
+                            <thead>
+                            <HeaderTests addHandler={this.addHandler.bind(this)}/>
+                            </thead>
+                            <tbody>
+                            {this.state.tests.map((test, index) => {
+                                return <ContainerTest key={index} test={test}
+                                                      removeHandler={this.removeHandler}
+                                                      editHandler={this.editHandler}/>
+                            })}
+                            </tbody>
+                        </table>
+                    </div>
+                </Route>
+            </Switch>
+
         )
     }
 }
+export default withRouter(PanelTests);

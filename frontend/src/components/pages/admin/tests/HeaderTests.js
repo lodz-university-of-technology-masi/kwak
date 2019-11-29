@@ -1,15 +1,27 @@
-import React from 'react';
+import React from "react";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useRouteMatch,
+    useParams,
+    withRouter
+} from "react-router-dom";
 
-export class HeaderTests extends React.Component {
+class HeaderTests extends React.Component {
     render() {
-        return(
+        const {match} = this.props;
+        return (
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Description</th>
                 <th scope="col" className="text-right">
-                    <button type="button" className="btn btn-secondary" onClick={()=>this.props.addHandler()}>Add test</button>
+                    <Link to={`${match.url}/add`}><button className="btn btn-secondary">Add test</button></Link>
                 </th>
             </tr>
         )
     }
 }
+
+export default withRouter(HeaderTests);
