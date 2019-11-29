@@ -48,6 +48,7 @@ public class GatewayResponse<Response> {
     private void setHeaders() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
+        headers.put("Access-Control-Allow-Origin", "*");
         this.headers = Collections.unmodifiableMap(new HashMap<>(headers));
     }
 
