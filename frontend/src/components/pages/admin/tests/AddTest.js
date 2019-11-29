@@ -6,7 +6,7 @@ const AddTest = () => (
     <div>
         <h1>Create Test</h1>
         <Formik
-            initialValues={{title: 'Title', lang: 'PL', description: 'Desc', questions: []}}
+            initialValues={{title: 'Title', lang: 'PL',  questions: []}}
             onSubmit={async (values) => {
                 const response = await API.post('kwakApi', '/tests', {body: values})
                 console.log(response);
@@ -19,8 +19,6 @@ const AddTest = () => (
                         <Field className="form-control" name="title"/>
                         <label htmlFor="lang">Lang</label>
                         <Field className="form-control" name="lang"/>
-                        <label htmlFor="description">Description</label>
-                        <Field className="form-control" name="description"/>
                     </div>
                     <h2>Question List</h2>
                     <FieldArray
