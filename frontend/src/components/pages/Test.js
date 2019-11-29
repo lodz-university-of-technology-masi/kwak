@@ -5,6 +5,7 @@ import { AnswerList } from "../AnswerList.js";
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { getTest } from "../../utils/api.js";
 import { getAnswers, saveAnswers } from "../../utils/storage.js";
+import {OpenAnswer} from "../OpenAnswer";
 
 export class Test extends React.Component {
     constructor(props) {
@@ -42,6 +43,9 @@ export class Test extends React.Component {
     }
 
     responseChanged(responses) {
+        this.setState({
+            responses: responses
+        });
         saveAnswers(this.state.test.id, this.state.currentQuestion, responses);
     }
 
@@ -57,6 +61,8 @@ export class Test extends React.Component {
 
         const isFirstQuestion = this.state.currentQuestion === 0;
         const isLastQuestion = this.state.test && this.state.currentQuestion === this.state.test.questions.length - 1;
+
+        const isOpenQuestion = this.state.test && this.state.test.questions[this.state.currentQuestion].type === "O";
 
         return (
             <ReactCSSTransitionGroup
@@ -78,10 +84,16 @@ export class Test extends React.Component {
                             total={this.state.test ? this.state.test.questions.length : 0}/>
                     </div>
 
-                    <AnswerList
-                        entries={question.answers || []}
-                        responses={this.state.responses || []}
-                        onUpdate={(responses) => this.responseChanged(responses)}/>
+                    { isOpenQuestion ?
+                        <OpenAnswer
+                            content={this.state.responses || ""}
+                            onUpdate={(content) => this.responseChanged(content)}/>
+                            :
+                        <AnswerList
+                            entries={question.answers || []}
+                            responses={this.state.responses || []}
+                            onUpdate={(responses) => this.responseChanged(responses)}/>
+                    }
 
                     <div className="btn-group w-100" role="group">
                         <button onClick={this.prevQuestion} disabled={isFirstQuestion} className="btn btn-primary btn btn-block mt-2" type="button">
