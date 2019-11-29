@@ -35,6 +35,23 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
+  CandidatesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: CandidateTests
+      AttributeDefinitions:
+        - AttributeName: CandidateId
+          AttributeType: S
+        - AttributeName: TestId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: CandidateId
+          KeyType: HASH
+        - AttributeName: TestId
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
   GetTestsFunction:
     Type: AWS::Serverless::Function
     Properties:
