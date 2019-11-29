@@ -99,17 +99,13 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Policies:
-        - PolicyName: GiveAccessToCognito
-          PolicyDocument:
-            Statement:
-              - Effect: "Allow"
-                Action: [
-                  "cognito-idp:AdminInitiateAuth",
-                  "cognito-idp:DescribeUserPool",
-                  "cognito-idp:DescribeUserPoolClient",
-                  "cognito-idp:ListUserPoolClients",
-                  "cognito-idp:ListUserPools"
-                ]
+      - Statement:
+          - Sid: AllowCognito
+            Effect: "Allow"
+            Action: [
+              "cognito-idp:*"
+            ]
+            Resource: '*'
       CodeUri: RecruitmentAPI
       Handler: recruitmentapi.endpoints.candidates.GetCandidates::handleRequest
       Runtime: java8

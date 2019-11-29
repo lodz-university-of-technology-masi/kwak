@@ -1,6 +1,7 @@
 import React from 'react';
 import {Route, Switch, Link} from "react-router-dom";
-import PanelTests from "./tests/TestsPanel";
+import TestsPanel from "./tests/TestsPanel";
+import CandidatesPanel from "./candidates/CandidatesPanel";
 
 
 export default function AdminHome(props) {
@@ -22,12 +23,18 @@ export default function AdminHome(props) {
                         <li className="nav-item">
                             <Link className="nav-link" to="/tests">Tests</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/candidates">Candidates</Link>
+                        </li>
                     </ul>
                 </div>
             </nav>
             <Switch>
                 <Route path="/tests">
-                    <PanelTests/>
+                    <TestsPanel/>
+                </Route>
+                <Route path="/candidates">
+                    <CandidatesPanel/>
                 </Route>
             </Switch>
         </div>
