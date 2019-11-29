@@ -2,9 +2,10 @@ import React from 'react';
 import {
     Switch,
     Route,
-    withRouter
+    withRouter, Link
 } from "react-router-dom";
 import {API} from "aws-amplify";
+import AssignTest from "./AssignTest";
 
 class CandidatesPanel extends React.Component {
     constructor(props) {
@@ -19,16 +20,31 @@ class CandidatesPanel extends React.Component {
     async componentDidMount() {
         this.setState({
             candidates: await API.get('kwakApi', '/candidates', {}),
+            tests: await API.get('kwakApi', '/tests', {}),
             loading: false
         });
     }
 
+    onTestAssigned = (candidate, test) => {
+        API.post('kwakApi', `/candidates/${candidate.id}/tests`, {
+           body: { testId: test.id }
+        }).then((response) => {
+            console.log(response);
+        })
+    };
+
     render() {
         const {match} = this.props;
-        const {candidates, loading} = this.state;
+        const {tests, candidates, loading} = this.state;
         return (
             <Switch>
+                <Route path={`${match.path}/assign`}>
+                    <AssignTest onTestAssigned={this.onTestAssigned} tests={tests} candidates={candidates} />
+                </Route>
                 <Route exact path={match.path}>
+                    <Link to={`${match.url}/assign`}>
+                        <button className="btn btn-secondary">Assign test</button>
+                    </Link>
                     {loading && <div className="d-flex justify-content-center">
                         <div className="spinner-border" role="status">
                             <span className="sr-only">Loading...</span>
