@@ -30,10 +30,8 @@ public class AddCandidateTest implements RequestHandler<GatewayRequest, GatewayR
             return new GatewayResponse<>(null, 400);
         }
 
-        Test test = new Test();
-        test.setId(candidateTest.getTestId());
-        List<Test> tests = mapper.query(Test.class, new DynamoDBQueryExpression<Test>().withHashKeyValues(test));
-        if (tests.size() == 0) {
+        Test test = mapper.load(Test.class, candidateTest.getTestId());
+        if (test == null) {
             return new GatewayResponse<>(null, 400);
         }
 
