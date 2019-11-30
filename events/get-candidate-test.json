@@ -1,8 +1,8 @@
 {
-  "body": "{\"testId\": \"5d0d44a5-7666-4ab5-b37d-4a45976f0885\"}",
+  "body": "",
   "resource": "/{proxy+}",
   "path": "/candidates/accdbd86-d529-4184-b7f4-3b2357b521a7/tests",
-  "httpMethod": "POST",
+  "httpMethod": "GET",
   "isBase64Encoded": true,
   "queryStringParameters": {
     "foo": "bar"
