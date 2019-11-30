@@ -38,6 +38,18 @@ public class Candidate {
         return surname;
     }
 
+    public static String getSub(UserType userType) {
+        AttributeType attribute = userType.getAttributes().stream()
+                .filter(attributeType -> attributeType.getName().equals("sub"))
+                .findAny()
+                .orElse(null);
+        if (attribute != null) {
+            return attribute.getValue();
+        }
+
+        return null;
+    }
+
     public static Candidate fromUserType(UserType userType) {
         String email = "", name = "", surname = "", id = "";
         for (AttributeType attribute : userType.getAttributes()) {
