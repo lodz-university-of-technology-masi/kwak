@@ -8,7 +8,7 @@ export default function AdminHome(props) {
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <a className="navbar-brand" href="#">Recruiter</a>
+                <a className="navbar-brand" href="/">Recruiter</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
