@@ -14,6 +14,7 @@ public class GetTest implements RequestHandler<GatewayRequest, GatewayResponse<T
 
     @Override
     public GatewayResponse<Test> handleRequest(GatewayRequest request, Context context) {
+        // TO DO: Verify permission???????
         String id = request.getPathParameters().get("id");
         Test test = mapper.load(Test.class, id);
         if (test == null) {

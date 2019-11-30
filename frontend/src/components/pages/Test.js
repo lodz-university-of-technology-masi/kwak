@@ -6,8 +6,10 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { getTest } from "../../utils/api.js";
 import { getAnswers, saveAnswers } from "../../utils/storage.js";
 import {OpenAnswer} from "../OpenAnswer";
+import {API} from 'aws-amplify';
 
 export class Test extends React.Component {
+    _isMounted = false;
     constructor(props) {
         super(props);
         this.state = {
@@ -22,13 +24,20 @@ export class Test extends React.Component {
     }
 
     // Load test data
-    componentDidMount() {
-        const test = getTest(0);
+    async componentDidMount() {
+        this._isMounted = true;
+        const {match: {params: {testId}}} = this.props;
+        const test = await API.get('kwakApi', `/tests/${testId}`, {});
+        if (this._isMounted) {
+            this.setState({
+                test: test,
+                responses: getAnswers(test.id, this.state.currentQuestion)
+            });
+        }
+    }
 
-        this.setState({
-            test: test,
-            responses: getAnswers(test.id, this.state.currentQuestion)
-        });
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     changeQuestion(idx) {
