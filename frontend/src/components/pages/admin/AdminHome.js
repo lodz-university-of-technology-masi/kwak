@@ -7,6 +7,10 @@ import {
 
 import {dataProvider} from "../../../utils/APIDataProvider";
 
+const TestTitle = ({ record }) => {
+    return <span>{record ? `${record.title}` : ''}</span>;
+};
+
 export const TestList = props => (
     <List {...props}>
         <Datagrid rowClick="edit">
@@ -17,7 +21,7 @@ export const TestList = props => (
 );
 
 export const TestEdit = props => (
-    <Edit {...props}>
+    <Edit {...props} title={<TestTitle/>}>
         <SimpleForm>
             <TextInput disabled source="id" />
             <TextInput source="title" />
@@ -65,6 +69,10 @@ export const TestCreate = props => (
     </Create>
 );
 
+const CandidateTitle = ({ record }) => {
+    return <span>{record ? `${record.name} ${record.surname}` : ''}</span>;
+};
+
 export const CandidateList = props => (
     <List {...props}>
         <Datagrid rowClick="edit">
@@ -77,7 +85,7 @@ export const CandidateList = props => (
 );
 
 export const CandidateEdit = props => (
-    <Edit {...props}>
+    <Edit {...props} title={<CandidateTitle/>}>
         <SimpleForm>
             <TextInput disabled source="id" />
             <TextInput disabled source="login" />
