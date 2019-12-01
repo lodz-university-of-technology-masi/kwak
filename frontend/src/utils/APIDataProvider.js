@@ -16,7 +16,14 @@ export const dataProvider = {
         }
     },
 
-    getMany: (resource, params) => {
+    getMany: async (resource, params) => {
+        const objects = params.ids.map(async function(x) {
+            return await API.get('kwakApi', `/${resource}/${x}`, {});
+        });
+
+        return {
+            data: objects
+        };
     },
 
     getManyReference: (resource, params) => {
@@ -41,8 +48,7 @@ export const dataProvider = {
         await API.del('kwakApi', `/${resource}/${params.id}`, {});
         return {
             data: {
-                id: params.id,
-                previousData: params.data
+                id: params.id
             }
         }
     },

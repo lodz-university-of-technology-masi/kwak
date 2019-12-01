@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     Admin, Resource, List, Datagrid,
-    TextField, EmailField, SelectInput, TextInput, RadioButtonGroupInput,
+    TextField, EmailField, SelectInput, TextInput, RadioButtonGroupInput, ReferenceField, ReferenceInput,
     Edit, Create, SimpleForm, ArrayInput, SimpleFormIterator
 } from 'react-admin';
 
@@ -96,11 +96,53 @@ export const CandidateEdit = props => (
     </Edit>
 );
 
+export const CandidateTestList = props => (
+    <List {...props}>
+        <Datagrid rowClick="edit">
+            <ReferenceField source="candidateId" reference="candidates">
+                <TextField source="login"/>
+            </ReferenceField>
+            <ReferenceField source="testId" reference="tests">
+                <TextField source="title"/>
+            </ReferenceField>
+        </Datagrid>
+    </List>
+);
+
+export const CandidateTestEdit = props => (
+    <Edit {...props}>
+        <SimpleForm>
+            <TextInput disabled source="id"/>
+            <ReferenceInput source="candidateId" reference="candidates">
+                <SelectInput optionText="login"/>
+            </ReferenceInput>
+            <ReferenceInput source="testId" reference="tests">
+                <SelectInput optionText="title"/>
+            </ReferenceInput>
+        </SimpleForm>
+    </Edit>
+);
+
+export const CandidateTestCreate = props => (
+    <Create {...props}>
+        <SimpleForm>
+            <ReferenceInput source="candidateId" reference="candidates">
+                <SelectInput optionText="login"/>
+            </ReferenceInput>
+            <ReferenceInput source="testId" reference="tests">
+                <SelectInput optionText="title"/>
+            </ReferenceInput>
+        </SimpleForm>
+    </Create>
+);
+
 export default function AdminHome(props) {
     return (
         <Admin dataProvider={dataProvider}>
             <Resource name="tests" list={TestList} edit={TestEdit} create={TestCreate}/>
             <Resource name="candidates" list={CandidateList} edit={CandidateEdit}/>
+            <Resource name="candidatetests" options={{label: 'Candidate Tests'}} list={CandidateTestList}
+                      edit={CandidateTestEdit} create={CandidateTestCreate}/>
         </Admin>
     )
 }
