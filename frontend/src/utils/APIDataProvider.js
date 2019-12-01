@@ -16,9 +16,11 @@ export const dataProvider = {
         }
     },
 
-    getMany: (resource, params) => {},
+    getMany: (resource, params) => {
+    },
 
-    getManyReference: (resource, params) => {},
+    getManyReference: (resource, params) => {
+    },
 
     create: async (resource, params) => {
         const data = await API.post('kwakApi', `/${resource}`, {body: params.data});
@@ -29,10 +31,11 @@ export const dataProvider = {
 
     update: async (resource, params) =>
         API.put('kwakApi', `/${resource}/${params.id}`, {body: params.data}).then(() => ({
-            data: params.data ,
+            data: params.data,
         })),
 
-    updateMany: (resource, params) => {},
+    updateMany: (resource, params) => {
+    },
 
     delete: async (resource, params) => {
         await API.del('kwakApi', `/${resource}/${params.id}`, {});
