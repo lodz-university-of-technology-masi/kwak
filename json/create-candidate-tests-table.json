@@ -1,12 +1,10 @@
 {
   "TableName": "CandidateTests",
   "KeySchema": [
-    { "AttributeName": "CandidateId", "KeyType": "HASH" },
-    { "AttributeName": "TestId", "KeyType": "RANGE" }
+    { "AttributeName": "Id", "KeyType": "HASH" }
   ],
   "AttributeDefinitions": [
-    { "AttributeName": "CandidateId", "AttributeType": "S" },
-    { "AttributeName": "TestId", "AttributeType": "S" }
+    { "AttributeName": "Id", "AttributeType": "S" }
   ],
   "ProvisionedThroughput": {
     "ReadCapacityUnits": 1,

@@ -40,15 +40,11 @@ Resources:
     Properties:
       TableName: CandidateTests
       AttributeDefinitions:
-        - AttributeName: CandidateId
-          AttributeType: S
-        - AttributeName: TestId
+        - AttributeName: Id
           AttributeType: S
       KeySchema:
-        - AttributeName: CandidateId
+        - AttributeName: Id
           KeyType: HASH
-        - AttributeName: TestId
-          KeyType: RANGE
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1

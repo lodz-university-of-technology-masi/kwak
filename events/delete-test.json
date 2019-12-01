@@ -1,7 +1,7 @@
 {
   "body": "",
   "resource": "/{proxy+}",
-  "path": "/tests/96d27fef-f2d6-4dcc-98af-af1396877b6a",
+  "path": "/tests/8db28e32-1388-4618-b2ec-75eb21f5d1e9",
   "httpMethod": "DELETE",
   "isBase64Encoded": true,
   "queryStringParameters": {
@@ -13,7 +13,7 @@
     ]
   },
   "pathParameters": {
-    "id": "96d27fef-f2d6-4dcc-98af-af1396877b6a"
+    "id": "8db28e32-1388-4618-b2ec-75eb21f5d1e9"
   },
   "stageVariables": {
     "baz": "qux"
