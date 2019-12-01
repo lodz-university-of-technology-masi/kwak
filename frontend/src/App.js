@@ -26,7 +26,7 @@ Amplify.configure({
 export default function App() {
     return (
         <Router>
-            <div className="container d-flex p-3 flex-column">
+            <div style={{width: '100%'}}>
                 <Home/>
             </div>
         </Router>

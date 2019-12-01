@@ -25,9 +25,13 @@ class Home extends Component {
             return <AdminHome/>;
         }
 
-        return <CandidateHome/>;
+        return (
+            <div className="container d-flex p-3 flex-column">
+                <CandidateHome/>
+            </div>
+        );
     }
 }
 
 
-export default withAuthenticator(Home, true);
+export default withAuthenticator(Home, false);
