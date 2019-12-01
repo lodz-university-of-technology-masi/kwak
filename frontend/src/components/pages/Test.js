@@ -3,7 +3,6 @@ import { Question } from '../Question.js'
 import { QuestionCounter } from '../QuestionCounter.js'
 import { AnswerList } from "../AnswerList.js";
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { getTest } from "../../utils/api.js";
 import { getAnswers, saveAnswers } from "../../utils/storage.js";
 import {OpenAnswer} from "../OpenAnswer";
 import {API} from 'aws-amplify';
