@@ -11,14 +11,15 @@ export class OpenAnswer extends React.Component {
     }
 
     handleChange(e) {
-        this.setState({ [e.target.name] : e.target.value });
+        this.setState({[e.target.name]: e.target.value});
         this.props.onUpdate(e.target.value);
     }
 
     render() {
         return (
             <div className="list-group-item list-group-item-action">
-                <textarea className="form-control" name="content" value={this.state.content} onChange={this.handleChange}/>
+                <textarea className="form-control" name="content" value={this.state.content}
+                          onChange={this.handleChange}/>
             </div>
         );
     }

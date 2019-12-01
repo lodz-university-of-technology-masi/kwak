@@ -22,12 +22,12 @@ export class AnswerList extends React.Component {
         if (value) {
             newSelected = [...this.state.selected, id];
         } else {
-            newSelected = this.state.selected.filter(function(item) {
+            newSelected = this.state.selected.filter(function (item) {
                 return item !== id
             });
         }
 
-        this.setState({ selected: newSelected });
+        this.setState({selected: newSelected});
         this.props.onUpdate(newSelected);
     }
 

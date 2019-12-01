@@ -1,14 +1,15 @@
 import React from 'react';
-import { Question } from '../Question.js'
-import { QuestionCounter } from '../QuestionCounter.js'
-import { AnswerList } from "../AnswerList.js";
+import {Question} from '../Question.js'
+import {QuestionCounter} from '../QuestionCounter.js'
+import {AnswerList} from "../AnswerList.js";
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { getAnswers, saveAnswers } from "../../utils/Storage.js";
+import {getAnswers, saveAnswers} from "../../utils/Storage.js";
 import {OpenAnswer} from "../OpenAnswer";
 import {API} from 'aws-amplify';
 
 export class Test extends React.Component {
     _isMounted = false;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -57,8 +58,13 @@ export class Test extends React.Component {
         saveAnswers(this.state.test.id, this.state.currentQuestion, responses);
     }
 
-    prevQuestion() { this.changeQuestion(this.state.currentQuestion - 1); }
-    nextQuestion() { this.changeQuestion(this.state.currentQuestion + 1); }
+    prevQuestion() {
+        this.changeQuestion(this.state.currentQuestion - 1);
+    }
+
+    nextQuestion() {
+        this.changeQuestion(this.state.currentQuestion + 1);
+    }
 
     render() {
         const question = this.state.test ? this.state.test.questions[this.state.currentQuestion] : {
@@ -92,11 +98,11 @@ export class Test extends React.Component {
                             total={this.state.test ? this.state.test.questions.length : 0}/>
                     </div>
 
-                    { isOpenQuestion ?
+                    {isOpenQuestion ?
                         <OpenAnswer
                             content={this.state.responses || ""}
                             onUpdate={(content) => this.responseChanged(content)}/>
-                            :
+                        :
                         <AnswerList
                             entries={question.answers || []}
                             responses={this.state.responses || []}
@@ -104,11 +110,13 @@ export class Test extends React.Component {
                     }
 
                     <div className="btn-group w-100" role="group">
-                        <button onClick={this.prevQuestion} disabled={isFirstQuestion} className="btn btn-primary btn btn-block mt-2" type="button">
+                        <button onClick={this.prevQuestion} disabled={isFirstQuestion}
+                                className="btn btn-primary btn btn-block mt-2" type="button">
                             Poprzednie pytanie
                         </button>
 
-                        <button onClick={this.nextQuestion} disabled={isLastQuestion} className="btn btn-primary btn btn-block mt-2" type="button">
+                        <button onClick={this.nextQuestion} disabled={isLastQuestion}
+                                className="btn btn-primary btn btn-block mt-2" type="button">
                             Następne pytanie
                         </button>
                     </div>

@@ -22,7 +22,7 @@ export default class CandidateHome extends Component {
         });
 
         const currentSession = await Auth.currentSession();
-        const { sub: candidateId } = currentSession.getAccessToken().decodePayload();
+        const {sub: candidateId} = currentSession.getAccessToken().decodePayload();
         const candidateTests = await API.get('kwakApi', `/candidates/${candidateId}/tests`, {});
         if (this._isMounted) {
             this.setState({
@@ -40,7 +40,7 @@ export default class CandidateHome extends Component {
         const {candidateTests, loading} = this.state;
         return (
             <Switch>
-                <Route path="/tests/:testId" component={Test} />
+                <Route path="/tests/:testId" component={Test}/>
                 <Route path="/">
                     <div>
                         {loading && <div className="d-flex justify-content-center">
@@ -53,7 +53,9 @@ export default class CandidateHome extends Component {
                             {candidateTests.map(candidateTest => (
                                 <li key={candidateTest.testId}>
                                     Test Id: {candidateTest.testId}
-                                    <Link to={`/tests/${candidateTest.testId}`}><button>Solve</button></Link>
+                                    <Link to={`/tests/${candidateTest.testId}`}>
+                                        <button>Solve</button>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
