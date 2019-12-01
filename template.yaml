@@ -171,6 +171,22 @@ Resources:
             RestApiId: !Ref KwakApi
             Path: /candidates/{candidateId}
             Method: get
+  GetAllCandidateTestsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Policies:
+        - AmazonDynamoDBFullAccess
+      CodeUri: RecruitmentAPI
+      Handler: recruitmentapi.endpoints.candidates.tests.GetAllCandidateTests::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Events:
+        GetTests:
+          Type: Api
+          Properties:
+            RestApiId: !Ref KwakApi
+            Path: /candidatetests
+            Method: get
   AddCandidateTestFunction:
     Type: AWS::Serverless::Function
     Properties:

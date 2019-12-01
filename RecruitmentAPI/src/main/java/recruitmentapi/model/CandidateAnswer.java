@@ -5,6 +5,15 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 @DynamoDBDocument
 public class CandidateAnswer {
     private String answer;
+    private boolean isCorrect;
+
+    public boolean isCorrect() {
+        return isCorrect;
+    }
+
+    public void setCorrect(boolean correct) {
+        isCorrect = correct;
+    }
 
     public String getAnswer() {
         return answer;
