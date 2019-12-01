@@ -1,4 +1,4 @@
-package recruitmentapi.endpoints.candidates.tests;
+package recruitmentapi.endpoints.candidatetests;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;

@@ -173,7 +173,7 @@ Resources:
       Policies:
         - AmazonDynamoDBFullAccess
       CodeUri: RecruitmentAPI
-      Handler: recruitmentapi.endpoints.candidates.tests.GetAllCandidateTests::handleRequest
+      Handler: recruitmentapi.endpoints.candidatetests.GetAllCandidateTests::handleRequest
       Runtime: java8
       MemorySize: 512
       Events:
@@ -222,6 +222,51 @@ Resources:
             RestApiId: !Ref KwakApi
             Path: /candidates/{candidateId}/tests
             Method: get
+  AddAdminCandidateTestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Policies: AmazonDynamoDBFullAccess
+      CodeUri: RecruitmentAPI
+      Handler: recruitmentapi.endpoints.candidatetests.AddCandidateTest::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Events:
+        GetTests:
+          Type: Api
+          Properties:
+            RestApiId: !Ref KwakApi
+            Path: /candidatetests
+            Method: post
+  UpdateCandidateTestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Policies: AmazonDynamoDBFullAccess
+      CodeUri: RecruitmentAPI
+      Handler: recruitmentapi.endpoints.candidatetests.UpdateCandidateTest::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Events:
+        GetTests:
+          Type: Api
+          Properties:
+            RestApiId: !Ref KwakApi
+            Path: /candidatetests/{id}
+            Method: put
+  DeleteCandidateTestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Policies: AmazonDynamoDBFullAccess
+      CodeUri: RecruitmentAPI
+      Handler: recruitmentapi.endpoints.candidatetests.DeleteCandidateTest::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Events:
+        GetTests:
+          Type: Api
+          Properties:
+            RestApiId: !Ref KwakApi
+            Path: /candidatetests/{id}
+            Method: delete
 
 Outputs:
   Api:
