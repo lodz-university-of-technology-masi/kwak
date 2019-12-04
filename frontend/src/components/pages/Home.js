@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withAuthenticator} from "aws-amplify-react";
 import {Auth} from 'aws-amplify';
 import AdminHome from "./admin/AdminHome";
-import CandidateHome2 from "./candidate/CandidateHome";
+import CandidateHome from "./candidate/CandidateHome";
 
 class Home extends Component {
     constructor(props) {
@@ -27,7 +27,7 @@ class Home extends Component {
 
         return (
             <div className="container d-flex p-3 flex-column">
-                <CandidateHome2/>
+                <CandidateHome/>
             </div>
         );
     }

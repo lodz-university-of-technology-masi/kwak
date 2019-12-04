@@ -36,10 +36,6 @@ export default class CandidateHome extends Component {
         this._isMounted = false;
     }
 
-    solveHandler() {
-
-    }
-
     render() {
         const {candidateTests, loading} = this.state;
         return (
@@ -74,9 +70,9 @@ export default class CandidateHome extends Component {
                                             <td><input type="text" className="form-control" id="testId" value={candidateTest.testId} disabled/></td>
                                             <td><input type="text" className="form-control" id="result" disabled/></td>
                                             <td className="text-right">
-                                                <button id="solveButton" type="button" className="btn btn-secondary" onClick={this.solveHandler(candidateTest.testId)}>
-                                                    Solve
-                                                </button>
+                                                <Link to={`/tests/${candidateTest.testId}`}>
+                                                    <button id="solveButton" type="button" className="btn btn-secondary">Solve</button>
+                                                </Link>
                                             </td>
                                         </tr>
                                         ))}
