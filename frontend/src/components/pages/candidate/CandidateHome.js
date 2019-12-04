@@ -36,29 +36,58 @@ export default class CandidateHome extends Component {
         this._isMounted = false;
     }
 
+    solveHandler() {
+
+    }
+
     render() {
         const {candidateTests, loading} = this.state;
         return (
             <Switch>
                 <Route path="/tests/:testId" component={Test}/>
                 <Route path="/">
-                    <div>
-                        {loading && <div className="d-flex justify-content-center">
-                            <div className="spinner-border" role="status">
-                                <span className="sr-only">Loading...</span>
+                    <div className="container d-flex p-3 flex-column ">
+                        <header className="mb-3">
+                            <nav className="navbar navbar-light">
+                                <a className="navbar-brand">Recruiter</a>
+                                {loading && <div className="d-flex justify-content-center">
+                                    <div className="spinner-border" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </div>
+                                </div>}
+                            </nav>
+                        </header>
+
+                        <main role="main">
+                            <div className="table-responsive">
+                                <table className="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Result</th>
+                                        <th scope="col" className="text-right"/>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {candidateTests.map(candidateTest => (
+                                        <tr>
+                                            <td><input type="text" className="form-control" id="testId" value={candidateTest.testId} disabled/></td>
+                                            <td><input type="text" className="form-control" id="result" disabled/></td>
+                                            <td className="text-right">
+                                                <button id="solveButton" type="button" className="btn btn-secondary" onClick={this.solveHandler(candidateTest.testId)}>
+                                                    Solve
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>}
-                        <h2>Assigned tests</h2>
-                        <ul>
-                            {candidateTests.map(candidateTest => (
-                                <li key={candidateTest.testId}>
-                                    Test Id: {candidateTest.testId}
-                                    <Link to={`/tests/${candidateTest.testId}`}>
-                                        <button>Solve</button>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
+                        </main>
+
+                        <footer>
+                            Recruiter v0.1
+                        </footer>
                     </div>
                 </Route>
             </Switch>
