@@ -8,10 +8,8 @@ export default class CandidateTestsComponent extends Component {
     }
 
     isFilled(candidateTest) {
-        if (candidateTest.questions.length === this.getTest(candidateTest.testId)) {
-            return true;
-        }
-        return false;
+        return candidateTest.questions.length === this.getTest(candidateTest.testId).questions.length;
+
     };
 
     getResult(candidateTest) {
