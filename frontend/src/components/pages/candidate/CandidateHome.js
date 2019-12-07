@@ -35,6 +35,7 @@ export default class CandidateHome extends Component {
         }
     }
 
+
     componentWillUnmount() {
         this._isMounted = false;
     }
@@ -44,12 +45,13 @@ export default class CandidateHome extends Component {
                 <div className="container d-flex p-3 flex-column ">
                     <header className="mb-3">
                         <nav className="navbar navbar-light">
-                            <span className="navbar-brand">Recruiter</span>
+                            <a href="/" className="navbar-brand">Recruiter</a>
                             {loading && <div className="d-flex justify-content-center">
                                 <div className="spinner-border" role="status">
                                     <span className="sr-only">Loading...</span>
                                 </div>
                             </div>}
+                            <button type="button" className="btn btn-secondary">Logout</button>
                         </nav>
                     </header>
 

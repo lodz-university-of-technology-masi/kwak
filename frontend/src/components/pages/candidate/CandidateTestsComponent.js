@@ -2,24 +2,31 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 
 export default class CandidateTestsComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
 
-    isFilled(candidateTest){
-        if(candidateTest.questions.length!==0){
+    isFilled(candidateTest) {
+        if (candidateTest.questions.length === this.getTest(candidateTest.testId)) {
             return true;
         }
         return false;
     };
-    getResult(candidateTest){
-        if(this.isFilled(candidateTest)) {
+
+    getResult(candidateTest) {
+        if (this.isFilled(candidateTest)) {
             let result = 0;
-            candidateTest.questions.forEach(e => e.isCorrect===true && result++);
+            candidateTest.questions.forEach(e => e.isCorrect === true && result++);
             return result;
         }
         return "-";
     };
-    getTest(testId){
-        return this.props.allTests.filter(test=> test.id===testId)[0];
+
+    getTest(testId) {
+        return this.props.allTests.filter(test => test.id === testId)[0];
     };
+
     render() {
         return (
             <div className="table-responsive">
@@ -34,22 +41,23 @@ export default class CandidateTestsComponent extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.props.candidateTests.map((candidateTest)=> (
+                    {this.props.candidateTests.map((candidateTest) => (
                         <tr>
-                            <td><input type="text" className="form-control" id="testId"
-                                       value={candidateTest.testId}
-                                       disabled/></td>
-                            <td><input type="text" className="form-control" id="testName"
-                                       value={this.getTest(candidateTest.testId).title}
-                                       disabled/></td>
-                            <td><input type="text" className="form-control" id="testName"
-                                       value={this.getTest(candidateTest.testId).lang}
-                                       disabled/></td>
-                            <td><input type="text" className="form-control" id="result" disabled
-                                       value={this.getResult(candidateTest)}/></td>
+                            <td><span id="testId"
+                            >{candidateTest.testId}</span>
+                            </td>
+                            <td><span id="testName">
+                                       {this.getTest(candidateTest.testId).title}
+                            </span></td>
+                            <td><span id="testName">
+                                       {this.getTest(candidateTest.testId).lang}
+                        </span></td>
+                            <td><span id="result">{this.getResult(candidateTest)}</span></td>
                             <td className="text-right">
                                 <Link to={`/tests/${candidateTest.testId}`}>
-                                    <button type="button" className="btn btn-secondary" disabled={this.isFilled(candidateTest)}>Solve</button>
+                                    <button type="button" className="btn btn-secondary"
+                                            disabled={this.isFilled(candidateTest)}>Solve
+                                    </button>
                                 </Link>
                             </td>
                         </tr>

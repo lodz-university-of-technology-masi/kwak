@@ -25,11 +25,7 @@ class Home extends Component {
             return <AdminHome/>;
         }
 
-        return (
-            <div className="container d-flex p-3 flex-column">
-                <CandidateHome/>
-            </div>
-        );
+        return <CandidateHome/>;
     }
 }
 
