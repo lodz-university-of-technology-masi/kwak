@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {API, Auth} from "aws-amplify";
 import {Route, Switch, Link} from "react-router-dom";
 import {Test} from "../Test";
+import CandidateTestsComponent from "./CandidateTestsComponent";
 export default class CandidateHome extends Component {
     _isMounted = false;
 
@@ -40,7 +41,7 @@ export default class CandidateHome extends Component {
                 <div className="container d-flex p-3 flex-column ">
                     <header className="mb-3">
                         <nav className="navbar navbar-light">
-                            <a className="navbar-brand">Recruiter</a>
+                            <span className="navbar-brand">Recruiter</span>
                             {loading && <div className="d-flex justify-content-center">
                                 <div className="spinner-border" role="status">
                                     <span className="sr-only">Loading...</span>
@@ -53,33 +54,8 @@ export default class CandidateHome extends Component {
                         <Switch>
                             <Route path="/tests/:testId" component={Test}/>
                             <Route path="/">
-                                <div className="table-responsive">
-                                    <table className="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Result</th>
-                                            <th scope="col" className="text-right"/>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {candidateTests.map(candidateTest => (
-                                            <tr>
-                                                <td><input type="text" className="form-control" id="testId" value={candidateTest.testId}
-                                                           disabled/></td>
-                                                <td><input type="text" className="form-control" id="result" disabled/></td>
-                                                <td className="text-right">
-                                                    <Link to={`/tests/${candidateTest.testId}`}>
-                                                        <button id="solveButton" type="button" className="btn btn-secondary">Solve</button>
-                                                    </Link>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <CandidateTestsComponent candidateTests={candidateTests}/>
                             </Route>
-
                         </Switch>
                     </main>
 
