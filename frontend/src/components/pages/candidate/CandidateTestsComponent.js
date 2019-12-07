@@ -12,7 +12,7 @@ export default class CandidateTestsComponent extends Component {
     getResult(candidateTest){
         if(this.isFilled(candidateTest)) {
             let result = 0;
-            candidateTest.questions.forEach(e => e.isCorrect.equal(true) && result++);
+            candidateTest.questions.forEach(e => e.isCorrect===true && result++);
             return result;
         }
         return "-";
@@ -20,7 +20,6 @@ export default class CandidateTestsComponent extends Component {
     getTest(testId){
         return this.props.allTests.filter(test=> test.id===testId)[0];
     };
-
     render() {
         return (
             <div className="table-responsive">
@@ -50,7 +49,7 @@ export default class CandidateTestsComponent extends Component {
                                        value={this.getResult(candidateTest)}/></td>
                             <td className="text-right">
                                 <Link to={`/tests/${candidateTest.testId}`}>
-                                    <button id="solveButton" type="button" className="btn btn-secondary">Solve</button>
+                                    <button type="button" className="btn btn-secondary" disabled={this.isFilled(candidateTest)}>Solve</button>
                                 </Link>
                             </td>
                         </tr>
@@ -60,4 +59,5 @@ export default class CandidateTestsComponent extends Component {
             </div>
         );
     }
+
 }
