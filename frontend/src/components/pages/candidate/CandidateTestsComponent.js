@@ -33,7 +33,6 @@ export default class CandidateTestsComponent extends Component {
                 <table className="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col">ID</th>
                         <th scope="col">Title</th>
                         <th scope="col">Language</th>
                         <th scope="col">Result</th>
@@ -43,9 +42,6 @@ export default class CandidateTestsComponent extends Component {
                     <tbody>
                     {this.props.candidateTests.map((candidateTest) => (
                         <tr>
-                            <td><span id="testId"
-                            >{candidateTest.testId}</span>
-                            </td>
                             <td><span id="testName">
                                        {this.getTest(candidateTest.testId).title}
                             </span></td>
