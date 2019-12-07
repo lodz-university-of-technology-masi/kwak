@@ -1,14 +1,27 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
-import {API} from "aws-amplify";
 
 export default class CandidateTestsComponent extends Component {
-    getResult=function(candidateTest){
-        let result=0;
-        candidateTest.questions.forEach(e=> e.isCorrect.equal(true)&&result++);
-    return result;
+
+    isFilled(candidateTest){
+        if(candidateTest.questions.length!==0){
+            return true;
+        }
+        return false;
     };
-    async render() {
+    getResult(candidateTest){
+        if(this.isFilled(candidateTest)) {
+            let result = 0;
+            candidateTest.questions.forEach(e => e.isCorrect.equal(true) && result++);
+            return result;
+        }
+        return "-";
+    };
+    getTest(testId){
+        return this.props.allTests.filter(test=> test.id===testId)[0];
+    };
+
+    render() {
         return (
             <div className="table-responsive">
                 <table className="table table-striped">
@@ -24,13 +37,14 @@ export default class CandidateTestsComponent extends Component {
                     <tbody>
                     {this.props.candidateTests.map((candidateTest)=> (
                         <tr>
-                            <td><input type="text" className="form-control" id="testId" value={candidateTest.testId}
+                            <td><input type="text" className="form-control" id="testId"
+                                       value={candidateTest.testId}
                                        disabled/></td>
                             <td><input type="text" className="form-control" id="testName"
-                                       value={API.get('kwakApi', `/tests/${candidateTest.testId}`, {}).title}
+                                       value={this.getTest(candidateTest.testId).title}
                                        disabled/></td>
                             <td><input type="text" className="form-control" id="testName"
-                                       value={API.get('kwakApi', `/tests/${candidateTest.testId}`, {}).lang}
+                                       value={this.getTest(candidateTest.testId).lang}
                                        disabled/></td>
                             <td><input type="text" className="form-control" id="result" disabled
                                        value={this.getResult(candidateTest)}/></td>
@@ -45,6 +59,5 @@ export default class CandidateTestsComponent extends Component {
                 </table>
             </div>
         );
-        return 1;
     }
 }
