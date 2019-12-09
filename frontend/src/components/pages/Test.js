@@ -6,6 +6,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {getAnswers, saveAnswers} from "../../utils/Storage.js";
 import {OpenAnswer} from "../OpenAnswer";
 import {API} from 'aws-amplify';
+import {NumericAnswer} from "../NumericAnswer";
 
 export class Test extends React.Component {
     _isMounted = false;
@@ -21,6 +22,7 @@ export class Test extends React.Component {
         this.prevQuestion = this.prevQuestion.bind(this);
         this.nextQuestion = this.nextQuestion.bind(this);
         this.responseChanged = this.responseChanged.bind(this);
+        this.renderQuestion = this.renderQuestion.bind(this);
     }
 
     // Load test data
@@ -76,8 +78,6 @@ export class Test extends React.Component {
         const isFirstQuestion = this.state.currentQuestion === 0;
         const isLastQuestion = this.state.test && this.state.currentQuestion === this.state.test.questions.length - 1;
 
-        const isOpenQuestion = this.state.test && this.state.test.questions[this.state.currentQuestion].type === "O";
-
         return (
             <ReactCSSTransitionGroup
                 transitionName="fade"
@@ -98,16 +98,7 @@ export class Test extends React.Component {
                             total={this.state.test ? this.state.test.questions.length : 0}/>
                     </div>
 
-                    {isOpenQuestion ?
-                        <OpenAnswer
-                            content={this.state.responses || ""}
-                            onUpdate={(content) => this.responseChanged(content)}/>
-                        :
-                        <AnswerList
-                            entries={question.answers || []}
-                            responses={this.state.responses || []}
-                            onUpdate={(responses) => this.responseChanged(responses)}/>
-                    }
+                    {this.renderQuestion()}
 
                     <div className="btn-group w-100" role="group">
                         <button onClick={this.prevQuestion} disabled={isFirstQuestion}
@@ -123,5 +114,32 @@ export class Test extends React.Component {
                 </div>
             </ReactCSSTransitionGroup>
         )
+    }
+
+    renderQuestion() {
+        if (this.state.test) {
+            const question = this.state.test.questions[this.state.currentQuestion];
+            switch (question.type) {
+                case 'Z':
+                    return (
+                        <AnswerList
+                            entries={question.answers || []}
+                            responses={this.state.responses || []}
+                            onUpdate={(responses) => this.responseChanged(responses)}/>
+                    );
+                case 'O':
+                    return (
+                        <OpenAnswer
+                            content={this.state.responses || ""}
+                            onUpdate={(content) => this.responseChanged(content)}/>
+                    );
+                case 'L':
+                    return (
+                        <NumericAnswer
+                            content={this.state.responses || ""}
+                            onUpdate={(content) => this.responseChanged(content)}/>
+                    );
+            }
+        }
     }
 }

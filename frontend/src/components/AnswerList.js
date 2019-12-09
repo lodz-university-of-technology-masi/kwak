@@ -18,6 +18,7 @@ export class AnswerList extends React.Component {
 
     onSelectionChange(id, value) {
         let newSelected;
+        console.log(this.state.selected);
 
         if (value) {
             newSelected = [...this.state.selected, id];
