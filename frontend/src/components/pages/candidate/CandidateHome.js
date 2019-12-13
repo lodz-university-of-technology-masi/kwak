@@ -35,9 +35,7 @@ export default class CandidateHome extends Component {
         }
     }
     logOut(){
-        Auth.signOut({ global: true })
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
+       Auth.signOut({ global: true }).then();
     }
 
 
