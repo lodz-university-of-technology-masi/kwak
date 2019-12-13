@@ -38,15 +38,15 @@ export default class CandidateTestsComponent extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.props.candidateTests.map((candidateTest) => (
-                        <tr>
-                            <td><span id="testName">
+                    {this.props.candidateTests.map((candidateTest, key) => (
+                        <tr key={key}>
+                            <td><span>
                                        {this.getTest(candidateTest.testId).title}
                             </span></td>
-                            <td><span id="testName">
+                            <td><span>
                                        {this.getTest(candidateTest.testId).lang}
                         </span></td>
-                            <td><span id="result">{this.getResult(candidateTest)}</span></td>
+                            <td><span>{this.getResult(candidateTest)}</span></td>
                             <td className="text-right">
                                 <Link to={`/tests/${candidateTest.testId}`}>
                                     <button type="button" className="btn btn-secondary"

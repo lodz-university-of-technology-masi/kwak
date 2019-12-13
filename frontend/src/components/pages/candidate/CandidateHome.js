@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {API, Auth} from "aws-amplify";
-import {Route, Switch, Link} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import {Test} from "../Test";
 import CandidateTestsComponent from "./CandidateTestsComponent";
 export default class CandidateHome extends Component {
@@ -34,6 +34,11 @@ export default class CandidateHome extends Component {
             });
         }
     }
+    logOut(){
+        Auth.signOut({ global: true })
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
+    }
 
 
     componentWillUnmount() {
@@ -51,7 +56,7 @@ export default class CandidateHome extends Component {
                                     <span className="sr-only">Loading...</span>
                                 </div>
                             </div>}
-                            <button type="button" className="btn btn-secondary">Logout</button>
+                            <button type="button" className="btn btn-secondary" onClick={this.logOut}>Logout</button>
                         </nav>
                     </header>
 
