@@ -2,7 +2,7 @@ import React from 'react';
 import {
     Admin, Resource, List, Datagrid,
     TextField, EmailField, SelectInput, TextInput, RadioButtonGroupInput, ReferenceField, ReferenceInput,
-    Edit, Create, SimpleForm, ArrayInput, SimpleFormIterator
+    Edit, Create, SimpleForm, ArrayInput, SimpleFormIterator, FormDataConsumer
 } from 'react-admin';
 
 import {dataProvider} from "../../../utils/APIDataProvider";
@@ -34,11 +34,23 @@ export const TestEdit = props => (
                     <TextInput source="title" label="Title"/>
                     <TextInput source="description" multiline label="Description"/>
                     <TextInput source="code" multiline label="Code"/>
-                    <RadioButtonGroupInput source="type" label="Type" choices={[
+                    <RadioButtonGroupInput source="type" label="Type" disabled choices={[
                         {id: 'O', name: 'Open'},
                         {id: 'Z', name: 'Closed'},
                         {id: 'L', name: 'Numeric'}
                     ]}/>
+
+                    <FormDataConsumer>
+                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.type === 'Z' ? (
+                            <ArrayInput source={getSource('answers')} label="Answers">
+                                <SimpleFormIterator>
+                                    <TextInput source="content" multiline label="Content"/>
+                                    <TextInput source="code" multiline label="Code"/>
+                                </SimpleFormIterator>
+                            </ArrayInput>
+                        ) : null
+                        }
+                    </FormDataConsumer>
                 </SimpleFormIterator>
             </ArrayInput>
         </SimpleForm>
@@ -63,6 +75,18 @@ export const TestCreate = props => (
                         {id: 'Z', name: 'Closed'},
                         {id: 'L', name: 'Numeric'}
                     ]}/>
+
+                    <FormDataConsumer>
+                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.type === 'Z' ? (
+                            <ArrayInput source={getSource('answers')} label="Answers">
+                                <SimpleFormIterator>
+                                    <TextInput source="content" multiline label="Content"/>
+                                    <TextInput source="code" multiline label="Code"/>
+                                </SimpleFormIterator>
+                            </ArrayInput>
+                        ) : null
+                        }
+                    </FormDataConsumer>
                 </SimpleFormIterator>
             </ArrayInput>
         </SimpleForm>
