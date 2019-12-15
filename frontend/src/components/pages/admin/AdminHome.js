@@ -6,6 +6,7 @@ import {
 } from 'react-admin';
 
 import {dataProvider} from "../../../utils/APIDataProvider";
+import {authProvider} from "../../../utils/AuthProvider";
 
 const TestTitle = ({record}) => {
     return <span>{record ? `${record.title}` : ''}</span>;
@@ -162,7 +163,7 @@ export const CandidateTestCreate = props => (
 
 export default function AdminHome(props) {
     return (
-        <Admin dataProvider={dataProvider}>
+        <Admin dataProvider={dataProvider} authProvider={authProvider}>
             <Resource name="tests" list={TestList} edit={TestEdit} create={TestCreate}/>
             <Resource name="candidates" list={CandidateList} edit={CandidateEdit}/>
             <Resource name="candidatetests" options={{label: 'Candidate Tests'}} list={CandidateTestList}
