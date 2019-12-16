@@ -109,18 +109,6 @@ export const CandidateList = props => (
     </List>
 );
 
-export const CandidateEdit = props => (
-    <Edit {...props} title={<CandidateTitle/>}>
-        <SimpleForm>
-            <TextInput disabled source="id"/>
-            <TextInput disabled source="login"/>
-            <TextInput disabled source="email"/>
-            <TextInput source="name"/>
-            <TextInput source="surname"/>
-        </SimpleForm>
-    </Edit>
-);
-
 export const CandidateTestList = props => (
     <List {...props}>
         <Datagrid rowClick="edit">
@@ -165,7 +153,7 @@ export default function AdminHome(props) {
     return (
         <Admin dataProvider={dataProvider} authProvider={authProvider}>
             <Resource name="tests" list={TestList} edit={TestEdit} create={TestCreate}/>
-            <Resource name="candidates" list={CandidateList} edit={CandidateEdit}/>
+            <Resource name="candidates" list={CandidateList}/>
             <Resource name="candidatetests" options={{label: 'Candidate Tests'}} list={CandidateTestList}
                       edit={CandidateTestEdit} create={CandidateTestCreate}/>
         </Admin>
