@@ -5,7 +5,7 @@ import {AnswerList} from "../AnswerList.js";
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {getAnswers, saveAnswers} from "../../utils/Storage.js";
 import {OpenAnswer} from "../OpenAnswer";
-import {API} from 'aws-amplify';
+import {API, Auth} from 'aws-amplify';
 import {NumericAnswer} from "../NumericAnswer";
 
 export class Test extends React.Component {
@@ -68,13 +68,33 @@ export class Test extends React.Component {
         this.changeQuestion(this.state.currentQuestion + 1);
     }
 
+    async getCandidateTest() {
+        const currentSession = await Auth.currentSession();
+        const {sub: candidateId} = currentSession.getAccessToken().decodePayload();
+        const candidateTests = await API.get('kwakApi', `/candidates/${candidateId}/tests`, {});
+        return candidateTests.filter((e) => e.testId === this.state.test.id)[0];
+    }
+
+    async sendResult() {
+        let candidateTest = await this.getCandidateTest();
+        for (let i = 0; i < this.state.test.questions.length; i++) {
+            candidateTest.questions.push({"answer": getAnswers(this.state.test.id, i), "isCorrect":null});
+        }
+        await API.put('kwakApi', `/candidatetests/${candidateTest.id}`, {
+            body:
+                candidateTest
+        });
+        window.location.href = "/";
+    }
+
+
     render() {
+
         const question = this.state.test ? this.state.test.questions[this.state.currentQuestion] : {
             title: undefined,
             description: undefined,
             answers: undefined
         };
-
         const isFirstQuestion = this.state.currentQuestion === 0;
         const isLastQuestion = this.state.test && this.state.currentQuestion === this.state.test.questions.length - 1;
 
@@ -106,9 +126,9 @@ export class Test extends React.Component {
                             Poprzednie pytanie
                         </button>
 
-                        <button onClick={this.nextQuestion} disabled={isLastQuestion}
+                        <button onClick={isLastQuestion ? this.sendResult.bind(this) : this.nextQuestion}
                                 className="btn btn-primary btn btn-block mt-2" type="button">
-                            Następne pytanie
+                            {isLastQuestion ? "Zakończ" : "Następne pytanie"}
                         </button>
                     </div>
                 </div>
