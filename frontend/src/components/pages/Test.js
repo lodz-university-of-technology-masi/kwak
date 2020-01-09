@@ -78,7 +78,7 @@ export class Test extends React.Component {
     async sendResult() {
         let candidateTest = await this.getCandidateTest();
         for (let i = 0; i < this.state.test.questions.length; i++) {
-            candidateTest.questions.push({"answer": getAnswers(this.state.test.id, i), "isCorrect":null});
+            candidateTest.questions.push({"answer": JSON.stringify(getAnswers(this.state.test.id, i))});
         }
         await API.put('kwakApi', `/candidatetests/${candidateTest.id}`, {
             body:
