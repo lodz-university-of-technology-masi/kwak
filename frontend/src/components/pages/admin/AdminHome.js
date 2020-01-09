@@ -1,8 +1,8 @@
 import React from 'react';
 import {
     Admin, Resource, List, Datagrid,
-    TextField, EmailField, SelectInput, TextInput, RadioButtonGroupInput, ReferenceField, ReferenceInput,
-    Edit, Create, SimpleForm, ArrayInput, SimpleFormIterator, FormDataConsumer
+    FunctionField, TextField, EmailField, SelectInput, TextInput, RadioButtonGroupInput, ReferenceField, ReferenceInput,
+    Edit, Create, SimpleForm, ArrayInput, SimpleFormIterator, FormDataConsumer, EditButton
 } from 'react-admin';
 
 import {dataProvider} from "../../../utils/APIDataProvider";
@@ -15,8 +15,8 @@ const TestTitle = ({record}) => {
 export const TestList = props => (
     <List {...props}>
         <Datagrid rowClick="edit">
-            <TextField source="title"/>
-            <TextField source="lang"/>
+            <TextField sortable={false} source="title"/>
+            <TextField sortable={false} source="lang"/>
         </Datagrid>
     </List>
 );
@@ -101,10 +101,10 @@ const CandidateTitle = ({record}) => {
 export const CandidateList = props => (
     <List {...props}>
         <Datagrid rowClick="edit">
-            <TextField source="name"/>
-            <TextField source="surname"/>
-            <TextField source="login"/>
-            <EmailField source="email"/>
+            <TextField sortable={false}  source="name"/>
+            <TextField sortable={false}  source="surname"/>
+            <TextField sortable={false}  source="login"/>
+            <EmailField sortable={false}  source="email"/>
         </Datagrid>
     </List>
 );
@@ -112,12 +112,14 @@ export const CandidateList = props => (
 export const CandidateTestList = props => (
     <List {...props}>
         <Datagrid rowClick="edit">
-            <ReferenceField source="candidateId" reference="candidates">
+            <ReferenceField sortable={false} source="candidateId" reference="candidates">
                 <TextField source="login"/>
             </ReferenceField>
-            <ReferenceField source="testId" reference="tests">
+            <ReferenceField sortable={false} source="testId" reference="tests" sortBy="title">
                 <TextField source="title"/>
             </ReferenceField>
+            <FunctionField label="Need rating" render={record => `${(record.questions.length !== 0 && record.questions.filter(e => e.correct === null).length !== 0)? 'Yes':'No'}`} />
+            <EditButton label="Rate"/>
         </Datagrid>
     </List>
 );
