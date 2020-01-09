@@ -9,14 +9,13 @@ export default class CandidateTestsComponent extends Component {
 
     isFilled(candidateTest) {
         return candidateTest.questions.length === this.getTest(candidateTest.testId).questions.length;
-
     };
 
     getResult(candidateTest) {
-        if (this.isFilled(candidateTest)) {
+        if (this.isFilled(candidateTest) && candidateTest.questions.filter(e=> e.correct===null).length===0) {
             let result = 0;
-            candidateTest.questions.forEach(e => e.isCorrect === true && result++);
-            return result;
+            candidateTest.questions.forEach(e => e.correct === true && result++);
+            return result+"/"+candidateTest.questions.length;
         }
         return "-";
     };
