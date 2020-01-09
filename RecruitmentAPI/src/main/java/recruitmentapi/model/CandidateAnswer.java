@@ -5,13 +5,13 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 @DynamoDBDocument
 public class CandidateAnswer {
     private String answer;
-    private boolean isCorrect;
+    private Boolean isCorrect;
 
-    public boolean isCorrect() {
+    public Boolean isCorrect() {
         return isCorrect;
     }
 
-    public void setCorrect(boolean correct) {
+    public void setCorrect(Boolean correct) {
         isCorrect = correct;
     }
 
