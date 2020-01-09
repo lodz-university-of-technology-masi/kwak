@@ -11,7 +11,7 @@ public class GatewayRequest extends APIGatewayProxyRequestEvent {
         try {
             return objectMapper.readValue(getBody(), type);
         } catch (IOException exception) {
-            return null;
+            throw new RuntimeException(exception.getMessage());
         }
     }
 }
