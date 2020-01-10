@@ -3,12 +3,18 @@ package recruitmentapi.model;
 import com.amazonaws.services.cognitoidp.model.AttributeType;
 import com.amazonaws.services.cognitoidp.model.UserType;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public class Candidate {
     private String id;
     private String login;
     private String email;
     private String name;
     private String surname;
+
+    public Candidate() { }
 
     public Candidate(String id, String login, String email, String name, String surname) {
         this.id = id;
@@ -36,6 +42,15 @@ public class Candidate {
 
     public String getSurname() {
         return surname;
+    }
+
+    public List<AttributeType> createAttributes() {
+        List<AttributeType> attributes = new ArrayList<>();
+        attributes.add(new AttributeType().withName("email").withValue(email));
+        attributes.add(new AttributeType().withName("given_name").withValue(name));
+        attributes.add(new AttributeType().withName("family_name").withValue(surname));
+
+        return attributes;
     }
 
     public static String getSub(UserType userType) {
