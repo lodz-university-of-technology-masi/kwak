@@ -1,5 +1,6 @@
 package recruitmentapi.services;
 
+import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
@@ -19,6 +20,8 @@ public class S3Service {
 
         return s3.generatePresignedUrl(
                 new GeneratePresignedUrlRequest(BUCKET_NAME, UUID.randomUUID().toString())
+                        .withMethod(HttpMethod.PUT)
+                        .withExpiration(expiration)
         );
     }
 

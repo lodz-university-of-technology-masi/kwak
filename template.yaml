@@ -306,7 +306,7 @@ Resources:
   GeneratePresignedURLFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Policies: AmazonDynamoDBFullAccess
+      Policies: AmazonS3FullAcccess
       CodeUri: RecruitmentAPI
       Handler: recruitmentapi.endpoints.GeneratePresignedURL::handleRequest
       Runtime: java8
