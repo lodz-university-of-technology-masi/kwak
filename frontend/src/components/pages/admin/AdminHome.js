@@ -181,8 +181,8 @@ export const CandidateTestEdit = props => (
                                     (<TextInput disabled source="code" label="Code"/>) : null}
                             </FormDataConsumer>
                             <FormDataConsumer>
-                                {({scopedFormData}) => scopedFormData.selected ?
-                                    (<TextInput disabled label="Selected" source="selected"/>) : null}
+                                {({scopedFormData}) => scopedFormData.selected!==null ?
+                                    (<TextInput disabled label={"Selected"} source={"selected"}/>) : null}
                             </FormDataConsumer>
                         </SimpleFormIterator>
                     </ArrayInput>
