@@ -5,6 +5,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import recruitmentapi.KwakException;
 import recruitmentapi.model.CandidateTest;
+import recruitmentapi.model.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,11 +16,14 @@ public class CandidateTestService {
     TestService testService;
 
     public CandidateTest create(CandidateTest candidateTest) {
-        if (testService.findById(candidateTest.getTestId()) == null ) {
+        Test test = testService.findById(candidateTest.getTestId());
+        if (test == null ) {
             throw new KwakException("Test does not exist");
         }
 
-        candidateTest.setQuestions(new ArrayList<>());
+        candidateTest.setQuestions(test.getQuestions());
+        candidateTest.setLang(test.getLang());
+        candidateTest.setTitle(test.getTitle());
         mapper.save(candidateTest);
         return candidateTest;
     }

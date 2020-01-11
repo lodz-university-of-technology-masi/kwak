@@ -12,6 +12,15 @@ public class Question {
     private String code;
     private String type;
     private List<Answer> answers;
+    private Boolean isCorrect;
+
+    public Boolean getCorrect() {
+        return isCorrect;
+    }
+
+    public void setCorrect(Boolean correct) {
+        isCorrect = correct;
+    }
 
     public String getTitle() {
         return title;

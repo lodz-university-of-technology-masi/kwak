@@ -8,6 +8,9 @@ import java.util.ArrayList;
 public class CandidateTest {
     private String id;
     private String candidateId;
+    private String testId;
+    private String lang;
+    private String title;
     private ArrayList<Question> questions;
 
     @DynamoDBHashKey(attributeName = "Id")
@@ -27,6 +30,33 @@ public class CandidateTest {
 
     public void setCandidateId(String id) {
         this.candidateId = id;
+    }
+
+    @DynamoDBAttribute(attributeName = "TestId")
+    public String getTestId() {
+        return testId;
+    }
+
+    public void setTestId(String id) {
+        this.testId = id;
+    }
+
+    @DynamoDBAttribute(attributeName = "Title")
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @DynamoDBAttribute(attributeName = "Language")
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 
     @DynamoDBAttribute(attributeName = "Questions")
