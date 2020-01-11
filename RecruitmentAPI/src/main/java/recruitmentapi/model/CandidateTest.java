@@ -11,6 +11,7 @@ public class CandidateTest {
     private String testId;
     private String lang;
     private String title;
+    private Boolean isSolved;
     private ArrayList<Question> questions;
 
     @DynamoDBHashKey(attributeName = "Id")
@@ -66,6 +67,15 @@ public class CandidateTest {
 
     public void setQuestions(ArrayList<Question> questions) {
         this.questions = questions;
+    }
+
+    @DynamoDBAttribute(attributeName = "Solved")
+    public Boolean getSolved() {
+        return isSolved;
+    }
+
+    public void setSolved(Boolean solved) {
+        isSolved = solved;
     }
 
 }
