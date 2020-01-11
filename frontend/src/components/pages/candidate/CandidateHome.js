@@ -25,11 +25,9 @@ export default class CandidateHome extends Component {
         const currentSession = await Auth.currentSession();
         const {sub: candidateId} = currentSession.getAccessToken().decodePayload();
         const candidateTests = await API.get('kwakApi', `/candidates/${candidateId}/tests`, {});
-        const allTests = await API.get('kwakApi', `/tests`, {});
         if (this._isMounted) {
             this.setState({
                 candidateTests,
-                allTests,
                 loading: false
             });
         }
@@ -43,7 +41,7 @@ export default class CandidateHome extends Component {
         this._isMounted = false;
     }
     render() {
-        const {candidateTests, allTests, loading} = this.state;
+        const {candidateTests, loading} = this.state;
         return (
                 <div className="container d-flex p-3 flex-column ">
                     <header className="mb-3">
@@ -62,7 +60,7 @@ export default class CandidateHome extends Component {
                         <Switch>
                             <Route path="/tests/:testId" component={Test}/>
                             <Route path="/">
-                                <CandidateTestsComponent candidateTests={candidateTests} allTests={allTests}/>
+                                <CandidateTestsComponent candidateTests={candidateTests}/>
                             </Route>
                         </Switch>
                     </main>

@@ -8,7 +8,7 @@ export default class CandidateTestsComponent extends Component {
     }
 
     isFilled(candidateTest) {
-        return candidateTest.questions.length === this.getTest(candidateTest.testId).questions.length;
+        return candidateTest.solved===true;
     };
 
     getResult(candidateTest) {
@@ -17,11 +17,7 @@ export default class CandidateTestsComponent extends Component {
             candidateTest.questions.forEach(e => e.correct === true && result++);
             return result+"/"+candidateTest.questions.length;
         }
-        return "-";
-    };
-
-    getTest(testId) {
-        return this.props.allTests.filter(test => test.id === testId)[0];
+        return "Waiting for rating";
     };
 
     render() {
@@ -40,10 +36,10 @@ export default class CandidateTestsComponent extends Component {
                     {this.props.candidateTests.map((candidateTest, key) => (
                         <tr key={key}>
                             <td><span>
-                                       {this.getTest(candidateTest.testId).title}
+                                       {candidateTest.title}
                             </span></td>
                             <td><span>
-                                       {this.getTest(candidateTest.testId).lang}
+                                       {candidateTest.lang}
                         </span></td>
                             <td><span>{this.getResult(candidateTest)}</span></td>
                             <td className="text-right">

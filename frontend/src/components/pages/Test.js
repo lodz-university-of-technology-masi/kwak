@@ -29,13 +29,21 @@ export class Test extends React.Component {
     async componentDidMount() {
         this._isMounted = true;
         const {match: {params: {testId}}} = this.props;
-        const test = await API.get('kwakApi', `/tests/${testId}`, {});
+        const test = await this.getCandidateTest(testId);
         if (this._isMounted) {
             this.setState({
                 test: test,
                 responses: getAnswers(test.id, this.state.currentQuestion)
             });
         }
+    }
+
+
+    async getCandidateTest(testId) {
+        const currentSession = await Auth.currentSession();
+        const {sub: candidateId} = currentSession.getAccessToken().decodePayload();
+        const candidateTests = await API.get('kwakApi', `/candidates/${candidateId}/tests`, {});
+        return candidateTests.filter((e) => e.testId === testId)[0];
     }
 
     componentWillUnmount() {
@@ -68,23 +76,26 @@ export class Test extends React.Component {
         this.changeQuestion(this.state.currentQuestion + 1);
     }
 
-    async getCandidateTest() {
-        const currentSession = await Auth.currentSession();
-        const {sub: candidateId} = currentSession.getAccessToken().decodePayload();
-        const candidateTests = await API.get('kwakApi', `/candidates/${candidateId}/tests`, {});
-        return candidateTests.filter((e) => e.testId === this.state.test.id)[0];
-    }
 
     async sendResult() {
-        let candidateTest = await this.getCandidateTest();
-        for (let i = 0; i < this.state.test.questions.length; i++) {
-            candidateTest.questions.push({"answer": JSON.stringify(getAnswers(this.state.test.id, i))});
+        let candidateTest = this.state.test;
+        console.log(candidateTest);
+        candidateTest.solved = true;
+        for (let i = 0; i < candidateTest.questions.length; i++) {
+            if (candidateTest.questions[i].type === "Z") {
+                const selectedAnswers = getAnswers(candidateTest.id, i);
+                for (let j = 0; j < candidateTest.questions[i].answers.length; j++) {
+                    candidateTest.questions[i].answers[j].selected = selectedAnswers.includes(j);
+                }
+            } else {
+                candidateTest.questions[i].answers = [{"content": getAnswers(candidateTest.id, i)}];
+            }
         }
         await API.put('kwakApi', `/candidatetests/${candidateTest.id}`, {
             body:
-                candidateTest
+            candidateTest
         });
-        window.location.href = "/";
+    window.location.href = "/";
     }
 
 

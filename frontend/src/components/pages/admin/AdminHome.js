@@ -147,7 +147,7 @@ export const CandidateTestList = props => (
             </ReferenceField>
             <TextField source="title"/>
             <FunctionField label="Need rating"
-                           render={record => `${(record.questions && record.questions.length !== 0 && record.questions.filter(e => e.correct === null).length !== 0) ? 'Yes' : 'No'}`}/>
+                           render={record => `${record.solved === true && record.questions.filter(e => e.correct === null).length !== 0 ? "Yes": "No"}`}/>
             <EditButton label="Rate"/>
         </Datagrid>
     </List>
@@ -163,20 +163,32 @@ export const CandidateTestEdit = props => (
     <Edit {...props}>
         <SimpleForm toolbar={<TestRatingToolbar/>}>
             <ArrayInput source="questions">
-            <SimpleFormIterator>
-                <TextInput disabled source="title" label="Title"/>
-                <TextInput disabled source="description" label="Description"/>
-                <TextInput disabled source="code" label="Code"/>
-                <ArrayInput source="answers" label="Answers">
-                    <SimpleFormIterator>
-                        <TextInput disabled source="content" label="Answer"/>
-                        <TextInput disabled source="code" label="Answer"/>
-                        <BooleanInput disabled label="Selected" source="isSelected"/>
-                    </SimpleFormIterator>
-                </ArrayInput>
-                <NullableBooleanInput label="Correct" source="correct"/>
-            </SimpleFormIterator>
-        </ArrayInput>
+                <SimpleFormIterator>
+                    <TextInput disabled source="title" label="Title"/>
+                    <FormDataConsumer>
+                        {({scopedFormData}) => scopedFormData.description ?
+                            (<TextInput disabled source="description" label="Description"/>) : null}
+                    </FormDataConsumer>
+                    <FormDataConsumer>
+                        {({scopedFormData}) => scopedFormData.code ?
+                            (<TextInput disabled source="code" label="Code"/>) : null}
+                    </FormDataConsumer>
+                    <ArrayInput source="answers" label="Answers">
+                        <SimpleFormIterator>
+                            <TextInput disabled source="content" label="Answer"/>
+                            <FormDataConsumer>
+                                {({scopedFormData}) => scopedFormData.code ?
+                                    (<TextInput disabled source="code" label="Code"/>) : null}
+                            </FormDataConsumer>
+                            <FormDataConsumer>
+                                {({scopedFormData}) => scopedFormData.selected ?
+                                    (<TextInput disabled label="Selected" source="selected"/>) : null}
+                            </FormDataConsumer>
+                        </SimpleFormIterator>
+                    </ArrayInput>
+                    <NullableBooleanInput label="Correct" source="correct"/>
+                </SimpleFormIterator>
+            </ArrayInput>
         </SimpleForm>
     </Edit>
 );
