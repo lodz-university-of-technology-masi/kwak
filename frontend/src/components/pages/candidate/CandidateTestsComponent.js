@@ -8,20 +8,21 @@ export default class CandidateTestsComponent extends Component {
     }
 
     isFilled(candidateTest) {
-        return candidateTest.questions.length === this.getTest(candidateTest.testId).questions.length;
+        return candidateTest.solved===true;
     };
 
     getResult(candidateTest) {
-        if (this.isFilled(candidateTest) && candidateTest.questions.filter(e=> e.correct===null).length===0) {
-            let result = 0;
-            candidateTest.questions.forEach(e => e.correct === true && result++);
-            return result+"/"+candidateTest.questions.length;
+        if (this.isFilled(candidateTest)) {
+            if(candidateTest.questions.filter(e=> e.correct===null).length===0){
+                let result = 0;
+                candidateTest.questions.forEach(e => e.correct === true && result++);
+                return result+"/"+candidateTest.questions.length;
+            }else{
+                return "Waiting for rating";
+            }
+        }else{
+            return "-";
         }
-        return "-";
-    };
-
-    getTest(testId) {
-        return this.props.allTests.filter(test => test.id === testId)[0];
     };
 
     render() {
@@ -40,10 +41,10 @@ export default class CandidateTestsComponent extends Component {
                     {this.props.candidateTests.map((candidateTest, key) => (
                         <tr key={key}>
                             <td><span>
-                                       {this.getTest(candidateTest.testId).title}
+                                       {candidateTest.title}
                             </span></td>
                             <td><span>
-                                       {this.getTest(candidateTest.testId).lang}
+                                       {candidateTest.lang}
                         </span></td>
                             <td><span>{this.getResult(candidateTest)}</span></td>
                             <td className="text-right">
