@@ -22,8 +22,7 @@ import {
     NullableBooleanInput,
     Toolbar,
     SaveButton,
-    email,
-    BooleanInput
+    email
 } from 'react-admin';
 
 import {dataProvider} from "../../../utils/APIDataProvider";
@@ -125,7 +124,7 @@ export const CandidateCreate = props => (
         <SimpleForm>
             <TextInput source="email" validate={validateEmail}/>
             <TextInput source="name"/>
-            <TextInput source="surname" />
+            <TextInput source="surname"/>
         </SimpleForm>
     </Create>
 );
@@ -139,19 +138,20 @@ export const CandidateList = props => (
         </Datagrid>
     </List>
 );
-export const CandidateTestList = props => (
+export const CandidateTestList = props => {
+const postRowClick = (id, basePath, record) => record.solved && record.questions.filter(e => e.correct === null).length !== 0 ? 'edit' : null;
+return (
     <List {...props}>
-        <Datagrid>
+        <Datagrid rowClick={postRowClick}>
             <ReferenceField sortable={false} source="candidateId" reference="candidates">
                 <TextField source="name"/>
             </ReferenceField>
             <TextField source="title"/>
             <FunctionField label="Need rating"
-                           render={record => `${record.solved === true && record.questions.filter(e => e.correct === null).length !== 0 ? "Yes": "No"}`}/>
-            <EditButton label="Rate"/>
+                           render={record => `${record.solved === true && record.questions.filter(e => e.correct === null).length !== 0 ? "Yes" : "No"}`}/>
         </Datagrid>
-    </List>
-);
+    </List>)
+};
 
 const TestRatingToolbar = props => (
     <Toolbar {...props} >
@@ -166,22 +166,22 @@ export const CandidateTestEdit = props => (
                 <SimpleFormIterator disableAdd disableRemove>
                     <TextInput disabled source="title" label="Title"/>
                     <FormDataConsumer>
-                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.description!==null ?
+                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.description !== null ?
                             (<TextInput disabled source={getSource("description")} label="Description"/>) : null}
                     </FormDataConsumer>
                     <FormDataConsumer>
-                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.code!==null ?
+                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.code !== null ?
                             (<TextInput disabled source={getSource("code")} label="Code"/>) : null}
                     </FormDataConsumer>
                     <ArrayInput source="answers" label="Answers">
                         <SimpleFormIterator disableAdd disableRemove>
                             <TextInput disabled source="content" label="Answer"/>
                             <FormDataConsumer>
-                                {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.code!==null ?
+                                {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.code !== null ?
                                     (<TextInput disabled source={getSource("code")} label="Code"/>) : null}
                             </FormDataConsumer>
                             <FormDataConsumer>
-                                {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.selected!==null ?
+                                {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.selected !== null ?
                                     (<TextInput disabled label={"Selected"} source={getSource("selected")}/>) : null}
                             </FormDataConsumer>
                         </SimpleFormIterator>
