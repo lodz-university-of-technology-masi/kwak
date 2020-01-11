@@ -18,8 +18,7 @@ import {
     ArrayInput,
     SimpleFormIterator,
     FormDataConsumer,
-    EditButton,
-    NullableBooleanInput,
+    BooleanInput,
     Toolbar,
     SaveButton,
     email
@@ -139,7 +138,7 @@ export const CandidateList = props => (
     </List>
 );
 export const CandidateTestList = props => {
-const postRowClick = (id, basePath, record) => record.solved && record.questions.filter(e => e.correct === null).length !== 0 ? 'edit' : null;
+const postRowClick = (id, basePath, record) => record.solved ? 'edit' : null;
 return (
     <List {...props}>
         <Datagrid rowClick={postRowClick}>
@@ -186,16 +185,26 @@ export const CandidateTestEdit = props => (
                             </FormDataConsumer>
                         </SimpleFormIterator>
                     </ArrayInput>
-                    <NullableBooleanInput label="Correct" source="correct"/>
+                    <FormDataConsumer>
+                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.correct === null ?
+                            scopedFormData.correct=false : null}
+                    </FormDataConsumer>
+                    <BooleanInput label="Correct" source="correct" defaultValue={false} />
                 </SimpleFormIterator>
             </ArrayInput>
         </SimpleForm>
     </Edit>
 );
 
+const CandidateTestCreateToolbar = props => (
+    <Toolbar {...props} >
+        <SaveButton redirect="list"/>
+    </Toolbar>
+);
+
 export const CandidateTestCreate = props => (
-    <Create {...props}>
-        <SimpleForm>
+    <Create {...props} afterSuccess="list">
+        <SimpleForm toolbar={<CandidateTestCreateToolbar/>}>
             <ReferenceInput source="candidateId" reference="candidates">
                 <SelectInput optionText="name"/>
             </ReferenceInput>
