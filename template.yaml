@@ -303,6 +303,21 @@ Resources:
             RestApiId: !Ref KwakApi
             Path: /candidatetests/{id}
             Method: get
+  GeneratePresignedURLFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Policies: AmazonDynamoDBFullAccess
+      CodeUri: RecruitmentAPI
+      Handler: recruitmentapi.endpoints.GeneratePresignedURL::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Events:
+        GetTests:
+          Type: Api
+          Properties:
+            RestApiId: !Ref KwakApi
+            Path: /upload
+            Method: post
 
 Outputs:
   Api:
