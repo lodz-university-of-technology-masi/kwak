@@ -30,7 +30,6 @@ public class TestService {
             throw new KwakException("Test does not exist");
         }
 
-        mapper.batchDelete(candidateTestService.findByTestId(id));
         mapper.delete(test);
     }
 

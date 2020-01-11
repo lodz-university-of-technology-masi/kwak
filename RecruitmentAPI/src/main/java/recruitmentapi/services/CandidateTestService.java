@@ -39,17 +39,6 @@ public class CandidateTestService {
         );
     }
 
-    List<CandidateTest> findByTestId(String id) {
-        HashMap<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":v1", new AttributeValue().withS(id));
-        return mapper.scan(
-                CandidateTest.class,
-                new DynamoDBScanExpression()
-                        .withFilterExpression("TestId = :v1")
-                        .withExpressionAttributeValues(eav)
-        );
-    }
-
     public void delete(String id) {
         CandidateTest test = mapper.load(CandidateTest.class, id);
         if (test == null) {
