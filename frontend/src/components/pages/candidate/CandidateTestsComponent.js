@@ -12,12 +12,17 @@ export default class CandidateTestsComponent extends Component {
     };
 
     getResult(candidateTest) {
-        if (this.isFilled(candidateTest) && candidateTest.questions.filter(e=> e.correct===null).length===0) {
-            let result = 0;
-            candidateTest.questions.forEach(e => e.correct === true && result++);
-            return result+"/"+candidateTest.questions.length;
+        if (this.isFilled(candidateTest)) {
+            if(candidateTest.questions.filter(e=> e.correct===null).length===0){
+                let result = 0;
+                candidateTest.questions.forEach(e => e.correct === true && result++);
+                return result+"/"+candidateTest.questions.length;
+            }else{
+                return "Waiting for rating";
+            }
+        }else{
+            return "-";
         }
-        return "Waiting for rating";
     };
 
     render() {
