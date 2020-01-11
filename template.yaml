@@ -167,6 +167,28 @@ Resources:
             RestApiId: !Ref KwakApi
             Path: /candidates/{candidateId}
             Method: get
+  DeleteCandidateFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Policies:
+        - Statement:
+            - Sid: AllowCognito
+              Effect: "Allow"
+              Action: [
+                "cognito-idp:*"
+              ]
+              Resource: '*'
+      CodeUri: RecruitmentAPI
+      Handler: recruitmentapi.endpoints.candidates.DeleteCandidate::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Events:
+        GetTests:
+          Type: Api
+          Properties:
+            RestApiId: !Ref KwakApi
+            Path: /candidates/{candidateId}
+            Method: delete
   AddCandidateFunction:
     Type: AWS::Serverless::Function
     Properties:

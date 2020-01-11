@@ -21,7 +21,8 @@ import {
     EditButton,
     NullableBooleanInput,
     Toolbar,
-    SaveButton
+    SaveButton,
+    email
 } from 'react-admin';
 
 import {dataProvider} from "../../../utils/APIDataProvider";
@@ -117,6 +118,17 @@ const CandidateTitle = ({record}) => {
     return <span>{record ? `${record.name} ${record.surname}` : ''}</span>;
 };
 
+const validateEmail = email();
+export const CandidateCreate = props => (
+    <Create {...props}>
+        <SimpleForm>
+            <TextInput source="email" validate={validateEmail}/>
+            <TextInput source="name"/>
+            <TextInput source="surname" />
+        </SimpleForm>
+    </Create>
+);
+
 export const CandidateList = props => (
     <List {...props}>
         <Datagrid rowClick="edit">
@@ -135,8 +147,6 @@ export const CandidateTestList = props => (
             <ReferenceField sortable={false} source="testId" reference="tests">
                 <TextField source="title"/>
             </ReferenceField>
-            <FunctionField label="Need rating"
-                           render={record => `${(record.questions.length !== 0 && record.questions.filter(e => e.correct === null).length !== 0) ? 'Yes' : 'No'}`}/>
             <EditButton label="Rate"/>
         </Datagrid>
     </List>
@@ -178,7 +188,7 @@ export default function AdminHome(props) {
     return (
         <Admin dataProvider={dataProvider} authProvider={authProvider}>
             <Resource name="tests" list={TestList} edit={TestEdit} create={TestCreate}/>
-            <Resource name="candidates" list={CandidateList}/>
+            <Resource name="candidates" list={CandidateList} create={CandidateCreate}/>
             <Resource name="candidatetests" options={{label: 'Candidate Tests'}} list={CandidateTestList}
                       edit={CandidateTestEdit} create={CandidateTestCreate}/>
         </Admin>

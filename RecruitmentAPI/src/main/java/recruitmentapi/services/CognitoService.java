@@ -50,4 +50,8 @@ public class CognitoService {
 
         return result.getGroups().stream().noneMatch(groupType -> groupType.getGroupName().equals(ADMIN_GROUP_NAME));
     }
+
+    public void deleteCandidate(String id) {
+        cognito.adminDeleteUser(new AdminDeleteUserRequest().withUserPoolId(USER_POOL_ID).withUsername(id));
+    }
 }
