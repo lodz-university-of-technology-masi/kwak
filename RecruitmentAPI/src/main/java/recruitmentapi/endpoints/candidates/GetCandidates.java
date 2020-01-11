@@ -9,12 +9,12 @@ import recruitmentapi.GatewayRequest;
 import recruitmentapi.GatewayResponse;
 import recruitmentapi.model.Candidate;
 import recruitmentapi.services.CognitoService;
+import recruitmentapi.services.ServiceContainer;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GetCandidates implements RequestHandler<GatewayRequest, GatewayResponse<List<Candidate>>> {
-    private CognitoService cognitoService = CognitoService.getInstance();
+public class GetCandidates extends ServiceContainer implements RequestHandler<GatewayRequest, GatewayResponse<List<Candidate>>> {
 
     @Override
     public GatewayResponse<List<Candidate>> handleRequest(GatewayRequest input, Context context) {

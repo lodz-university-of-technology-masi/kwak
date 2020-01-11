@@ -7,10 +7,9 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 
 public class DynamoDBAdapter {
-    private final DynamoDB dynamoDB;
     private final DynamoDBMapper mapper;
 
-    private DynamoDBAdapter() {
+    public DynamoDBAdapter() {
         AmazonDynamoDBClientBuilder builder = AmazonDynamoDBClientBuilder
                 .standard();
 
@@ -23,15 +22,10 @@ public class DynamoDBAdapter {
         }
 
         AmazonDynamoDB amazonDynamoDB = builder.build();
-        dynamoDB = new DynamoDB(amazonDynamoDB);
         mapper = new DynamoDBMapper(amazonDynamoDB);
     }
-    private static DynamoDBAdapter adapter = null;
-    public static DynamoDBMapper getMapper() {
-       if (adapter == null) {
-           adapter = new DynamoDBAdapter();
-       }
 
-       return adapter.mapper;
+    public DynamoDBMapper getMapper() {
+        return mapper;
     }
 }

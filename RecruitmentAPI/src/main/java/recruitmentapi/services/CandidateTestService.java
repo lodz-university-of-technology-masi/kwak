@@ -3,7 +3,6 @@ package recruitmentapi.services;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import recruitmentapi.DynamoDBAdapter;
 import recruitmentapi.KwakException;
 import recruitmentapi.model.CandidateTest;
 
@@ -12,8 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CandidateTestService {
-    private DynamoDBMapper mapper = DynamoDBAdapter.getMapper();
-    private TestService testService = new TestService();
+    DynamoDBMapper mapper;
+    TestService testService;
 
     public CandidateTest create(CandidateTest candidateTest) {
         if (testService.findById(candidateTest.getTestId()) == null ) {
@@ -70,5 +69,14 @@ public class CandidateTestService {
         }
 
         mapper.save(candidateTest);
+    }
+
+    private static CandidateTestService candidateTestService = null;
+    public static CandidateTestService getInstance() {
+        if (candidateTestService == null) {
+            candidateTestService = new CandidateTestService();
+        }
+
+        return candidateTestService;
     }
 }

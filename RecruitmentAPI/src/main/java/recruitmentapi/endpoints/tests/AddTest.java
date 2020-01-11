@@ -4,12 +4,10 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import recruitmentapi.GatewayRequest;
 import recruitmentapi.GatewayResponse;
+import recruitmentapi.services.ServiceContainer;
 import recruitmentapi.model.Test;
-import recruitmentapi.services.TestService;
 
-public class AddTest implements RequestHandler<GatewayRequest, GatewayResponse<Test>> {
-    private TestService testService = new TestService();
-
+public class AddTest extends ServiceContainer implements RequestHandler<GatewayRequest, GatewayResponse<Test>> {
     @Override
     public GatewayResponse<Test> handleRequest(GatewayRequest request, Context context) {
         Test test = request.getTypedBody(Test.class);

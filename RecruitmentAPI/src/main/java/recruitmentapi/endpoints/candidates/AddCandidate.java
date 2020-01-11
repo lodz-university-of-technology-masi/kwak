@@ -6,10 +6,9 @@ import recruitmentapi.GatewayRequest;
 import recruitmentapi.GatewayResponse;
 import recruitmentapi.model.Candidate;
 import recruitmentapi.services.CognitoService;
+import recruitmentapi.services.ServiceContainer;
 
-public class AddCandidate implements RequestHandler<GatewayRequest, GatewayResponse<Candidate>> {
-    private CognitoService cognitoService = CognitoService.getInstance();
-
+public class AddCandidate extends ServiceContainer implements RequestHandler<GatewayRequest, GatewayResponse<Candidate>> {
     @Override
     public GatewayResponse<Candidate> handleRequest(GatewayRequest request, Context context) {
         Candidate candidate = request.getTypedBody(Candidate.class);

@@ -13,8 +13,6 @@ public class CognitoService {
     private final String ADMIN_GROUP_NAME = "Admin";
     private AWSCognitoIdentityProvider cognito = AWSCognitoIdentityProviderClientBuilder.defaultClient();
 
-    private CognitoService() {}
-
     public Candidate findCandidateById(String candidateId) {
         AdminGetUserResult result = cognito.adminGetUser(new AdminGetUserRequest()
                 .withUserPoolId(USER_POOL_ID)
@@ -33,15 +31,6 @@ public class CognitoService {
         );
 
         return Candidate.fromUserType(result.getUser());
-    }
-
-    private static CognitoService cognitoService = null;
-    public static CognitoService getInstance() {
-        if (cognitoService == null) {
-            cognitoService = new CognitoService();
-        }
-
-        return cognitoService;
     }
 
     public List<Candidate> findAllCandidates() {

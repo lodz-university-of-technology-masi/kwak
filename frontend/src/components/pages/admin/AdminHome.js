@@ -122,7 +122,6 @@ export const CandidateList = props => (
         <Datagrid rowClick="edit">
             <TextField sortable={false} source="name"/>
             <TextField sortable={false} source="surname"/>
-            <TextField sortable={false} source="login"/>
             <EmailField sortable={false} source="email"/>
         </Datagrid>
     </List>
@@ -131,7 +130,7 @@ export const CandidateTestList = props => (
     <List {...props}>
         <Datagrid>
             <ReferenceField sortable={false} source="candidateId" reference="candidates">
-                <TextField source="login"/>
+                <TextField source="name"/>
             </ReferenceField>
             <ReferenceField sortable={false} source="testId" reference="tests">
                 <TextField source="title"/>
@@ -166,7 +165,7 @@ export const CandidateTestCreate = props => (
     <Create {...props}>
         <SimpleForm>
             <ReferenceInput source="candidateId" reference="candidates">
-                <SelectInput optionText="login"/>
+                <SelectInput optionText="name"/>
             </ReferenceInput>
             <ReferenceInput source="testId" reference="tests">
                 <SelectInput optionText="title"/>

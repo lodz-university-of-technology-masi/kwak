@@ -2,16 +2,14 @@ package recruitmentapi.services;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import recruitmentapi.DynamoDBAdapter;
 import recruitmentapi.KwakException;
-import recruitmentapi.model.CandidateTest;
 import recruitmentapi.model.Test;
 
 import java.util.List;
 
 public class TestService {
-    private DynamoDBMapper mapper = DynamoDBAdapter.getMapper();
-    private CandidateTestService candidateTestService = new CandidateTestService();
+    DynamoDBMapper mapper;
+    CandidateTestService candidateTestService;
 
     public List<Test> findAll() {
         return mapper.scan(Test.class, new DynamoDBScanExpression());
