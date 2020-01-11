@@ -163,26 +163,26 @@ export const CandidateTestEdit = props => (
     <Edit {...props}>
         <SimpleForm toolbar={<TestRatingToolbar/>}>
             <ArrayInput source="questions">
-                <SimpleFormIterator>
+                <SimpleFormIterator disableAdd disableRemove>
                     <TextInput disabled source="title" label="Title"/>
                     <FormDataConsumer>
-                        {({scopedFormData}) => scopedFormData.description ?
-                            (<TextInput disabled source="description" label="Description"/>) : null}
+                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.description!==null ?
+                            (<TextInput disabled source={getSource("description")} label="Description"/>) : null}
                     </FormDataConsumer>
                     <FormDataConsumer>
-                        {({scopedFormData}) => scopedFormData.code ?
-                            (<TextInput disabled source="code" label="Code"/>) : null}
+                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.code!==null ?
+                            (<TextInput disabled source={getSource("code")} label="Code"/>) : null}
                     </FormDataConsumer>
                     <ArrayInput source="answers" label="Answers">
-                        <SimpleFormIterator>
+                        <SimpleFormIterator disableAdd disableRemove>
                             <TextInput disabled source="content" label="Answer"/>
                             <FormDataConsumer>
-                                {({scopedFormData}) => scopedFormData.code ?
-                                    (<TextInput disabled source="code" label="Code"/>) : null}
+                                {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.code!==null ?
+                                    (<TextInput disabled source={getSource("code")} label="Code"/>) : null}
                             </FormDataConsumer>
                             <FormDataConsumer>
-                                {({scopedFormData}) => scopedFormData.selected!==null ?
-                                    (<TextInput disabled label={"Selected"} source={"selected"}/>) : null}
+                                {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.selected!==null ?
+                                    (<TextInput disabled label={"Selected"} source={getSource("selected")}/>) : null}
                             </FormDataConsumer>
                         </SimpleFormIterator>
                     </ArrayInput>
