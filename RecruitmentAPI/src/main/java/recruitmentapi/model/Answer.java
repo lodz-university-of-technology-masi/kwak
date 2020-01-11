@@ -6,6 +6,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 public class Answer {
     private String content;
     private String code;
+    private Boolean isSelected;
+    private Boolean isCorrect;
 
     public String getContent() {
         return content;
