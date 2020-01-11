@@ -1,15 +1,14 @@
 package recruitmentapi.endpoints.tests;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import recruitmentapi.DynamoDBAdapter;
 import recruitmentapi.GatewayRequest;
 import recruitmentapi.GatewayResponse;
 import recruitmentapi.model.Test;
+import recruitmentapi.services.TestService;
 
 public class AddTest implements RequestHandler<GatewayRequest, GatewayResponse<Test>> {
-    private DynamoDBMapper mapper = new DynamoDBAdapter().getMapper();
+    private TestService testService = new TestService();
 
     @Override
     public GatewayResponse<Test> handleRequest(GatewayRequest request, Context context) {
@@ -18,7 +17,6 @@ public class AddTest implements RequestHandler<GatewayRequest, GatewayResponse<T
             return new GatewayResponse<>(null, 400);
         }
 
-        mapper.save(test);
-        return new GatewayResponse<>(test, 200);
+        return new GatewayResponse<>(testService.create(test), 200);
     }
 }

@@ -10,13 +10,13 @@ public class DynamoDBAdapter {
     private final DynamoDB dynamoDB;
     private final DynamoDBMapper mapper;
 
-    public DynamoDBAdapter() {
+    private DynamoDBAdapter() {
         AmazonDynamoDBClientBuilder builder = AmazonDynamoDBClientBuilder
                 .standard();
 
         if (System.getenv("AWS_SAM_LOCAL") != null) {
             builder.withEndpointConfiguration(
-                    new AwsClientBuilder.EndpointConfiguration("http://192.168.99.100:8000", "us-east-1")
+                    new AwsClientBuilder.EndpointConfiguration("http://192.168.99.100:8000", "eu-central-1")
             );
         } else {
             builder.withRegion(System.getenv("AWS_REGION"));
@@ -26,12 +26,12 @@ public class DynamoDBAdapter {
         dynamoDB = new DynamoDB(amazonDynamoDB);
         mapper = new DynamoDBMapper(amazonDynamoDB);
     }
+    private static DynamoDBAdapter adapter = null;
+    public static DynamoDBMapper getMapper() {
+       if (adapter == null) {
+           adapter = new DynamoDBAdapter();
+       }
 
-    public DynamoDB getDynamoDB() {
-        return dynamoDB;
-    }
-
-    public DynamoDBMapper getMapper() {
-        return mapper;
+       return adapter.mapper;
     }
 }

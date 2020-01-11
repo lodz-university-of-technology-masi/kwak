@@ -1,31 +1,23 @@
 package recruitmentapi.endpoints.candidatetests;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import recruitmentapi.DynamoDBAdapter;
+import recruitmentapi.ErrorMessage;
 import recruitmentapi.GatewayRequest;
 import recruitmentapi.GatewayResponse;
-import recruitmentapi.model.Candidate;
 import recruitmentapi.model.CandidateTest;
-import recruitmentapi.model.Test;
-
-import java.util.ArrayList;
+import recruitmentapi.services.CandidateTestService;
 
 public class AddCandidateTest implements RequestHandler<GatewayRequest, GatewayResponse<CandidateTest>> {
-    private DynamoDBMapper mapper = new DynamoDBAdapter().getMapper();
+    private CandidateTestService candidateTestService = new CandidateTestService();
 
     @Override
     public GatewayResponse<CandidateTest> handleRequest(GatewayRequest request, Context context) {
-        CandidateTest test = request.getTypedBody(CandidateTest.class);
-        if (test.getId() != null) {
-            return new GatewayResponse<>(null, 400);
+        CandidateTest candidateTest = request.getTypedBody(CandidateTest.class);
+        if (candidateTest.getId() != null || candidateTest.getTestId() == null) {
+            return new GatewayResponse<>(new ErrorMessage(400, "Invalid candidateTest"));
         }
 
-        if (test.getQuestions() == null) {
-            test.setQuestions(new ArrayList<>());
-        }
-        mapper.save(test);
-        return new GatewayResponse<>(test, 200);
+        return new GatewayResponse<>(candidateTestService.create(candidateTest), 200);
     }
 }

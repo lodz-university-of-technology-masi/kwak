@@ -1,5 +1,5 @@
 {
-  "body": " {\n    \"login\": \"216892\",\n    \"email\": \"216892@edu.p.lodz.pl\",\n    \"name\": \"Konrad\",\n    \"surname\": \"Stępniak\"\n  }",
+  "body": " { \"email\": \"216892@edu.p.lodz.pl\",\n    \"name\": \"Konrad\",\n    \"surname\": \"Stępniak\"\n  }",
   "resource": "/{proxy+}",
   "path": "/candidates",
   "httpMethod": "POST",
