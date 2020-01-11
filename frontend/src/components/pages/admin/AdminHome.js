@@ -22,7 +22,8 @@ import {
     NullableBooleanInput,
     Toolbar,
     SaveButton,
-    email
+    email,
+    BooleanInput
 } from 'react-admin';
 
 import {dataProvider} from "../../../utils/APIDataProvider";
@@ -144,9 +145,9 @@ export const CandidateTestList = props => (
             <ReferenceField sortable={false} source="candidateId" reference="candidates">
                 <TextField source="name"/>
             </ReferenceField>
-            <ReferenceField sortable={false} source="testId" reference="tests">
-                <TextField source="title"/>
-            </ReferenceField>
+            <TextField source="title"/>
+            <FunctionField label="Need rating"
+                           render={record => `${(record.questions && record.questions.length !== 0 && record.questions.filter(e => e.correct === null).length !== 0) ? 'Yes' : 'No'}`}/>
             <EditButton label="Rate"/>
         </Datagrid>
     </List>
@@ -162,11 +163,20 @@ export const CandidateTestEdit = props => (
     <Edit {...props}>
         <SimpleForm toolbar={<TestRatingToolbar/>}>
             <ArrayInput source="questions">
-                <SimpleFormIterator>
-                    <TextInput disabled source="answer" label="Answer"/>
-                    <NullableBooleanInput label="Correct" source="correct"/>
-                </SimpleFormIterator>
-            </ArrayInput>
+            <SimpleFormIterator>
+                <TextInput disabled source="title" label="Title"/>
+                <TextInput disabled source="description" label="Description"/>
+                <TextInput disabled source="code" label="Code"/>
+                <ArrayInput source="answers" label="Answers">
+                    <SimpleFormIterator>
+                        <TextInput disabled source="content" label="Answer"/>
+                        <TextInput disabled source="code" label="Answer"/>
+                        <BooleanInput disabled label="Selected" source="isSelected"/>
+                    </SimpleFormIterator>
+                </ArrayInput>
+                <NullableBooleanInput label="Correct" source="correct"/>
+            </SimpleFormIterator>
+        </ArrayInput>
         </SimpleForm>
     </Edit>
 );
