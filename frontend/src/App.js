@@ -17,7 +17,7 @@ Amplify.configure({
         endpoints: [
             {
                 name: "kwakApi",
-                endpoint: "https://t2ayllb7y6.execute-api.eu-central-1.amazonaws.com/dev",
+                endpoint: "https://ahysbf0ask.execute-api.eu-central-1.amazonaws.com/dev",
             }
         ]
     }
