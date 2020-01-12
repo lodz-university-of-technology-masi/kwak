@@ -147,7 +147,7 @@ export const CandidateTestList = props => {
                 <ReferenceField sortable={false} source="candidateId" reference="candidates">
                     <TextField source="name"/>
                 </ReferenceField>
-                <TextField source="title"/>
+                <TextField source="title" sortable={false}/>
                 <FunctionField label="Need rating"
                                render={record => `${record.solved === true && record.questions.filter(e => e.correct === null).length !== 0 ? "Yes" : "No"}`}/>
                 <FunctionField label="Rated"
