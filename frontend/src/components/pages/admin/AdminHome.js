@@ -212,7 +212,7 @@ const CandidateTestCreateToolbar = props => (
 );
 
 export const CandidateTestCreate = props => (
-    <Create {...props} afterSuccess="list">
+    <Create {...props}>
         <SimpleForm toolbar={<CandidateTestCreateToolbar/>}>
             <ReferenceInput source="candidateId" reference="candidates">
                 <SelectInput optionText="name"/>
