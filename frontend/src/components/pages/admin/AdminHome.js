@@ -14,6 +14,8 @@ import {
     ReferenceInput,
     Edit,
     Create,
+    Show,
+    SimpleShowLayout,
     SimpleForm,
     ArrayInput,
     SimpleFormIterator,
@@ -130,9 +132,19 @@ export const CandidateCreate = props => (
     </Create>
 );
 
+export const CandidateShow = props => (
+    <Show {...props}>
+        <SimpleShowLayout>
+            <TextField source="email"/>
+            <TextField source="name"/>
+            <TextField source="surname"/>
+        </SimpleShowLayout>
+    </Show>
+);
+
 export const CandidateList = props => (
     <List {...props} exporter={false}>
-        <Datagrid rowClick="edit">
+        <Datagrid rowClick="show">
             <TextField sortable={false} source="name"/>
             <TextField sortable={false} source="surname"/>
             <EmailField sortable={false} source="email"/>
@@ -144,7 +156,7 @@ export const CandidateTestList = props => {
     return (
         <List {...props} exporter={false}>
             <Datagrid rowClick={postRowClick}>
-                <ReferenceField sortable={false} source="candidateId" reference="candidates">
+                <ReferenceField sortable={false} source="candidateId" reference="candidates" link="show">
                     <TextField source="name"/>
                 </ReferenceField>
                 <TextField source="title" sortable={false}/>
@@ -240,7 +252,7 @@ export default function AdminHome(props) {
     return (
         <Admin dataProvider={dataProviderCSV} authProvider={authProvider} customRoutes={customRoutes}>
             <Resource name="tests" list={TestList} edit={TestEdit} create={TestCreate}/>
-            <Resource name="candidates" list={CandidateList} create={CandidateCreate}/>
+            <Resource name="candidates" list={CandidateList} create={CandidateCreate} show={CandidateShow}/>
             <Resource name="candidatetests" options={{label: 'Candidate Tests'}} list={CandidateTestList}
                       edit={CandidateTestEdit} create={CandidateTestCreate}/>
         </Admin>
