@@ -60,3 +60,30 @@ export const dataProvider = {
         }
     },
 };
+
+
+export const dataProviderCSV = {
+    ...dataProvider,
+    create: async (resource, params) => {
+        if (resource !== 'tests' || !params.data.file) {
+            return dataProvider.create(resource, params);
+        }
+
+        const {key, url} = await API.post('kwakApi', `/upload`, {});
+        await fetch(url, {
+            method: 'PUT',
+            body:  params.data.file.rawFile
+        });
+
+        const test = await API.post('kwakApi', `/tests/import`, {
+            body: {
+                testTitle: params.data.title,
+                fileKey: key
+            }
+        });
+
+        return {
+            data: test
+        };
+    }
+};

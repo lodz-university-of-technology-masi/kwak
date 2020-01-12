@@ -24,15 +24,17 @@ import {
     email,
 } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
-import {dataProvider} from "../../../utils/APIDataProvider";
+import {dataProviderCSV} from "../../../utils/APIDataProvider";
 import {authProvider} from "../../../utils/AuthProvider";
+import {customRoutes} from "../../../utils/CustomRoutes";
+import {TestActions} from "./TestActions";
 
 const TestTitle = ({record}) => {
     return <span>{record ? `${record.title}` : ''}</span>;
 };
 
 export const TestList = props => (
-    <List {...props}>
+    <List {...props} actions={<TestActions/>}>
         <Datagrid rowClick="edit">
             <TextField sortable={false} source="title"/>
             <TextField sortable={false} source="lang"/>
@@ -56,12 +58,12 @@ export const TestEdit = props => (
                     <TextInput source="code" multiline label="Code"/>
                     <RadioButtonGroupInput source="type" label="Type" disabled choices={[
                         {id: 'O', name: 'Open'},
-                        {id: 'Z', name: 'Closed'},
+                        {id: 'W', name: 'Closed'},
                         {id: 'L', name: 'Numeric'}
                     ]}/>
 
                     <FormDataConsumer>
-                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.type === 'Z' ? (
+                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.type === 'W' ? (
                             <ArrayInput source={getSource('answers')} label="Answers">
                                 <SimpleFormIterator>
                                     <TextInput source="content" multiline label="Content"/>
@@ -92,12 +94,12 @@ export const TestCreate = props => (
                     <TextInput source="code" multiline label="Code"/>
                     <RadioButtonGroupInput source="type" label="Type" choices={[
                         {id: 'O', name: 'Open'},
-                        {id: 'Z', name: 'Closed'},
+                        {id: 'W', name: 'Closed'},
                         {id: 'L', name: 'Numeric'}
                     ]}/>
 
                     <FormDataConsumer>
-                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.type === 'Z' ? (
+                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.type === 'W' ? (
                             <ArrayInput source={getSource('answers')} label="Answers">
                                 <SimpleFormIterator>
                                     <TextInput source="content" multiline label="Content"/>
@@ -129,7 +131,7 @@ export const CandidateCreate = props => (
 );
 
 export const CandidateList = props => (
-    <List {...props}>
+    <List {...props} exporter={false}>
         <Datagrid rowClick="edit">
             <TextField sortable={false} source="name"/>
             <TextField sortable={false} source="surname"/>
@@ -140,7 +142,7 @@ export const CandidateList = props => (
 export const CandidateTestList = props => {
     const postRowClick = (id, basePath, record) => record.solved ? 'edit' : null;
     return (
-        <List {...props}>
+        <List {...props} exporter={false}>
             <Datagrid rowClick={postRowClick}>
                 <ReferenceField sortable={false} source="candidateId" reference="candidates">
                     <TextField source="name"/>
@@ -224,7 +226,7 @@ export const CandidateTestCreate = props => (
 
 export default function AdminHome(props) {
     return (
-        <Admin dataProvider={dataProvider} authProvider={authProvider}>
+        <Admin dataProvider={dataProviderCSV} authProvider={authProvider} customRoutes={customRoutes}>
             <Resource name="tests" list={TestList} edit={TestEdit} create={TestCreate}/>
             <Resource name="candidates" list={CandidateList} create={CandidateCreate}/>
             <Resource name="candidatetests" options={{label: 'Candidate Tests'}} list={CandidateTestList}

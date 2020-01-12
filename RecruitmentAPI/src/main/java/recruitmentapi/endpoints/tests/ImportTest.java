@@ -86,7 +86,7 @@ public class ImportTest extends ServiceContainer implements RequestHandler<Gatew
 
             Question question = new Question();
             question.setType(parseQuestionCount(line[1]));
-            question.setDescription(line[3]);
+            question.setTitle(line[3]);
             if (question.getType().equals(Question.CLOSED)) {
                 question.setAnswers(parseAnswers(line));
             }

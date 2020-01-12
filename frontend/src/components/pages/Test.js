@@ -151,7 +151,7 @@ export class Test extends React.Component {
         if (this.state.test) {
             const question = this.state.test.questions[this.state.currentQuestion];
             switch (question.type) {
-                case 'Z':
+                case 'W':
                     return (
                         <AnswerList
                             entries={question.answers || []}
