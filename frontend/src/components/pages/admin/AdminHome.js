@@ -148,10 +148,13 @@ export const CandidateTestList = props => {
                     <TextField source="name"/>
                 </ReferenceField>
                 <TextField source="title" sortable={false}/>
-                <FunctionField label="Need rating"
-                               render={record => `${record.solved === true && record.questions.filter(e => e.correct === null).length !== 0 ? "Yes" : "No"}`}/>
-                <FunctionField label="Rated"
-                               render={record => `${record.solved === true && record.questions.filter(e => e.correct === null).length === 0 ? "Yes" : "No"}`}/>
+                <FunctionField label="Rating"
+                               render={record => {
+                                   const correctAnswers = record.questions.filter(e => e.correct);
+                                   if (!record.solved) return "Not solved";
+                                   if (record.questions.filter(e => e.correct === null).length !== 0) return "Waiting for rating";
+                                   return `${correctAnswers.length}/${record.questions.length}`
+                               }}/>
             </Datagrid>
         </List>)
 };
