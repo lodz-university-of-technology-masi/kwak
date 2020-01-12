@@ -25,6 +25,7 @@ import {
     Toolbar,
     SaveButton,
     email,
+    required
 } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
 import {dataProviderCSV} from "../../../utils/APIDataProvider";
@@ -49,8 +50,8 @@ export const TestEdit = props => (
     <Edit {...props} title={<TestTitle/>}>
         <SimpleForm>
             <TextInput disabled source="id"/>
-            <TextInput source="title"/>
-            <SelectInput source="lang" choices={[
+            <TextInput source="title" validate={[required()]}/>
+            <SelectInput source="lang" validate={[required()]} choices={[
                 {id: 'pl', name: 'Polish'},
                 {id: 'en', name: 'English'},
                 {id: 'de', name: 'German'},
@@ -61,10 +62,10 @@ export const TestEdit = props => (
             ]}/>
             <ArrayInput source="questions">
                 <SimpleFormIterator>
-                    <TextInput source="title" label="Title"/>
+                    <TextInput source="title" label="Title" validate={[required()]}/>
                     <TextInput source="description" multiline label="Description"/>
                     <TextInput source="code" multiline label="Code"/>
-                    <RadioButtonGroupInput source="type" label="Type" disabled choices={[
+                    <RadioButtonGroupInput source="type" label="Type" validate={[required()]} disabled choices={[
                         {id: 'O', name: 'Open'},
                         {id: 'W', name: 'Closed'},
                         {id: 'L', name: 'Numeric'}
@@ -99,8 +100,8 @@ export const TestEdit = props => (
 export const TestCreate = props => (
     <Create {...props}>
         <SimpleForm>
-            <TextInput source="title"/>
-            <SelectInput source="lang" choices={[
+            <TextInput source="title" validate={[required()]}/>
+            <SelectInput source="lang" validate={[required()]} choices={[
                 {id: 'pl', name: 'Polish'},
                 {id: 'en', name: 'English'},
                 {id: 'de', name: 'German'},
@@ -111,10 +112,10 @@ export const TestCreate = props => (
             ]}/>
             <ArrayInput source="questions">
                 <SimpleFormIterator>
-                    <TextInput source="title" label="Title"/>
+                    <TextInput source="title" label="Title" validate={[required()]}/>
                     <TextInput source="description" multiline label="Description"/>
                     <TextInput source="code" multiline label="Code"/>
-                    <RadioButtonGroupInput source="type" label="Type" choices={[
+                    <RadioButtonGroupInput source="type" label="Type" validate={[required()]} choices={[
                         {id: 'O', name: 'Open'},
                         {id: 'W', name: 'Closed'},
                         {id: 'L', name: 'Numeric'}
@@ -155,8 +156,8 @@ export const CandidateCreate = props => (
     <Create {...props}>
         <SimpleForm>
             <TextInput source="email" validate={validateEmail}/>
-            <TextInput source="name"/>
-            <TextInput source="surname"/>
+            <TextInput source="name" validate={[required()]}/>
+            <TextInput source="surname" validate={[required()]}/>
         </SimpleForm>
     </Create>
 );
