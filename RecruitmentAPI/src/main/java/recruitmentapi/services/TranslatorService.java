@@ -38,6 +38,7 @@ public class TranslatorService {
         translatedTest.setLang(targetLang);
         translatedTest.setTitle(translation.get(translationIdx++));
 
+        ArrayList<Question> translatedQuestions = new ArrayList<>();
         for (Question question : source.getQuestions()) {
             Question translatedQuestion = new Question();
 
@@ -48,13 +49,19 @@ public class TranslatorService {
             translatedQuestion.setType(question.getType());
 
             if (question.getAnswers() != null) {
+                ArrayList<Answer> translatedAnswers = new ArrayList<>();
                 for (Answer answer : question.getAnswers()) {
                     Answer translatedAnswer = new Answer();
                     translatedAnswer.setCode(answer.getCode());
                     translatedAnswer.setContent(translation.get(translationIdx++));
+                    translatedAnswers.add(translatedAnswer);
                 }
+                translatedQuestion.setAnswers(translatedAnswers);
             }
+            translatedQuestions.add(translatedQuestion);
         }
+
+        translatedTest.setQuestions(translatedQuestions);
 
         return translatedTest;
     }
