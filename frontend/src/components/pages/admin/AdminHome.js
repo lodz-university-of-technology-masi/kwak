@@ -162,6 +162,7 @@ export const CandidateTestList = props => {
                 <TextField source="title" sortable={false}/>
                 <FunctionField label="Rating"
                                render={record => {
+                                   if (!record.questions) return "Unknown result";
                                    const correctAnswers = record.questions.filter(e => e.correct);
                                    if (!record.solved) return "Not solved";
                                    if (record.questions.filter(e => e.correct === null).length !== 0) return "Waiting for rating";
