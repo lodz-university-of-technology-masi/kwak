@@ -12,6 +12,7 @@ import java.util.List;
 public class Test {
 
     private String id;
+    private String parentId;
     private String title;
     private String lang;
     private ArrayList<Question> questions;
@@ -25,6 +26,15 @@ public class Test {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @DynamoDBAttribute(attributeName = "ParentId")
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 
     @DynamoDBAttribute(attributeName = "Title")

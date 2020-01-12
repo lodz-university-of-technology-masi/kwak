@@ -20,6 +20,7 @@ public class AddTest extends ServiceContainer implements RequestHandler<GatewayR
             for (String lang : test.getTargetLanguages()) {
                 Test translatedTest = TranslatorService.translateTest(test, lang);
                 if (translatedTest != null) {
+                    translatedTest.setParentId(test.getId());
                     testService.create(translatedTest);
                 }
             }

@@ -15,6 +15,7 @@ import {
     Edit,
     Create,
     Show,
+    SelectArrayInput,
     SimpleShowLayout,
     SimpleForm,
     ArrayInput,
@@ -50,8 +51,13 @@ export const TestEdit = props => (
             <TextInput disabled source="id"/>
             <TextInput source="title"/>
             <SelectInput source="lang" choices={[
-                {id: 'PL', name: 'Polish'},
-                {id: 'EN', name: 'English'},
+                {id: 'pl', name: 'Polish'},
+                {id: 'en', name: 'English'},
+                {id: 'de', name: 'German'},
+                {id: 'fr', name: 'French'},
+                {id: 'ru', name: 'Russian'},
+                {id: 'jp', name: 'Japanese'},
+                {id: 'cn', name: 'Chinese'},
             ]}/>
             <ArrayInput source="questions">
                 <SimpleFormIterator>
@@ -77,6 +83,15 @@ export const TestEdit = props => (
                     </FormDataConsumer>
                 </SimpleFormIterator>
             </ArrayInput>
+            <SelectArrayInput label="Also create translated versions" source="targetLanguages" choices={[
+                {id: 'pl', name: 'Polish'},
+                {id: 'en', name: 'English'},
+                {id: 'de', name: 'German'},
+                {id: 'fr', name: 'French'},
+                {id: 'ru', name: 'Russian'},
+                {id: 'jp', name: 'Japanese'},
+                {id: 'cn', name: 'Chinese'},
+            ]} />
         </SimpleForm>
     </Edit>
 );
@@ -86,8 +101,13 @@ export const TestCreate = props => (
         <SimpleForm>
             <TextInput source="title"/>
             <SelectInput source="lang" choices={[
-                {id: 'PL', name: 'Polish'},
-                {id: 'EN', name: 'English'},
+                {id: 'pl', name: 'Polish'},
+                {id: 'en', name: 'English'},
+                {id: 'de', name: 'German'},
+                {id: 'fr', name: 'French'},
+                {id: 'ru', name: 'Russian'},
+                {id: 'jp', name: 'Japanese'},
+                {id: 'cn', name: 'Chinese'},
             ]}/>
             <ArrayInput source="questions">
                 <SimpleFormIterator>
@@ -113,6 +133,15 @@ export const TestCreate = props => (
                     </FormDataConsumer>
                 </SimpleFormIterator>
             </ArrayInput>
+            <SelectArrayInput label="Also create translated versions" source="targetLanguages" choices={[
+                {id: 'pl', name: 'Polish'},
+                {id: 'en', name: 'English'},
+                {id: 'de', name: 'German'},
+                {id: 'fr', name: 'French'},
+                {id: 'ru', name: 'Russian'},
+                {id: 'jp', name: 'Japanese'},
+                {id: 'cn', name: 'Chinese'},
+            ]} />
         </SimpleForm>
     </Create>
 );
