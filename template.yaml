@@ -78,6 +78,23 @@ Resources:
             RestApiId: !Ref KwakApi
             Path: /tests
             Method: post
+  ImportTestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Policies:
+        - AmazonDynamoDBFullAccess
+        - AmazonS3FullAccess
+      CodeUri: RecruitmentAPI
+      Handler: recruitmentapi.endpoints.tests.ImportTest::handleRequest
+      Runtime: java8
+      MemorySize: 512
+      Events:
+        GetTests:
+          Type: Api
+          Properties:
+            RestApiId: !Ref KwakApi
+            Path: /tests/import
+            Method: post
   UpdateTestFunction:
     Type: AWS::Serverless::Function
     Properties:

@@ -16,5 +16,7 @@ dependencies {
     implementation 'com.amazonaws:aws-lambda-java-events:2.2.7'
     implementation 'com.amazonaws:aws-java-sdk-dynamodb:1.11.666'
     implementation 'com.amazonaws:aws-java-sdk-cognitoidp:1.11.683'
+    implementation 'com.opencsv:opencsv:5.0'
+
     testImplementation 'junit:junit:4.12'
 }

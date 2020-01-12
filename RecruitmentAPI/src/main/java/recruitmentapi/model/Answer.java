@@ -8,6 +8,14 @@ public class Answer {
     private String code;
     private Boolean isSelected;
 
+    public Answer() {
+
+    }
+
+    public Answer(String content) {
+        this.content = content;
+    }
+
     public Boolean getSelected() {
         return isSelected;
     }

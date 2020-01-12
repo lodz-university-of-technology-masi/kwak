@@ -61,4 +61,8 @@ public class Question {
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
+
+    public static final String OPEN = "O";
+    public static final String NUMBER = "L";
+    public static final String CLOSED = "W";
 }
