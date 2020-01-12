@@ -32,7 +32,7 @@ public class ImportTest extends ServiceContainer implements RequestHandler<Gatew
 
         Test test = new Test();
         test.setTitle(importTestRequest.getTestTitle());
-        test.setQuestions(loadQuestions(testObject.getObjectContent()));
+        test.setQuestions(new ArrayList<>(loadQuestions(testObject.getObjectContent())));
         test.setLang(testLanguage);
 
         try {

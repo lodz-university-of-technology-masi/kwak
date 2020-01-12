@@ -82,7 +82,7 @@ export class Test extends React.Component {
         console.log(candidateTest);
         candidateTest.solved = true;
         for (let i = 0; i < candidateTest.questions.length; i++) {
-            if (candidateTest.questions[i].type === "Z") {
+            if (candidateTest.questions[i].type === "W") {
                 const selectedAnswers = getAnswers(candidateTest.id, i);
                 for (let j = 0; j < candidateTest.questions[i].answers.length; j++) {
                     candidateTest.questions[i].answers[j].selected = selectedAnswers.includes(j);
