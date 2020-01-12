@@ -165,6 +165,9 @@ const useStyles = makeStyles({
     input: {
         '& .MuiInputBase-input': { color: 'black' }
     },
+    selected: {
+        backgroundColor: '#fff8d2'
+    },
 });
 export const CandidateTestEdit = props => {
     const classes = useStyles();
@@ -184,15 +187,19 @@ export const CandidateTestEdit = props => {
                         </FormDataConsumer>
                         <ArrayInput source="answers" label="Answers">
                             <SimpleFormIterator disableAdd disableRemove>
-                                <TextInput disabled source="content" label="Answer"/>
+                                <FormDataConsumer>
+                                    {({formData, scopedFormData, getSource, ...rest}) =>
+                                        (<TextInput
+                                            disabled
+                                            source={getSource("content")}
+                                            label={scopedFormData.selected ? "Selected" : (scopedFormData.selected !== null ? "Not selected" : "Answer")}
+                                            className={scopedFormData.selected ? classes.selected : null}
+
+                                        />)}
+                                </FormDataConsumer>
                                 <FormDataConsumer>
                                     {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.code !== null ?
                                         (<TextInput disabled source={getSource("code")} label="Code"/>) : null}
-                                </FormDataConsumer>
-                                <FormDataConsumer>
-                                    {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.selected !== null ?
-                                        (<TextInput disabled label={"Selected"}
-                                                    source={getSource("selected")}/>) : null}
                                 </FormDataConsumer>
                             </SimpleFormIterator>
                         </ArrayInput>
