@@ -78,8 +78,8 @@ export class Test extends React.Component {
 
 
     async sendResult() {
+        this.setState({saving: true});
         let candidateTest = this.state.test;
-        console.log(candidateTest);
         candidateTest.solved = true;
         for (let i = 0; i < candidateTest.questions.length; i++) {
             if (candidateTest.questions[i].type === "W") {
@@ -95,7 +95,9 @@ export class Test extends React.Component {
             body:
             candidateTest
         });
-    window.location.href = "/";
+        this.setState({saving: false})
+        window.location.href = "/";
+
     }
 
 
@@ -108,7 +110,15 @@ export class Test extends React.Component {
         };
         const isFirstQuestion = this.state.currentQuestion === 0;
         const isLastQuestion = this.state.test && this.state.currentQuestion === this.state.test.questions.length - 1;
+        let buttonContent;
+        if (this.state.saving) {
+            buttonContent = <div className="spinner-border" role="status"/>;
+        }else if(isLastQuestion){
+            buttonContent = "Zakończ";
 
+        }else{
+            buttonContent = "Następne pytanie";
+        }
         return (
             <ReactCSSTransitionGroup
                 transitionName="fade"
@@ -139,7 +149,7 @@ export class Test extends React.Component {
 
                         <button onClick={isLastQuestion ? this.sendResult.bind(this) : this.nextQuestion}
                                 className="btn btn-primary btn btn-block mt-2" type="button">
-                            {isLastQuestion ? "Zakończ" : "Następne pytanie"}
+                            {buttonContent}
                         </button>
                     </div>
                 </div>
