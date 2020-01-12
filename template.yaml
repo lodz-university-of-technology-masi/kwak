@@ -21,6 +21,429 @@ Resources:
         AllowHeaders: "'*'"
         AllowOrigin: "'*'"
       StageName: dev
+      GatewayResponses:
+        BAD_REQUEST_BODY:
+          StatusCode: 400
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: "'*'"
+          ResponseTemplates:
+            application/json: '{"message": "$context.error.validationErrorString"}'
+
+      DefinitionBody:
+        openapi: 3.0.0
+        info:
+          description: KWAK API
+          version: "1.0.0"
+          title: KWAK API
+          contact:
+            email: vesphy@gmail.com
+        x-amazon-apigateway-request-validators:
+          all:
+            validateRequestBody: true
+            validateRequestParameters: true
+          params-only :
+            validateRequestBody: false,
+            validateRequestParameters : true
+        x-amazon-apigateway-request-validator : params-only
+        paths:
+          "/tests/import":
+            post:
+              x-amazon-apigateway-request-validator: all
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ImportTestFunction.Arn}/invocations
+                responses: {}
+              requestBody:
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/ImportTest'
+              responses:
+                '200':
+                  description: test imported
+          "/tests":
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AddTestFunction.Arn}/invocations
+                responses: {}
+              requestBody:
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/Test'
+              responses:
+                '200':
+                  description: test created
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: GET
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetTestsFunction.Arn}/invocations
+                responses: {}
+              responses:
+                '200':
+                  description: list of all tests
+          "/tests/{id}":
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: GET
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetTestFunction.Arn}/invocations
+                responses: {}
+              parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                    type: string
+                    format: uuid
+              responses:
+                '200':
+                  description: get test
+            delete:
+              x-amazon-apigateway-integration:
+                httpMethod: DELETE
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeleteTestFunction.Arn}/invocations
+                responses: {}
+              parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                    type: string
+                    format: uuid
+              responses:
+                '204':
+                  description: delete test
+            put:
+              x-amazon-apigateway-integration:
+                httpMethod: PUT
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdateTestFunction.Arn}/invocations
+                responses: {}
+              parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                    type: string
+                    format: uuid
+              requestBody:
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/Test'
+              responses:
+                '200':
+                  description: update test
+          "/candidatetests":
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AddAdminCandidateTestFunction.Arn}/invocations
+                responses: {}
+              requestBody:
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/CandidateTest'
+              responses:
+                '200':
+                  description: candidate test created
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: GET
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllCandidateTestsFunction.Arn}/invocations
+                responses: {}
+              responses:
+                '200':
+                  description: list of all candidate tests
+          "/candidatetests/{id}":
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: GET
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAdminCandidateTestFunction.Arn}/invocations
+                responses: {}
+              parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                    type: string
+                    format: uuid
+              responses:
+                '200':
+                  description: get candidate test
+            delete:
+              x-amazon-apigateway-integration:
+                httpMethod: DELETE
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeleteCandidateTestFunction.Arn}/invocations
+                responses: {}
+              parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                    type: string
+                    format: uuid
+              responses:
+                '204':
+                  description: delete test
+            put:
+              x-amazon-apigateway-integration:
+                httpMethod: PUT
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdateCandidateTestFunction.Arn}/invocations
+                responses: {}
+              parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                    type: string
+                    format: uuid
+              requestBody:
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/CandidateTest'
+              responses:
+                '200':
+                  description: update candidate test
+          "/candidates":
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AddCandidateFunction.Arn}/invocations
+                responses: {}
+              requestBody:
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/Candidate'
+              responses:
+                '200':
+                  description: candidate test created
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: GET
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetCandidatesFunction.Arn}/invocations
+                responses: {}
+              responses:
+                '200':
+                  description: list of all candidates
+          "/candidates/{candidateId}":
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: GET
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetCandidateFunction.Arn}/invocations
+                responses: {}
+              parameters:
+                - in: path
+                  name: candidateId
+                  required: true
+                  schema:
+                    type: string
+                    format: uuid
+              responses:
+                '200':
+                  description: get candidate
+            delete:
+              x-amazon-apigateway-integration:
+                httpMethod: DELETE
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeleteCandidateFunction.Arn}/invocations
+                responses: {}
+              parameters:
+                - in: path
+                  name: candidateId
+                  required: true
+                  schema:
+                    type: string
+                    format: uuid
+              responses:
+                '204':
+                  description: delete candidate
+          "/candidates/{candidateId}/tests":
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: GET
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetCandidateTestsFunction.Arn}/invocations
+                responses: {}
+              parameters:
+                - in: path
+                  name: candidateId
+                  required: true
+                  schema:
+                    type: string
+                    format: uuid
+              responses:
+                '200':
+                  description: get candidate tests
+          "/update":
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GeneratePresignedURLFunction.Arn}/invocations
+                responses: {}
+              responses:
+                '200':
+                  description: generated key and url
+
+        components:
+          schemas:
+            Candidate:
+              type: object
+              required:
+                - email
+                - name
+                - surname
+              properties:
+                id:
+                  type: string
+                  minLength: 5
+                  maxLength: 100
+                name:
+                  type: string
+                  minLength: 5
+                  maxLength: 100
+                surname:
+                  type: string
+                  minLength: 5
+                  maxLength: 100
+
+            ImportTest:
+              type: object
+              required:
+                - testTitle
+                - fileKey
+              properties:
+                testTitle:
+                  type: string
+                  minLength: 5
+                  maxLength: 80
+                fileKey:
+                  type: string
+                  format: uuid
+            CandidateTest:
+              allOf:
+                - $ref: '#/components/schemas/Test'
+                - type: object
+                  required:
+                    - candidateId
+                    - testId
+                  properties:
+                    candidateId:
+                      type: string
+                      format: uuid
+                    testId:
+                      type: string
+                      format: uuid
+                    solved:
+                      type: boolean
+                      nullable: true
+
+            Test:
+              type: object
+              required:
+                - title
+                - lang
+                - questions
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                title:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                lang:
+                  type: string
+                  enum:
+                    - EN
+                    - PL
+                questions:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - title
+                      - type
+                    properties:
+                      title:
+                        type: string
+                        minLength: 1
+                        maxLength: 100
+                      description:
+                        type: string
+                        nullable: true
+                        minLength: 1
+                        maxLength: 500
+                      code:
+                        type: string
+                        nullable: true
+                        minLength: 1
+                        maxLength: 500
+                      type:
+                        type: string
+                        enum:
+                          - W
+                          - L
+                          - O
+                      correct:
+                        type: boolean
+                        nullable: true
+                      answers:
+                        nullable: true
+                        type: array
+                        items:
+                          type: object
+                          required:
+                            - content
+                          properties:
+                            content:
+                              type: string
+                              minLength: 1
+                              maxLength: 200
+                            code:
+                              type: string
+                              nullable: true
+                              minLength: 1
+                              maxLength: 500
+                            selected:
+                              type: boolean
+                              nullable: true
 
   TestsTable:
     Type: AWS::DynamoDB::Table
@@ -56,13 +479,7 @@ Resources:
       Handler: recruitmentapi.endpoints.tests.GetTests::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /tests
-            Method: get
+
   AddTestFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -71,13 +488,7 @@ Resources:
       Handler: recruitmentapi.endpoints.tests.AddTest::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /tests
-            Method: post
+
   ImportTestFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -88,13 +499,7 @@ Resources:
       Handler: recruitmentapi.endpoints.tests.ImportTest::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /tests/import
-            Method: post
+
   UpdateTestFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -103,13 +508,7 @@ Resources:
       Handler: recruitmentapi.endpoints.tests.UpdateTest::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /tests/{id}
-            Method: put
+
   DeleteTestFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -118,13 +517,7 @@ Resources:
       Handler: recruitmentapi.endpoints.tests.DeleteTest::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /tests/{id}
-            Method: delete
+
   GetTestFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -133,13 +526,7 @@ Resources:
       Handler: recruitmentapi.endpoints.tests.GetTest::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /tests/{id}
-            Method: get
+
   GetCandidatesFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -155,13 +542,7 @@ Resources:
       Handler: recruitmentapi.endpoints.candidates.GetCandidates::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /candidates
-            Method: get
+
   GetCandidateFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -177,13 +558,7 @@ Resources:
       Handler: recruitmentapi.endpoints.candidates.GetCandidate::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /candidates/{candidateId}
-            Method: get
+
   DeleteCandidateFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -199,13 +574,7 @@ Resources:
       Handler: recruitmentapi.endpoints.candidates.DeleteCandidate::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /candidates/{candidateId}
-            Method: delete
+
   AddCandidateFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -221,13 +590,7 @@ Resources:
       Handler: recruitmentapi.endpoints.candidates.AddCandidate::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /candidates
-            Method: post
+
   GetAllCandidateTestsFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -237,13 +600,7 @@ Resources:
       Handler: recruitmentapi.endpoints.candidatetests.GetAllCandidateTests::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /candidatetests
-            Method: get
+
   GetCandidateTestsFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -253,13 +610,7 @@ Resources:
       Handler: recruitmentapi.endpoints.candidates.tests.GetCandidateTests::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /candidates/{candidateId}/tests
-            Method: get
+
   AddAdminCandidateTestFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -268,13 +619,7 @@ Resources:
       Handler: recruitmentapi.endpoints.candidatetests.AddCandidateTest::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /candidatetests
-            Method: post
+
   UpdateCandidateTestFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -283,13 +628,7 @@ Resources:
       Handler: recruitmentapi.endpoints.candidatetests.UpdateCandidateTest::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /candidatetests/{id}
-            Method: put
+
   DeleteCandidateTestFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -298,13 +637,7 @@ Resources:
       Handler: recruitmentapi.endpoints.candidatetests.DeleteCandidateTest::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /candidatetests/{id}
-            Method: delete
+
   GetAdminCandidateTestFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -313,13 +646,7 @@ Resources:
       Handler: recruitmentapi.endpoints.candidatetests.GetCandidateTest::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /candidatetests/{id}
-            Method: get
+
   GeneratePresignedURLFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -328,13 +655,6 @@ Resources:
       Handler: recruitmentapi.endpoints.GeneratePresignedURL::handleRequest
       Runtime: java8
       MemorySize: 512
-      Events:
-        GetTests:
-          Type: Api
-          Properties:
-            RestApiId: !Ref KwakApi
-            Path: /upload
-            Method: post
 
 Outputs:
   Api:
