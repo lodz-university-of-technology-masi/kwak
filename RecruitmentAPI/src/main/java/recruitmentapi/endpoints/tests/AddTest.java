@@ -6,6 +6,7 @@ import recruitmentapi.GatewayRequest;
 import recruitmentapi.GatewayResponse;
 import recruitmentapi.services.ServiceContainer;
 import recruitmentapi.model.Test;
+import recruitmentapi.services.TranslatorService;
 
 public class AddTest extends ServiceContainer implements RequestHandler<GatewayRequest, GatewayResponse<Test>> {
     @Override
@@ -13,6 +14,15 @@ public class AddTest extends ServiceContainer implements RequestHandler<GatewayR
         Test test = request.getTypedBody(Test.class);
         if (test.getId() != null) {
             return new GatewayResponse<>(null, 400);
+        }
+
+        if (test.getTargetLanguages() != null) {
+            for (String lang : test.getTargetLanguages()) {
+                Test translatedTest = TranslatorService.translateTest(test, lang);
+                if (translatedTest != null) {
+                    testService.create(translatedTest);
+                }
+            }
         }
 
         return new GatewayResponse<>(testService.create(test), 200);
