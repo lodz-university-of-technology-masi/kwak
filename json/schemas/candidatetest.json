@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["id", "title", "lang", "questions", "candidateId", "testId"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 100
+    },
+    "candidateId": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 100
+    },
+    "testId": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 100
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "lang": {
+      "type": "string",
+      "enum": ["EN", "PL"]
+    },
+    "solved": {
+      "type": ["boolean", "null"]
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "type"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "description": {
+            "type": ["string", "null"],
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "code": {
+            "type": ["string", "null"],
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "type": {
+            "type": "string",
+            "enum": ["W", "L", "O"]
+          },
+          "correct": {
+            "type": ["boolean", "null"]
+          },
+          "answers": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["content"],
+                  "properties": {
+
+                    "content": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 200
+                    },
+                    "code": {
+                      "type": ["string", "null"],
+                      "minLength": 1,
+                      "maxLength": 500
+                    },
+                    "selected": {
+                      "type": ["boolean", "null"]
+                    }
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

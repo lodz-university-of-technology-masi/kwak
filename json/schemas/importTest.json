@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["testTitle", "fileKey"],
+  "properties": {
+    "testTitle": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 80
+    },
+    "fileKey": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 100
+    }
+  }
+}
