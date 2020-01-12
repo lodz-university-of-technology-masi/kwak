@@ -20,8 +20,10 @@ public class TranslatorService {
                 add(question.getTitle());
                 add(question.getDescription());
 
-                for (Answer answer : question.getAnswers()) {
-                    add(answer.getContent());
+                if (question.getAnswers() != null) {
+                    for (Answer answer : question.getAnswers()) {
+                        add(answer.getContent());
+                    }
                 }
             }
         }};
@@ -45,10 +47,12 @@ public class TranslatorService {
             translatedQuestion.setCode(question.getCode());
             translatedQuestion.setType(question.getType());
 
-            for (Answer answer : question.getAnswers()) {
-                Answer translatedAnswer = new Answer();
-                translatedAnswer.setCode(answer.getCode());
-                translatedAnswer.setContent(translation.get(translationIdx++));
+            if (question.getAnswers() != null) {
+                for (Answer answer : question.getAnswers()) {
+                    Answer translatedAnswer = new Answer();
+                    translatedAnswer.setCode(answer.getCode());
+                    translatedAnswer.setContent(translation.get(translationIdx++));
+                }
             }
         }
 
