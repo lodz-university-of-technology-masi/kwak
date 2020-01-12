@@ -7,16 +7,16 @@ import {getAnswers, saveAnswers} from "../../utils/Storage.js";
 import {OpenAnswer} from "../OpenAnswer";
 import {API, Auth} from 'aws-amplify';
 import {NumericAnswer} from "../NumericAnswer";
+import {Redirect} from "react-router-dom";
 
 export class Test extends React.Component {
-    _isMounted = false;
-
     constructor(props) {
         super(props);
         this.state = {
             currentQuestion: 0,
             test: null,
             responses: [],
+            toDashboard: false
         };
 
         this.prevQuestion = this.prevQuestion.bind(this);
@@ -27,15 +27,12 @@ export class Test extends React.Component {
 
     // Load test data
     async componentDidMount() {
-        this._isMounted = true;
         const {match: {params: {testId}}} = this.props;
         const test = await this.getCandidateTest(testId);
-        if (this._isMounted) {
-            this.setState({
-                test: test,
-                responses: getAnswers(test.id, this.state.currentQuestion)
-            });
-        }
+        this.setState({
+            test: test,
+            responses: getAnswers(test.id, this.state.currentQuestion)
+        });
     }
 
 
@@ -44,10 +41,6 @@ export class Test extends React.Component {
         const {sub: candidateId} = currentSession.getAccessToken().decodePayload();
         const candidateTests = await API.get('kwakApi', `/candidates/${candidateId}/tests`, {});
         return candidateTests.filter((e) => e.testId === testId)[0];
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false;
     }
 
     changeQuestion(idx) {
@@ -81,27 +74,32 @@ export class Test extends React.Component {
         this.setState({saving: true});
         let candidateTest = this.state.test;
         candidateTest.solved = true;
-        for (let i = 0; i < candidateTest.questions.length; i++) {
-            if (candidateTest.questions[i].type === "W") {
-                const selectedAnswers = getAnswers(candidateTest.id, i);
-                for (let j = 0; j < candidateTest.questions[i].answers.length; j++) {
-                    candidateTest.questions[i].answers[j].selected = selectedAnswers.includes(j);
+
+        for (const [questionIdx, question] of candidateTest.questions.entries()) {
+            if (question.type === "W") {
+                const selectedAnswers = getAnswers(candidateTest.id, questionIdx);
+                for (const [answerIdx, answer] of question.answers.entries()) {
+                    answer.selected = selectedAnswers.includes(answerIdx);
                 }
             } else {
-                candidateTest.questions[i].answers = [{"content": getAnswers(candidateTest.id, i)}];
+                question.answers = [{"content": getAnswers(candidateTest.id, questionIdx)}];
             }
         }
+
         await API.put('kwakApi', `/candidatetests/${candidateTest.id}`, {
             body:
             candidateTest
-        });
-        this.setState({saving: false})
-        window.location.href = "/";
-
+        }).then(() => this.setState(() => ({
+            toDashboard: true,
+            saving:false
+        })));
     }
 
 
     render() {
+        if (this.state.toDashboard === true) {
+            return <Redirect to='/' />
+        }
 
         const question = this.state.test ? this.state.test.questions[this.state.currentQuestion] : {
             title: undefined,
