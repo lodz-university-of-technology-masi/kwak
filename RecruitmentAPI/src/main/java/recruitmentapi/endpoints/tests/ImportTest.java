@@ -9,15 +9,16 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.MappingStrategy;
 import com.opencsv.exceptions.*;
+import recruitmentapi.ErrorMessage;
 import recruitmentapi.GatewayRequest;
 import recruitmentapi.GatewayResponse;
+import recruitmentapi.KwakException;
 import recruitmentapi.model.Answer;
 import recruitmentapi.model.Question;
 import recruitmentapi.model.Test;
 import recruitmentapi.services.ServiceContainer;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,29 +29,32 @@ public class ImportTest extends ServiceContainer implements RequestHandler<Gatew
     @Override
     public GatewayResponse<Test> handleRequest(GatewayRequest request, Context context) {
         ImportTestRequest importTestRequest = request.getTypedBody(ImportTestRequest.class);
-        S3Object testObject = s3Service.openFile(importTestRequest.getFileKey());
-
         Test test = new Test();
         test.setTitle(importTestRequest.getTestTitle());
-        test.setQuestions(new ArrayList<>(loadQuestions(testObject.getObjectContent())));
-        test.setLang(testLanguage);
-
         try {
-            testObject.close();
+            test.setQuestions(new ArrayList<>(loadQuestions(importTestRequest.getFileKey())));
+            test.setLang(testLanguage);
+            testService.create(test);
+        } catch (KwakException e) {
+            return new GatewayResponse<>(new ErrorMessage(400, e.toString()));
         } catch (IOException e) {
             return new GatewayResponse<>(400);
         }
-        return new GatewayResponse<>(testService.create(test), 200);
+
+        return new GatewayResponse<>(test, 200);
     }
 
-    private List<Question> loadQuestions(InputStream inputStream) {
-        CsvToBean<Question> csvToBean = new CsvToBeanBuilder<Question>(new InputStreamReader(inputStream))
-                .withSeparator(';')
-                .withMappingStrategy(
-                        new QuestionMappingStrategy()
-                ).build();
-
-        return csvToBean.parse();
+    private List<Question> loadQuestions(String fileKey) throws IOException {
+        try (S3Object testObject = s3Service.openFile(fileKey)) {
+            CsvToBean<Question> csvToBean = new CsvToBeanBuilder<Question>(new InputStreamReader(testObject.getObjectContent()))
+                    .withSeparator(';')
+                    .withMappingStrategy(
+                            new QuestionMappingStrategy()
+                    ).build();
+            return csvToBean.parse();
+        } catch (RuntimeException e){
+            throw new KwakException(e);
+        }
     }
 
 
@@ -79,16 +83,21 @@ public class ImportTest extends ServiceContainer implements RequestHandler<Gatew
         @Override
         public Question populateNewBean(String[] line) throws CsvBeanIntrospectionException, CsvDataTypeMismatchException, CsvConstraintViolationException, CsvValidationException {
             if (line.length < 5) {
-                throw new CsvValidationException("Line does not have enough fields");
+                throw new CsvValidationException("Line does not have enough fields got " + line.length + " fields.");
             }
-
             testLanguage = parseLanguage(line[2]);
 
             Question question = new Question();
             question.setType(parseQuestionCount(line[1]));
             question.setTitle(line[3]);
+            if (question.getTitle().isEmpty()) {
+                throw new CsvValidationException("Question title cannot be empty");
+            }
+
             if (question.getType().equals(Question.CLOSED)) {
                 question.setAnswers(parseAnswers(line));
+            } else if (!line[4].equals("|")) {
+                throw new CsvValidationException("Missing delimeter '|'");
             }
 
             return question;
@@ -96,7 +105,7 @@ public class ImportTest extends ServiceContainer implements RequestHandler<Gatew
 
         private String parseLanguage(String lang) throws CsvDataTypeMismatchException {
             if (!Test.isSupportedLanguage(lang)) {
-                throw new CsvDataTypeMismatchException("Invalid Language");
+                throw new CsvDataTypeMismatchException("Invalid language [" + lang + "]");
             }
 
             return lang;
@@ -105,28 +114,35 @@ public class ImportTest extends ServiceContainer implements RequestHandler<Gatew
         private List<Answer> parseAnswers(String[] line) throws CsvDataTypeMismatchException, CsvConstraintViolationException {
             int answersCount = parseAnswerCount(line[4]);
             if (line.length < 5 + answersCount) {
-                throw new CsvConstraintViolationException("Not enough questions");
+                throw new CsvConstraintViolationException("Answer count != number of answers");
             }
 
             ArrayList<Answer> answers = new ArrayList<>();
             for (int i = 5; i < 5 + answersCount; i++) {
+                if (line[i].isEmpty()) {
+                    throw new CsvConstraintViolationException("Answer " + i + " cannot be empty");
+                }
                 answers.add(new Answer(line[i]));
             }
 
             return answers;
         }
 
-        private int parseAnswerCount(String number) throws CsvDataTypeMismatchException {
+        private int parseAnswerCount(String number) throws CsvDataTypeMismatchException, CsvConstraintViolationException {
             try {
-                return Integer.parseInt(number);
+                int num = Integer.parseInt(number);
+                if (num <= 0) {
+                    throw new CsvConstraintViolationException("Invalid answer count " + number + ", must be at least 1");
+                }
+                return num;
             } catch (NumberFormatException nfe) {
-                throw new CsvDataTypeMismatchException("Invalid question number");
+                throw new CsvDataTypeMismatchException("Invalid answer count " + number + ", must be an integer greater than 1");
             }
         }
 
         private String parseQuestionCount(String type) throws CsvDataTypeMismatchException {
             if (!type.equals(Question.CLOSED) && !type.equals(Question.OPEN) && !type.equals(Question.NUMBER)) {
-                throw new CsvDataTypeMismatchException("Type does not exist");
+                throw new CsvDataTypeMismatchException("Type " + type + " does not exist");
             }
 
             return type;

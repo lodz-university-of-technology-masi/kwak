@@ -27,7 +27,7 @@ public class TestService {
     public void delete(String id) {
         Test test = findById(id);
         if (test == null) {
-            throw new KwakException("Test does not exist");
+            throw new KwakException("Test [" + id + "] does not exist");
         }
 
         mapper.delete(test);
@@ -35,7 +35,7 @@ public class TestService {
 
     public void update(Test test) {
         if (findById(test.getId()) == null) {
-            throw new KwakException("Test does not exist while updating");
+            throw new KwakException("Test [" + test.getId() + "] does not exist while updating");
         }
 
         mapper.save(test);

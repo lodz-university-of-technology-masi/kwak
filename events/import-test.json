@@ -1,5 +1,5 @@
 {
-  "body": "{\n    \"testTitle\": \"Importowany test\",\n    \"fileKey\": \"acf272d4-040c-481a-bbb6-784cd4c54eeb\"\n  }",
+  "body": "{\n    \"testTitle\": \"Importowany test\",\n    \"fileKey\": \"2ace56c9-c377-452a-9da6-ce2947eb3158\"\n  }",
   "resource": "/{proxy+}",
   "path": "/tests/import",
   "httpMethod": "POST",

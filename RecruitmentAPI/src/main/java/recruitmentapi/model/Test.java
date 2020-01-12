@@ -58,7 +58,6 @@ public class Test {
         return lang.equals("PL") || lang.equals("EN");
     }
 
-
     @Override
     public String toString() {
         return "Test{" +

@@ -75,15 +75,18 @@ export const dataProviderCSV = {
             body:  params.data.file.rawFile
         });
 
-        const test = await API.post('kwakApi', `/tests/import`, {
-            body: {
-                testTitle: params.data.title,
-                fileKey: key
+        try {
+            const test = await API.post('kwakApi', `/tests/import`, {
+                body: {
+                    testTitle: params.data.title,
+                    fileKey: key
+                }
+            });
+            return {
+                data: test
             }
-        });
-
-        return {
-            data: test
-        };
+        } catch (error) {
+            throw new Error(error.response.data.message)
+        }
     }
 };
