@@ -150,6 +150,8 @@ export const CandidateTestList = props => {
                 <TextField source="title"/>
                 <FunctionField label="Need rating"
                                render={record => `${record.solved === true && record.questions.filter(e => e.correct === null).length !== 0 ? "Yes" : "No"}`}/>
+                <FunctionField label="Rated"
+                               render={record => `${record.solved === true && record.questions.filter(e => e.correct === null).length === 0 ? "Yes" : "No"}`}/>
             </Datagrid>
         </List>)
 };
