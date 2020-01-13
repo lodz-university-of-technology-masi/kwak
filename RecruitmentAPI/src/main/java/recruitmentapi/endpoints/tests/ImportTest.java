@@ -104,6 +104,7 @@ public class ImportTest extends ServiceContainer implements RequestHandler<Gatew
         }
 
         private String parseLanguage(String lang) throws CsvDataTypeMismatchException {
+            lang = lang.toLowerCase();
             if (!Test.isSupportedLanguage(lang)) {
                 throw new CsvDataTypeMismatchException("Invalid language [" + lang + "]");
             }

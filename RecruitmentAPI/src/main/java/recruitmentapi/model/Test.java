@@ -74,7 +74,7 @@ public class Test {
     }
 
     public static boolean isSupportedLanguage(String lang) {
-        return lang.equals("PL") || lang.equals("EN");
+        return lang.equals("en") || lang.equals("pl");
     }
 
     @Override

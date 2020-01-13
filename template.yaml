@@ -310,7 +310,7 @@ Resources:
               responses:
                 '200':
                   description: get candidate tests
-          "/update":
+          "/upload":
             post:
               x-amazon-apigateway-integration:
                 credentials: 'arn:aws:iam::*:user/*'
@@ -391,8 +391,13 @@ Resources:
                 lang:
                   type: string
                   enum:
-                    - EN
-                    - PL
+                    - en
+                    - pl
+                    - de
+                    - fr
+                    - jp
+                    - ru
+                    - cn
                 questions:
                   type: array
                   items:
