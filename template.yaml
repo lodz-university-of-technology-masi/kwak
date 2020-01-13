@@ -16,6 +16,7 @@ Resources:
       Auth:
         AddDefaultAuthorizerToCorsPreflight: False
         DefaultAuthorizer: AWS_IAM
+        InvokeRole: CALLER_CREDENTIALS
       Cors:
         AllowMethods: "'*'"
         AllowHeaders: "'*'"
@@ -51,11 +52,11 @@ Resources:
             post:
               x-amazon-apigateway-request-validator: all
               x-amazon-apigateway-integration:
+                credentials: 'arn:aws:iam::*:user/*'
                 httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ImportTestFunction.Arn}/invocations
-                responses: {}
               requestBody:
                 content:
                   application/json:
@@ -67,11 +68,11 @@ Resources:
           "/tests":
             post:
               x-amazon-apigateway-integration:
+                credentials: 'arn:aws:iam::*:user/*'
                 httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AddTestFunction.Arn}/invocations
-                responses: {}
               requestBody:
                 content:
                   application/json:
@@ -82,22 +83,22 @@ Resources:
                   description: test created
             get:
               x-amazon-apigateway-integration:
-                httpMethod: GET
+                credentials: 'arn:aws:iam::*:user/*'
+                httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetTestsFunction.Arn}/invocations
-                responses: {}
               responses:
                 '200':
                   description: list of all tests
           "/tests/{id}":
             get:
               x-amazon-apigateway-integration:
-                httpMethod: GET
+                credentials: 'arn:aws:iam::*:user/*'
+                httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetTestFunction.Arn}/invocations
-                responses: {}
               parameters:
                 - in: path
                   name: id
@@ -110,11 +111,11 @@ Resources:
                   description: get test
             delete:
               x-amazon-apigateway-integration:
-                httpMethod: DELETE
+                credentials: 'arn:aws:iam::*:user/*'
+                httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeleteTestFunction.Arn}/invocations
-                responses: {}
               parameters:
                 - in: path
                   name: id
@@ -127,11 +128,11 @@ Resources:
                   description: delete test
             put:
               x-amazon-apigateway-integration:
-                httpMethod: PUT
+                credentials: 'arn:aws:iam::*:user/*'
+                httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdateTestFunction.Arn}/invocations
-                responses: {}
               parameters:
                 - in: path
                   name: id
@@ -150,11 +151,11 @@ Resources:
           "/candidatetests":
             post:
               x-amazon-apigateway-integration:
+                credentials: 'arn:aws:iam::*:user/*'
                 httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AddAdminCandidateTestFunction.Arn}/invocations
-                responses: {}
               requestBody:
                 content:
                   application/json:
@@ -165,22 +166,22 @@ Resources:
                   description: candidate test created
             get:
               x-amazon-apigateway-integration:
-                httpMethod: GET
+                credentials: 'arn:aws:iam::*:user/*'
+                httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllCandidateTestsFunction.Arn}/invocations
-                responses: {}
               responses:
                 '200':
                   description: list of all candidate tests
           "/candidatetests/{id}":
             get:
               x-amazon-apigateway-integration:
-                httpMethod: GET
+                credentials: 'arn:aws:iam::*:user/*'
+                httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAdminCandidateTestFunction.Arn}/invocations
-                responses: {}
               parameters:
                 - in: path
                   name: id
@@ -193,11 +194,11 @@ Resources:
                   description: get candidate test
             delete:
               x-amazon-apigateway-integration:
-                httpMethod: DELETE
+                credentials: 'arn:aws:iam::*:user/*'
+                httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeleteCandidateTestFunction.Arn}/invocations
-                responses: {}
               parameters:
                 - in: path
                   name: id
@@ -210,11 +211,11 @@ Resources:
                   description: delete test
             put:
               x-amazon-apigateway-integration:
-                httpMethod: PUT
+                credentials: 'arn:aws:iam::*:user/*'
+                httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${UpdateCandidateTestFunction.Arn}/invocations
-                responses: {}
               parameters:
                 - in: path
                   name: id
@@ -233,11 +234,11 @@ Resources:
           "/candidates":
             post:
               x-amazon-apigateway-integration:
+                credentials: 'arn:aws:iam::*:user/*'
                 httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AddCandidateFunction.Arn}/invocations
-                responses: {}
               requestBody:
                 content:
                   application/json:
@@ -248,22 +249,22 @@ Resources:
                   description: candidate test created
             get:
               x-amazon-apigateway-integration:
-                httpMethod: GET
+                credentials: 'arn:aws:iam::*:user/*'
+                httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetCandidatesFunction.Arn}/invocations
-                responses: {}
               responses:
                 '200':
                   description: list of all candidates
           "/candidates/{candidateId}":
             get:
               x-amazon-apigateway-integration:
-                httpMethod: GET
+                credentials: 'arn:aws:iam::*:user/*'
+                httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetCandidateFunction.Arn}/invocations
-                responses: {}
               parameters:
                 - in: path
                   name: candidateId
@@ -276,11 +277,11 @@ Resources:
                   description: get candidate
             delete:
               x-amazon-apigateway-integration:
-                httpMethod: DELETE
+                credentials: 'arn:aws:iam::*:user/*'
+                httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DeleteCandidateFunction.Arn}/invocations
-                responses: {}
               parameters:
                 - in: path
                   name: candidateId
@@ -294,11 +295,11 @@ Resources:
           "/candidates/{candidateId}/tests":
             get:
               x-amazon-apigateway-integration:
-                httpMethod: GET
+                credentials: 'arn:aws:iam::*:user/*'
+                httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetCandidateTestsFunction.Arn}/invocations
-                responses: {}
               parameters:
                 - in: path
                   name: candidateId
@@ -312,15 +313,14 @@ Resources:
           "/update":
             post:
               x-amazon-apigateway-integration:
+                credentials: 'arn:aws:iam::*:user/*'
                 httpMethod: POST
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GeneratePresignedURLFunction.Arn}/invocations
-                responses: {}
               responses:
                 '200':
                   description: generated key and url
-
         components:
           schemas:
             Candidate:
@@ -444,6 +444,7 @@ Resources:
                             selected:
                               type: boolean
                               nullable: true
+
 
   TestsTable:
     Type: AWS::DynamoDB::Table
