@@ -46,11 +46,10 @@ Resources:
           params-only :
             validateRequestBody: false,
             validateRequestParameters : true
-        x-amazon-apigateway-request-validator : params-only
+        x-amazon-apigateway-request-validator : all
         paths:
           "/tests/import":
             post:
-              x-amazon-apigateway-request-validator: all
               x-amazon-apigateway-integration:
                 credentials: 'arn:aws:iam::*:user/*'
                 httpMethod: POST
@@ -384,6 +383,23 @@ Resources:
                 id:
                   type: string
                   format: uuid
+                parentId:
+                  type: string
+                  format: uuid
+                  nullable: true
+                targetLanguages:
+                  nullable: true
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                      - en
+                      - pl
+                      - de
+                      - fr
+                      - jp
+                      - ru
+                      - cn
                 title:
                   type: string
                   minLength: 1

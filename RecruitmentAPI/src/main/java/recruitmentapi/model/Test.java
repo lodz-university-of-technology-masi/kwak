@@ -74,7 +74,13 @@ public class Test {
     }
 
     public static boolean isSupportedLanguage(String lang) {
-        return lang.equals("en") || lang.equals("pl");
+        return lang.equals("en") ||
+                lang.equals("pl") ||
+                lang.equals("de") ||
+                lang.equals("fr") ||
+                lang.equals("jp") ||
+                lang.equals("ru") ||
+                lang.equals("cn");
     }
 
     @Override
