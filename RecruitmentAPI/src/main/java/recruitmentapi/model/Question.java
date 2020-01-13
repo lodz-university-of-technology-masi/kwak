@@ -74,8 +74,10 @@ public class Question {
             texts.add(description);
         }
 
-        for (Answer answer : answers) {
-            texts.addAll(answer.getTranslatableTexts());
+        if (answers != null) {
+            for (Answer answer : answers) {
+                texts.addAll(answer.getTranslatableTexts());
+            }
         }
 
         return texts;
@@ -90,11 +92,13 @@ public class Question {
             question.title = texts.remove(0);
         }
 
-        ArrayList<Answer> answers = new ArrayList<>();
-        for (Answer answer : base.answers) {
-            answers.add(Answer.translate(answer, texts));
+        if (base.answers != null) {
+            ArrayList<Answer> answers = new ArrayList<>();
+            for (Answer answer : base.answers) {
+                answers.add(Answer.translate(answer, texts));
+            }
+            question.setAnswers(answers);
         }
-        question.setAnswers(answers);
 
         return question;
     }

@@ -107,11 +107,13 @@ public class Test {
             newTest.title = texts.remove(0);
         }
 
-        ArrayList<Question> questions = new ArrayList<>();
-        for (Question question : base.questions) {
-            questions.add(Question.translate(question, texts));
+        if (base.questions != null) {
+            ArrayList<Question> questions = new ArrayList<>();
+            for (Question question : base.questions) {
+                questions.add(Question.translate(question, texts));
+            }
+            newTest.setQuestions(questions);
         }
-        newTest.setQuestions(questions);
 
         return newTest;
     }
