@@ -2,10 +2,13 @@ package recruitmentapi.services;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import recruitmentapi.KwakException;
 import recruitmentapi.model.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TestService {
     DynamoDBMapper mapper;
@@ -17,6 +20,17 @@ public class TestService {
 
     public Test findById(String testId) {
         return mapper.load(Test.class, testId);
+    }
+
+    public List<Test> findByParent(String parentId) {
+        Map<String, AttributeValue> eav = new HashMap<>();
+        eav.put(":val1", new AttributeValue().withS(parentId));
+
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("ParentId = :val1")
+                .withExpressionAttributeValues(eav);
+
+        return mapper.scan(Test.class, scanExpression);
     }
 
     public Test create(Test test) {
