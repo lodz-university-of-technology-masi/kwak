@@ -17,7 +17,7 @@ public class UpdateTest extends ServiceContainer implements RequestHandler<Gatew
             Test beforeTest = testService.findById(test.getId());
 
             for (Test translatedTest : testService.findByParent(test.getId())) {
-                if (!beforeTest.getTargetLanguages().contains(translatedTest.getLang())) {
+                if (beforeTest.getTargetLanguages() != null && !beforeTest.getTargetLanguages().contains(translatedTest.getLang())) {
                     testService.delete(translatedTest.getId());
                 } else {
                     translatedTest = TranslatorService.translateTest(test, translatedTest.getLang());
@@ -28,7 +28,7 @@ public class UpdateTest extends ServiceContainer implements RequestHandler<Gatew
             }
 
             for (String lang : test.getTargetLanguages()) {
-                if (!beforeTest.getTargetLanguages().contains(lang)) {
+                if (beforeTest.getTargetLanguages() != null && !beforeTest.getTargetLanguages().contains(lang)) {
                     Test translatedTest = TranslatorService.translateTest(test, lang);
                     if (translatedTest != null) {
                         testService.create(translatedTest);

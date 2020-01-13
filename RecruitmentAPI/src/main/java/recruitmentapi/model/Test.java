@@ -83,6 +83,39 @@ public class Test {
                 lang.equals("cn");
     }
 
+    public List<String> getTranslatableTexts() {
+        List<String> texts = new ArrayList<>();
+
+        if (title != null && !title.isEmpty()) {
+            texts.add(title);
+        }
+
+        for (Question question : questions) {
+            texts.addAll(question.getTranslatableTexts());
+        }
+
+        return texts;
+    }
+
+    public static Test translate(Test base, String lang, List<String> texts) {
+        Test newTest = new Test();
+        newTest.parentId = base.id;
+        newTest.lang = lang;
+        newTest.targetLanguages = base.targetLanguages;
+
+        if (base.title != null && !base.title.isEmpty()) {
+            newTest.title = texts.remove(0);
+        }
+
+        ArrayList<Question> questions = new ArrayList<>();
+        for (Question question : base.questions) {
+            questions.add(Question.translate(question, texts));
+        }
+        newTest.setQuestions(questions);
+
+        return newTest;
+    }
+
     @Override
     public String toString() {
         return "Test{" +

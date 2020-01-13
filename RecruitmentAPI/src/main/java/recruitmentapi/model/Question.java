@@ -2,6 +2,7 @@ package recruitmentapi.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @DynamoDBDocument
@@ -60,6 +61,42 @@ public class Question {
 
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    public List<String> getTranslatableTexts() {
+        List<String> texts = new ArrayList<>();
+
+        if (title != null && !title.isEmpty()) {
+            texts.add(title);
+        }
+
+        if (description != null && !description.isEmpty()) {
+            texts.add(description);
+        }
+
+        for (Answer answer : answers) {
+            texts.addAll(answer.getTranslatableTexts());
+        }
+
+        return texts;
+    }
+
+    static Question translate(Question base, List<String> texts) {
+        Question question = new Question();
+        question.type = base.type;
+        question.code = base.code;
+
+        if (base.title != null && !base.title.isEmpty()) {
+            question.title = texts.remove(0);
+        }
+
+        ArrayList<Answer> answers = new ArrayList<>();
+        for (Answer answer : base.answers) {
+            answers.add(Answer.translate(answer, texts));
+        }
+        question.setAnswers(answers);
+
+        return question;
     }
 
     public static final String OPEN = "O";
