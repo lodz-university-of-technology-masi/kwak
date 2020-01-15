@@ -10,7 +10,7 @@ import recruitmentapi.model.CandidateTest;
 public class DeleteCandidateTest extends ServiceContainer implements RequestHandler<GatewayRequest, GatewayResponse<CandidateTest>> {
     @Override
     public GatewayResponse<CandidateTest> handleRequest(GatewayRequest request, Context context) {
-        candidateTestService.delete(request.getPathParameters().get("id"));
+        candidateTestService.delete(request.getUserSub(), request.getPathParameters().get("id"));
         return new GatewayResponse<>(204);
     }
 

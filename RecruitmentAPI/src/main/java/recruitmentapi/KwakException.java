@@ -12,10 +12,14 @@ public class KwakException extends RuntimeException {
     @Override
     public String toString() {
         Throwable self = getCause();
-        if (self.getCause() != null) {
-            return self.getMessage() + self.getCause().getMessage();
+        if (self != null) {
+            if (self.getCause() != null) {
+                return self.getMessage() + self.getCause().getMessage();
+            }
+
+            return self.getMessage();
         }
 
-        return self.getMessage();
+        return getMessage();
     }
 }

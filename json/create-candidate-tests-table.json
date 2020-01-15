@@ -1,10 +1,29 @@
 {
   "TableName": "CandidateTests",
   "KeySchema": [
-    { "AttributeName": "Id", "KeyType": "HASH" }
+    { "AttributeName": "RecruiterId", "KeyType": "HASH" },
+    { "AttributeName": "Id", "KeyType": "RANGE" }
   ],
   "AttributeDefinitions": [
+    { "AttributeName": "CandidateId", "AttributeType": "S" },
+    { "AttributeName": "RecruiterId", "AttributeType": "S" },
     { "AttributeName": "Id", "AttributeType": "S" }
+  ],
+  "GlobalSecondaryIndexes": [
+    {
+      "IndexName": "CandidateIdIndex",
+      "KeySchema": [
+        { "AttributeName": "CandidateId", "KeyType":  "HASH" },
+        { "AttributeName": "Id", "KeyType":  "RANGE" }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      },
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": 1,
+        "WriteCapacityUnits": 1
+      }
+    }
   ],
   "ProvisionedThroughput": {
     "ReadCapacityUnits": 1,

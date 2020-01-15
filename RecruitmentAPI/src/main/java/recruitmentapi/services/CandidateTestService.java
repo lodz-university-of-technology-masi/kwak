@@ -1,9 +1,13 @@
 package recruitmentapi.services;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
 import recruitmentapi.KwakException;
+import recruitmentapi.model.Candidate;
 import recruitmentapi.model.CandidateTest;
 import recruitmentapi.model.Test;
 
@@ -20,7 +24,7 @@ public class CandidateTestService {
         if (test == null ) {
             throw new KwakException("Test does not exist");
         }
-
+        candidateTest.setRecruiterId(recruiterId);
         candidateTest.setQuestions(test.getQuestions());
         candidateTest.setLang(test.getLang());
         candidateTest.setTitle(test.getTitle());
@@ -28,48 +32,68 @@ public class CandidateTestService {
         return candidateTest;
     }
 
-    public List<CandidateTest> findByCandidate(String candidateId) {
-        HashMap<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":v1", new AttributeValue().withS(candidateId));
-        return mapper.scan(
+    public List<CandidateTest> findAllByCandidateId(String candidateId) {
+        CandidateTest candidateTest = new CandidateTest();
+        candidateTest.setCandidateId(candidateId);
+
+        return mapper.query(
                 CandidateTest.class,
-                new DynamoDBScanExpression()
-                        .withFilterExpression("CandidateId = :v1")
-                        .withExpressionAttributeValues(eav)
+                new DynamoDBQueryExpression<CandidateTest>()
+                        .withIndexName("CandidateIdIndex")
+                        .withConsistentRead(false)
+                        .withHashKeyValues(candidateTest)
         );
     }
 
-    public void delete(String id) {
-        CandidateTest test = mapper.load(CandidateTest.class, id);
+    public List<CandidateTest> findAllByRecruiterId(String recruiterId) {
+        CandidateTest candidateTest = new CandidateTest();
+        candidateTest.setRecruiterId(recruiterId);
+
+        return mapper.query(
+                CandidateTest.class,
+                new DynamoDBQueryExpression<CandidateTest>()
+                        .withHashKeyValues(candidateTest)
+        );
+    }
+
+    public void delete(String recruiterId, String candidateTestId) {
+        CandidateTest test = findByRecruiterId(recruiterId, candidateTestId);
         if (test == null) {
-            throw new KwakException("Test does not exist");
+            throw new KwakException("CandidateTest does not exist");
         }
 
         mapper.delete(test);
     }
 
-    public List<CandidateTest> findAll() {
-        return mapper.scan(CandidateTest.class, new DynamoDBScanExpression());
+    public CandidateTest findByRecruiterId(String recruiterId, String candidateTestId) {
+        return mapper.load(CandidateTest.class, recruiterId, candidateTestId);
     }
 
-    public CandidateTest findById(String id) {
-        return mapper.load(CandidateTest.class, id);
+    public CandidateTest findByCandidateId(String candidateId, String candidateTestId) {
+        CandidateTest candidateTest = new CandidateTest();
+        candidateTest.setCandidateId(candidateId);
+
+        return mapper.query(
+                CandidateTest.class,
+                new DynamoDBQueryExpression<CandidateTest>()
+                        .withIndexName("CandidateIdIndex")
+                        .withConsistentRead(false)
+                        .withHashKeyValues(candidateTest)
+                        .withRangeKeyCondition(
+                                "Id",
+                                new Condition()
+                                        .withComparisonOperator(ComparisonOperator.EQ)
+                                        .withAttributeValueList(new AttributeValue().withS(candidateTestId))
+                        )
+                        .withLimit(1)
+        ).get(0);
     }
 
     public void update(CandidateTest candidateTest) {
-        if (findById(candidateTest.getId()) == null) {
+        if (findByRecruiterId(candidateTest.getRecruiterId(), candidateTest.getId()) == null) {
             throw new KwakException("Test does not exist while updating");
         }
 
         mapper.save(candidateTest);
-    }
-
-    private static CandidateTestService candidateTestService = null;
-    public static CandidateTestService getInstance() {
-        if (candidateTestService == null) {
-            candidateTestService = new CandidateTestService();
-        }
-
-        return candidateTestService;
     }
 }

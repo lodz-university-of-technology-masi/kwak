@@ -27,8 +27,8 @@ export class Test extends React.Component {
 
     // Load test data
     async componentDidMount() {
-        const {match: {params: {testId}}} = this.props;
-        const test = await this.getCandidateTest(testId);
+        const {match: {params: {candidateTestId}}} = this.props;
+        const test = await this.getCandidateTest(candidateTestId);
         this.setState({
             test: test,
             responses: getAnswers(test.id, this.state.currentQuestion)
@@ -36,11 +36,9 @@ export class Test extends React.Component {
     }
 
 
-    async getCandidateTest(testId) {
-        const currentSession = await Auth.currentSession();
-        const {sub: candidateId} = currentSession.getAccessToken().decodePayload();
-        const candidateTests = await API.get('kwakApi', `/candidates/${candidateId}/tests`, {});
-        return candidateTests.filter((e) => e.testId === testId)[0];
+    async getCandidateTest(id) {
+        const test = await API.get('kwakApi', `/candidatetests/${id}?candidate=1`, {});
+        return test;
     }
 
     changeQuestion(idx) {
@@ -86,7 +84,7 @@ export class Test extends React.Component {
             }
         }
 
-        await API.put('kwakApi', `/candidatetests/${candidateTest.id}`, {
+        await API.put('kwakApi', `/candidatetests/${candidateTest.id}/solve`, {
             body:
             candidateTest
         }).then(() => this.setState(() => ({

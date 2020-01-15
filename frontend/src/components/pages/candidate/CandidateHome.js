@@ -22,9 +22,7 @@ export default class CandidateHome extends Component {
             loading: true
         });
 
-        const currentSession = await Auth.currentSession();
-        const {sub: candidateId} = currentSession.getAccessToken().decodePayload();
-        const candidateTests = await API.get('kwakApi', `/candidates/${candidateId}/tests`, {});
+        const candidateTests = await API.get('kwakApi', `/candidatetests?candidate=1`, {});
         if (this._isMounted) {
             this.setState({
                 candidateTests,
@@ -58,7 +56,7 @@ export default class CandidateHome extends Component {
 
                     <main role="main">
                         <Switch>
-                            <Route path="/tests/:testId" component={Test}/>
+                            <Route path="/tests/:candidateTestId" component={Test}/>
                             <Route path="/">
                                 <CandidateTestsComponent candidateTests={candidateTests}/>
                             </Route>

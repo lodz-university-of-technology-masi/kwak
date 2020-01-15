@@ -195,7 +195,7 @@ export const CandidateTestList = props => {
                                    if (!record.questions) return "Unknown result";
                                    const correctAnswers = record.questions.filter(e => e.correct);
                                    if (!record.solved) return "Not solved";
-                                   if (record.questions.filter(e => e.correct === null).length !== 0) return "Waiting for rating";
+                                   if (record.questions.filter(e => !e.correct).length !== 0) return "Waiting for rating";
                                    return `${correctAnswers.length}/${record.questions.length}`
                                }}/>
             </Datagrid>
@@ -224,11 +224,11 @@ export const CandidateTestEdit = props => {
                     <SimpleFormIterator disableAdd disableRemove>
                         <TextInput disabled source="title" label="Title" />
                         <FormDataConsumer>
-                            {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.description !== null ?
+                            {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.description ?
                                 (<TextInput disabled source={getSource("description")} label="Description"/>) : null}
                         </FormDataConsumer>
                         <FormDataConsumer>
-                            {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.code !== null ?
+                            {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.code ?
                                 (<TextInput disabled source={getSource("code")} label="Code"/>) : null}
                         </FormDataConsumer>
                         <ArrayInput source="answers" label="Answers">
@@ -238,21 +238,17 @@ export const CandidateTestEdit = props => {
                                         (<TextInput
                                             disabled
                                             source={getSource("content")}
-                                            label={scopedFormData.selected ? "Selected" : (scopedFormData.selected !== null ? "Not selected" : "Answer")}
+                                            label={scopedFormData.selected ? "Selected" : (scopedFormData.selected ? "Not selected" : "Answer")}
                                             className={scopedFormData.selected ? classes.selected : null}
 
                                         />)}
                                 </FormDataConsumer>
                                 <FormDataConsumer>
-                                    {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.code !== null ?
+                                    {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.code ?
                                         (<TextInput disabled source={getSource("code")} label="Code"/>) : null}
                                 </FormDataConsumer>
                             </SimpleFormIterator>
                         </ArrayInput>
-                        <FormDataConsumer>
-                            {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.correct === null ?
-                                scopedFormData.correct = false : null}
-                        </FormDataConsumer>
                         <BooleanInput label="Correct" source="correct" defaultValue={false}/>
                     </SimpleFormIterator>
                 </ArrayInput>

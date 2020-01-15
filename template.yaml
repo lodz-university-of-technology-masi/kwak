@@ -159,7 +159,17 @@ Resources:
                 content:
                   application/json:
                     schema:
-                      $ref: '#/components/schemas/CandidateTest'
+                      type: object
+                      required:
+                        - candidateId
+                        - testId
+                      properties:
+                        candidateId:
+                          type: string
+                          format: uuid
+                        testId:
+                          type: string
+                          format: uuid
               responses:
                 '200':
                   description: candidate test created
@@ -170,9 +180,38 @@ Resources:
                 type: aws_proxy
                 uri:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetAllCandidateTestsFunction.Arn}/invocations
+              parameters:
+                - in: query
+                  name: candidate
+                  required: false
+                  schema:
+                    type: string
               responses:
                 '200':
                   description: list of all candidate tests
+          "/candidatetests/{id}/solve":
+            put:
+              x-amazon-apigateway-integration:
+                credentials: 'arn:aws:iam::*:user/*'
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SolveCandidateTestFunction.Arn}/invocations
+              parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                    type: string
+                    format: uuid
+              requestBody:
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/CandidateTest'
+                responses:
+                  '200':
+                    description: solve candidate test
           "/candidatetests/{id}":
             get:
               x-amazon-apigateway-integration:
@@ -188,6 +227,11 @@ Resources:
                   schema:
                     type: string
                     format: uuid
+                - in: query
+                  name: candidate
+                  required: false
+                  schema:
+                    type: string
               responses:
                 '200':
                   description: get candidate test
@@ -222,6 +266,11 @@ Resources:
                   schema:
                     type: string
                     format: uuid
+                - in: query
+                  name: candidate
+                  required: false
+                  schema:
+                    type: string
               requestBody:
                 content:
                   application/json:
@@ -291,24 +340,6 @@ Resources:
               responses:
                 '204':
                   description: delete candidate
-          "/candidates/{candidateId}/tests":
-            get:
-              x-amazon-apigateway-integration:
-                credentials: 'arn:aws:iam::*:user/*'
-                httpMethod: POST
-                type: aws_proxy
-                uri:
-                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetCandidateTestsFunction.Arn}/invocations
-              parameters:
-                - in: path
-                  name: candidateId
-                  required: true
-                  schema:
-                    type: string
-                    format: uuid
-              responses:
-                '200':
-                  description: get candidate tests
           "/upload":
             post:
               x-amazon-apigateway-integration:
@@ -338,6 +369,10 @@ Resources:
                   minLength: 5
                   maxLength: 100
                 surname:
+                  type: string
+                  minLength: 5
+                  maxLength: 100
+                email:
                   type: string
                   minLength: 5
                   maxLength: 100
@@ -480,12 +515,30 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: CandidateTests
+      KeySchema:
+        - AttributeName: RecruiterId
+          KeyType: HASH
+        - AttributeName: Id
+          KeyType: RANGE
       AttributeDefinitions:
+        - AttributeName: CandidateId
+          AttributeType: S
+        - AttributeName: RecruiterId
+          AttributeType: S
         - AttributeName: Id
           AttributeType: S
-      KeySchema:
-        - AttributeName: Id
-          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: CandidateIdIndex
+          KeySchema:
+            - AttributeName: CandidateId
+              KeyType: HASH
+            - AttributeName: Id
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
@@ -619,16 +672,6 @@ Resources:
       Runtime: java8
       MemorySize: 512
 
-  GetCandidateTestsFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Policies:
-        - AmazonDynamoDBFullAccess
-      CodeUri: RecruitmentAPI
-      Handler: recruitmentapi.endpoints.candidates.tests.GetCandidateTests::handleRequest
-      Runtime: java8
-      MemorySize: 512
-
   AddAdminCandidateTestFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -671,6 +714,15 @@ Resources:
       Policies: AmazonS3FullAccess
       CodeUri: RecruitmentAPI
       Handler: recruitmentapi.endpoints.GeneratePresignedURL::handleRequest
+      Runtime: java8
+      MemorySize: 512
+
+  SolveCandidateTestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Policies: AmazonDynamoDBFullAccess
+      CodeUri: RecruitmentAPI
+      Handler: recruitmentapi.endpoints.candidatetests.SolveCandidateTest::handleRequest
       Runtime: java8
       MemorySize: 512
 
