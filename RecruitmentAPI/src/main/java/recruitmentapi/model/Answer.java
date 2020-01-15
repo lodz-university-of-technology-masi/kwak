@@ -1,6 +1,7 @@
 package recruitmentapi.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,6 +45,7 @@ public class Answer {
         this.code = code;
     }
 
+    @DynamoDBIgnore
     List<String> getTranslatableTexts() {
         if (content != null && !content.isEmpty()) {
             return Collections.singletonList(content);
