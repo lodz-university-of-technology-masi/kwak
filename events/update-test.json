@@ -1,5 +1,5 @@
 {
-  "body": "{\n  \"id\": \"435658b8-7573-4a2b-a503-71ae415f18fb\", \"title\": \"Jakiś test\",\n  \"lang\": \"pl\",\n  \"questions\": [\n    {\n      \"title\": \"title\",\n      \"description\": \"description\",\n      \"code\": \"code\",\n      \"type\": \"C\",\n      \"answers\": [{\"content\": \"answer 1\"}, {\"content\": \"answer 2\"}, {\"content\": \"answer 3\"}]\n    },\n    {\n      \"title\": \"ADAM\",\n      \"description\": \"1234\",\n      \"code\": \"bbb\",\n      \"type\": \"L\"\n    },\n    {\n      \"title\": \"ADAxd\",\n      \"description\": \"1234\",\n      \"code\": \"bbb\",\n      \"type\": \"O\"\n    }\n  ]\n}",
+  "body": "{\"title\":\"Biblia Assemblera\",\"lang\":\"pl\",\"questions\":[{\"title\":\"Co tam słychać?\",\"type\":\"O\"},{\"title\":\"Ile waży Mariusz Pudzianowski?\",\"type\":\"L\"},{\"title\":\"Mój ulubiony owoc?\",\"type\":\"W\",\"answers\":[{\"content\":\"Jabłko\"},{\"content\":\"Ananas\"},{\"content\":\"Truskawka\"}]}],\"targetLanguages\":[\"fr\",\"de\"],\"id\":\"2c78fa88-fd8a-4d20-8d95-e80f5a4accc3\"}",
   "resource": "/{proxy+}",
   "path": "/tests/435658b8-7573-4a2b-a503-71ae415f18fb",
   "httpMethod": "PUT",

@@ -15,7 +15,7 @@ public class DynamoDBAdapter {
 
         if (System.getenv("AWS_SAM_LOCAL") != null) {
             builder.withEndpointConfiguration(
-                    new AwsClientBuilder.EndpointConfiguration("http://host.docker.internal:8000", "eu-central-1")
+                    new AwsClientBuilder.EndpointConfiguration("http://docker.for.mac.localhost:8000", "eu-central-1")
             );
         } else {
             builder.withRegion(System.getenv("AWS_REGION"));

@@ -20,8 +20,10 @@ public class UpdateTest extends ServiceContainer implements RequestHandler<Gatew
                 if (beforeTest.getTargetLanguages() != null && !beforeTest.getTargetLanguages().contains(translatedTest.getLang())) {
                     testService.delete(translatedTest.getId());
                 } else {
+                    String id = translatedTest.getId();
                     translatedTest = TranslatorService.translateTest(test, translatedTest.getLang());
                     if (translatedTest != null) {
+                        translatedTest.setId(id);
                         testService.update(translatedTest);
                     }
                 }
