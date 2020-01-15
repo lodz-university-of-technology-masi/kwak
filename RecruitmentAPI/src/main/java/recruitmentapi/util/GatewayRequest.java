@@ -1,11 +1,9 @@
-package recruitmentapi;
+package recruitmentapi.util;
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.util.UUID;
 
 public class GatewayRequest extends APIGatewayProxyRequestEvent {
     private static final ObjectMapper objectMapper = new ObjectMapper();

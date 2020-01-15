@@ -2,17 +2,13 @@ package recruitmentapi.services;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
-import recruitmentapi.KwakException;
-import recruitmentapi.model.Candidate;
+import recruitmentapi.util.KwakException;
 import recruitmentapi.model.CandidateTest;
 import recruitmentapi.model.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class CandidateTestService {

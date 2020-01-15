@@ -1,4 +1,4 @@
-package recruitmentapi;
+package recruitmentapi.util;
 
 public class KwakException extends RuntimeException {
     public KwakException(String message) {

@@ -1,4 +1,4 @@
-package recruitmentapi;
+package recruitmentapi.services;
 
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;

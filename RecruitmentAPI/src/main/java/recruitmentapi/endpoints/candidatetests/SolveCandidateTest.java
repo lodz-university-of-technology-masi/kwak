@@ -2,11 +2,11 @@ package recruitmentapi.endpoints.candidatetests;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import recruitmentapi.ErrorMessage;
-import recruitmentapi.GatewayRequest;
-import recruitmentapi.GatewayResponse;
+import recruitmentapi.util.ErrorMessage;
+import recruitmentapi.util.GatewayRequest;
+import recruitmentapi.util.GatewayResponse;
+import recruitmentapi.util.KwakException;
 import recruitmentapi.model.Answer;
-import recruitmentapi.model.Candidate;
 import recruitmentapi.model.CandidateTest;
 import recruitmentapi.model.Question;
 import recruitmentapi.services.ServiceContainer;
@@ -26,10 +26,14 @@ public class SolveCandidateTest extends ServiceContainer implements RequestHandl
             return new GatewayResponse<>(new ErrorMessage(400, "Test already solved"));
         }
         originalTest.setSolved(true);
-
         applyDifferences(originalTest, updatedTest);
-        candidateTestService.update(originalTest);
-        return new GatewayResponse<>(204);
+
+        try {
+            candidateTestService.update(originalTest);
+            return new GatewayResponse<>(204);
+        } catch (KwakException e) {
+            return new GatewayResponse<>(new ErrorMessage(400, e.getMessage()));
+        }
     }
 
     private void applyDifferences(CandidateTest originalTest, CandidateTest updatedTest) {

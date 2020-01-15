@@ -1,7 +1,5 @@
 package recruitmentapi.services;
 
-import recruitmentapi.DynamoDBAdapter;
-
 public class ServiceContainer {
     protected TestService testService;
     protected CandidateTestService candidateTestService;

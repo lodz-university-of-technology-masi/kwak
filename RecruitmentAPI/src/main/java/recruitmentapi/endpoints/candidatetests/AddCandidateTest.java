@@ -2,9 +2,10 @@ package recruitmentapi.endpoints.candidatetests;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import recruitmentapi.ErrorMessage;
-import recruitmentapi.GatewayRequest;
-import recruitmentapi.GatewayResponse;
+import recruitmentapi.util.ErrorMessage;
+import recruitmentapi.util.GatewayRequest;
+import recruitmentapi.util.GatewayResponse;
+import recruitmentapi.util.KwakException;
 import recruitmentapi.services.ServiceContainer;
 import recruitmentapi.model.CandidateTest;
 
@@ -16,6 +17,10 @@ public class AddCandidateTest extends ServiceContainer implements RequestHandler
             return new GatewayResponse<>(new ErrorMessage(400, "Invalid candidateTest"));
         }
 
-        return new GatewayResponse<>(candidateTestService.create(request.getUserSub(), candidateTest), 200);
+        try {
+            return new GatewayResponse<>(candidateTestService.create(request.getUserSub(), candidateTest), 200);
+        } catch (KwakException e) {
+            return new GatewayResponse<>(new ErrorMessage(400, e.getMessage()));
+        }
     }
 }
