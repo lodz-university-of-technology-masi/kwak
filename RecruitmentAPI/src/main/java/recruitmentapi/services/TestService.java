@@ -1,6 +1,7 @@
 package recruitmentapi.services;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import recruitmentapi.KwakException;
@@ -14,12 +15,17 @@ public class TestService {
     DynamoDBMapper mapper;
     CandidateTestService candidateTestService;
 
-    public List<Test> findAll() {
-        return mapper.scan(Test.class, new DynamoDBScanExpression());
+    public List<Test> findAll(String recruiterId) {
+        Test test = new Test();
+        test.setRecruiterId(recruiterId);
+        return mapper.query(
+                Test.class,
+                new DynamoDBQueryExpression<Test>().withHashKeyValues(test)
+        );
     }
 
-    public Test findById(String testId) {
-        return mapper.load(Test.class, testId);
+    public Test findById(String recruiterId, String testId) {
+        return mapper.load(Test.class, recruiterId, testId);
     }
 
     public List<Test> findByParent(String parentId) {
@@ -33,22 +39,23 @@ public class TestService {
         return mapper.scan(Test.class, scanExpression);
     }
 
-    public Test create(Test test) {
+    public Test create(String recruiterId, Test test) {
+        test.setRecruiterId(recruiterId);
         mapper.save(test);
         return test;
     }
 
-    public void delete(String id) {
-        Test test = findById(id);
+    public void delete(String recruiterId, String testId) {
+        Test test = findById(recruiterId, testId);
         if (test == null) {
-            throw new KwakException("Test [" + id + "] does not exist");
+            throw new KwakException("Test [" + recruiterId + ", " + testId + "] does not exist");
         }
 
         mapper.delete(test);
     }
 
     public void update(Test test) {
-        if (findById(test.getId()) == null) {
+        if (findById(test.getRecruiterId(), test.getId()) == null) {
             throw new KwakException("Test [" + test.getId() + "] does not exist while updating");
         }
 

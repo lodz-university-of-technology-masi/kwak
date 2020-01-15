@@ -12,6 +12,6 @@ import java.util.List;
 public class GetTests extends ServiceContainer implements RequestHandler<GatewayRequest, GatewayResponse<List<Test>>> {
     @Override
     public GatewayResponse<List<Test>> handleRequest(GatewayRequest request, Context context) {
-        return new GatewayResponse<>(testService.findAll(), 200);
+        return new GatewayResponse<>(testService.findAll(request.getUserSub()), 200);
     }
 }

@@ -16,13 +16,13 @@ public class AddTest extends ServiceContainer implements RequestHandler<GatewayR
             return new GatewayResponse<>(null, 400);
         }
 
-        testService.create(test);
+        testService.create(request.getUserSub(), test);
         if (test.getTargetLanguages() != null) {
             for (String lang : test.getTargetLanguages()) {
                 Test translatedTest = TranslatorService.translateTest(test, lang);
                 if (translatedTest != null) {
                     translatedTest.setParentId(test.getId());
-                    testService.create(translatedTest);
+                    testService.create(request.getUserSub(), translatedTest);
                 }
             }
         }

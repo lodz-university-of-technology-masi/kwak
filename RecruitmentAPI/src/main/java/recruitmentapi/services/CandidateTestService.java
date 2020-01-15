@@ -15,8 +15,8 @@ public class CandidateTestService {
     DynamoDBMapper mapper;
     TestService testService;
 
-    public CandidateTest create(CandidateTest candidateTest) {
-        Test test = testService.findById(candidateTest.getTestId());
+    public CandidateTest create(String recruiterId, CandidateTest candidateTest) {
+        Test test = testService.findById(recruiterId, candidateTest.getTestId());
         if (test == null ) {
             throw new KwakException("Test does not exist");
         }

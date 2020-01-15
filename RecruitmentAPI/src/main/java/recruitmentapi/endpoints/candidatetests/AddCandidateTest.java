@@ -16,6 +16,6 @@ public class AddCandidateTest extends ServiceContainer implements RequestHandler
             return new GatewayResponse<>(new ErrorMessage(400, "Invalid candidateTest"));
         }
 
-        return new GatewayResponse<>(candidateTestService.create(candidateTest), 200);
+        return new GatewayResponse<>(candidateTestService.create(request.getUserSub(), candidateTest), 200);
     }
 }

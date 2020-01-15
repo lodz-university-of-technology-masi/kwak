@@ -464,11 +464,15 @@ Resources:
     Properties:
       TableName: Tests
       AttributeDefinitions:
+        - AttributeName: RecruiterId
+          AttributeType: S
         - AttributeName: Id
           AttributeType: S
       KeySchema:
-        - AttributeName: Id
+        - AttributeName: RecruiterId
           KeyType: HASH
+        - AttributeName: Id
+          KeyType: RANGE
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1

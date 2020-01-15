@@ -34,7 +34,7 @@ public class ImportTest extends ServiceContainer implements RequestHandler<Gatew
         try {
             test.setQuestions(new ArrayList<>(loadQuestions(importTestRequest.getFileKey())));
             test.setLang(testLanguage);
-            testService.create(test);
+            testService.create(request.getUserSub(), test);
         } catch (KwakException e) {
             return new GatewayResponse<>(new ErrorMessage(400, e.toString()));
         } catch (IOException e) {

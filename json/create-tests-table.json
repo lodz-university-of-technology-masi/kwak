@@ -1,9 +1,11 @@
 {
   "TableName": "Tests",
   "KeySchema": [
-    { "AttributeName": "Id", "KeyType": "HASH" }
+    { "AttributeName": "RecruiterId", "KeyType": "HASH" },
+    { "AttributeName": "Id", "KeyType": "RANGE" }
   ],
   "AttributeDefinitions": [
+    { "AttributeName": "RecruiterId", "AttributeType": "S" },
     { "AttributeName": "Id", "AttributeType": "S" }
   ],
   "ProvisionedThroughput": {
