@@ -60,7 +60,7 @@ public class Answer {
         answer.code = base.code;
         answer.isSelected = base.isSelected;
 
-        if (answer.content != null && !answer.content.isEmpty()) {
+        if (base.content != null && !base.content.isEmpty()) {
             answer.content = texts.remove(0);
         }
 

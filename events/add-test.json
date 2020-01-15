@@ -1,5 +1,5 @@
 {
-  "body": "{\n  \"title\": \"Jakiś test\",\n  \"lang\": \"pl\",\n  \"questions\": [\n    {\n      \"title\": \"title\",\n      \"description\": \"description\",\n      \"code\": \"code\",\n      \"type\": \"C\",\n      \"answers\": [{\"content\": \"answer 1\"}, {\"content\": \"answer 2\"}, {\"content\": \"answer 3\"}]\n    },\n    {\n      \"title\": \"ADAM\",\n      \"description\": \"1234\",\n      \"code\": \"bbb\",\n      \"type\": \"L\"\n    },\n    {\n      \"title\": \"ADAxd\",\n      \"description\": \"1234\",\n      \"code\": \"bbb\",\n      \"type\": \"O\"\n    }\n  ]\n}",
+  "body": "{\"title\":\"Biblia Assemblera\",\"lang\":\"pl\",\"questions\":[{\"title\":\"Ile waży Mariusz Pudzianowski?\",\"type\":\"L\"},{\"title\":\"Co to Assembler?\",\"type\":\"O\"},{\"title\":\"Mój ulubiony owoc?\",\"type\":\"W\",\"answers\":[{\"content\":\"Jabłko\"},{\"content\":\"Banan\"},{\"content\":\"Gruszka\"}]}],\"targetLanguages\":[\"en\"]}",
   "resource": "/{proxy+}",
   "path": "/tests",
   "httpMethod": "POST",
