@@ -371,7 +371,6 @@ Resources:
                       format: uuid
                     solved:
                       type: boolean
-                      nullable: true
 
             Test:
               type: object
@@ -386,9 +385,7 @@ Resources:
                 parentId:
                   type: string
                   format: uuid
-                  nullable: true
                 targetLanguages:
-                  nullable: true
                   type: array
                   items:
                     type: string
@@ -429,12 +426,10 @@ Resources:
                         maxLength: 100
                       description:
                         type: string
-                        nullable: true
                         minLength: 1
                         maxLength: 500
                       code:
                         type: string
-                        nullable: true
                         minLength: 1
                         maxLength: 500
                       type:
@@ -445,9 +440,7 @@ Resources:
                           - O
                       correct:
                         type: boolean
-                        nullable: true
                       answers:
-                        nullable: true
                         type: array
                         items:
                           type: object
@@ -460,12 +453,10 @@ Resources:
                               maxLength: 200
                             code:
                               type: string
-                              nullable: true
                               minLength: 1
                               maxLength: 500
                             selected:
                               type: boolean
-                              nullable: true
 
 
   TestsTable:
