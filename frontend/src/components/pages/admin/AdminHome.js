@@ -72,7 +72,7 @@ export const TestEdit = props => (
                     ]}/>
 
                     <FormDataConsumer>
-                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.type === 'W' ? (
+                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData && scopedFormData.type === 'W' ? (
                             <ArrayInput source={getSource('answers')} label="Answers">
                                 <SimpleFormIterator>
                                     <TextInput source="content" multiline label="Content"/>
