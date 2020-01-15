@@ -1,6 +1,7 @@
 package recruitmentapi.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +82,7 @@ public class Test {
     }
 
     @DynamoDBIgnore
+    @JsonIgnore
     public List<String> getTranslatableTexts() {
         List<String> texts = new ArrayList<>();
 

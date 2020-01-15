@@ -5,6 +5,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,7 +34,7 @@ public class GatewayResponse<Response> {
         try {
             this.body = objectMapper.writeValueAsString(errorMessage);
         } catch (JsonProcessingException e) {
-            this.body = "Could not serialize Response object to JSON";
+            this.body = "Could not serialize Response object to JSON " + e.getMessage();
             this.statusCode = 500;
         }
     }
@@ -45,12 +46,13 @@ public class GatewayResponse<Response> {
         try {
             this.body = objectMapper.writeValueAsString(body);
         } catch (JsonProcessingException e) {
-            this.body = "Could not serialize Response object to JSON";
+            this.body = "Could not serialize Response object to JSON " + e.getMessage();
             this.statusCode = 500;
         }
     }
 
     private void setHeaders() {
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("Access-Control-Allow-Origin", "*");

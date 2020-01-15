@@ -16,6 +16,7 @@ public class AddTest extends ServiceContainer implements RequestHandler<GatewayR
             return new GatewayResponse<>(null, 400);
         }
 
+        testService.create(test);
         if (test.getTargetLanguages() != null) {
             for (String lang : test.getTargetLanguages()) {
                 Test translatedTest = TranslatorService.translateTest(test, lang);
@@ -26,6 +27,6 @@ public class AddTest extends ServiceContainer implements RequestHandler<GatewayR
             }
         }
 
-        return new GatewayResponse<>(testService.create(test), 200);
+        return new GatewayResponse<>(test, 200);
     }
 }
