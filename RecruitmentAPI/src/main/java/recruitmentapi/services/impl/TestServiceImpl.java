@@ -7,7 +7,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import recruitmentapi.services.CandidateTestService;
 import recruitmentapi.services.TestService;
 import recruitmentapi.util.KwakException;
-import recruitmentapi.model.Test;
+import recruitmentapi.endpoints.tests.model.Test;
 
 import java.util.HashMap;
 import java.util.List;

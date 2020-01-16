@@ -1,6 +1,6 @@
 package recruitmentapi.services;
 
-import recruitmentapi.model.Candidate;
+import recruitmentapi.endpoints.candidates.model.Candidate;
 
 import java.util.List;
 

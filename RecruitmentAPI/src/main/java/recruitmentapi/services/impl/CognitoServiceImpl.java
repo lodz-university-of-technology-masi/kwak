@@ -3,7 +3,7 @@ package recruitmentapi.services.impl;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
 import com.amazonaws.services.cognitoidp.model.*;
-import recruitmentapi.model.Candidate;
+import recruitmentapi.endpoints.candidates.model.Candidate;
 import recruitmentapi.services.CognitoService;
 
 import java.util.List;

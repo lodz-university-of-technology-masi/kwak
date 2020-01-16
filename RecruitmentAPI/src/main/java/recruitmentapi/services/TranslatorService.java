@@ -3,7 +3,7 @@ package recruitmentapi.services;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.HttpRequest;
-import recruitmentapi.model.Test;
+import recruitmentapi.endpoints.tests.model.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;

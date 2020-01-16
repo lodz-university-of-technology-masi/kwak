@@ -1,4 +1,4 @@
-package recruitmentapi.model;
+package recruitmentapi.endpoints.tests.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;

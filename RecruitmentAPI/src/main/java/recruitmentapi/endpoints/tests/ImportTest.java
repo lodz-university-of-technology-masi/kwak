@@ -9,13 +9,13 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.MappingStrategy;
 import com.opencsv.exceptions.*;
+import recruitmentapi.endpoints.tests.model.Answer;
+import recruitmentapi.endpoints.tests.model.Question;
+import recruitmentapi.endpoints.tests.model.Test;
 import recruitmentapi.util.ErrorMessage;
 import recruitmentapi.util.GatewayRequest;
 import recruitmentapi.util.GatewayResponse;
 import recruitmentapi.util.KwakException;
-import recruitmentapi.model.Answer;
-import recruitmentapi.model.Question;
-import recruitmentapi.model.Test;
 import recruitmentapi.services.ServiceContainer;
 
 import java.io.IOException;
