@@ -2,12 +2,12 @@ package recruitmentapi.endpoints.tests;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import recruitmentapi.endpoints.tests.model.Test;
 import recruitmentapi.util.ErrorMessage;
 import recruitmentapi.util.GatewayRequest;
 import recruitmentapi.util.GatewayResponse;
 import recruitmentapi.util.KwakException;
 import recruitmentapi.services.ServiceContainer;
+import recruitmentapi.model.Test;
 import recruitmentapi.services.TranslatorService;
 
 public class UpdateTest extends ServiceContainer implements RequestHandler<GatewayRequest, GatewayResponse<Test>> {

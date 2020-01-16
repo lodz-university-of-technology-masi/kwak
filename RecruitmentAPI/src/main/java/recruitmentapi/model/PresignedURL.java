@@ -1,4 +1,4 @@
-package recruitmentapi.services;
+package recruitmentapi.model;
 
 public class PresignedURL {
     private String key;

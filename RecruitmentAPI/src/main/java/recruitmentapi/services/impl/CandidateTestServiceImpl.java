@@ -8,8 +8,8 @@ import com.amazonaws.services.dynamodbv2.model.Condition;
 import recruitmentapi.services.CandidateTestService;
 import recruitmentapi.services.TestService;
 import recruitmentapi.util.KwakException;
-import recruitmentapi.endpoints.candidatetests.model.CandidateTest;
-import recruitmentapi.endpoints.tests.model.Test;
+import recruitmentapi.model.CandidateTest;
+import recruitmentapi.model.Test;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package recruitmentapi.services;
 
-import recruitmentapi.endpoints.tests.model.Test;
+import recruitmentapi.model.Test;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
-package recruitmentapi.endpoints.candidatetests.model;
+package recruitmentapi.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import recruitmentapi.endpoints.tests.model.Question;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @DynamoDBTable(tableName = "CandidateTests")
 public class CandidateTest {

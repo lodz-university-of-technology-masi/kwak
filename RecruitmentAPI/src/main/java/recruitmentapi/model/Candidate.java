@@ -1,10 +1,11 @@
-package recruitmentapi.endpoints.candidates.model;
+package recruitmentapi.model;
 
 import com.amazonaws.services.cognitoidp.model.AttributeType;
 import com.amazonaws.services.cognitoidp.model.UserType;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Candidate {

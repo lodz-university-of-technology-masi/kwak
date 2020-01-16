@@ -2,12 +2,12 @@ package recruitmentapi.endpoints.candidatetests;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import recruitmentapi.endpoints.candidatetests.model.CandidateTest;
 import recruitmentapi.util.ErrorMessage;
 import recruitmentapi.util.GatewayRequest;
 import recruitmentapi.util.GatewayResponse;
 import recruitmentapi.util.KwakException;
 import recruitmentapi.services.ServiceContainer;
+import recruitmentapi.model.CandidateTest;
 
 public class DeleteCandidateTest extends ServiceContainer implements RequestHandler<GatewayRequest, GatewayResponse<CandidateTest>> {
     @Override

@@ -2,13 +2,13 @@ package recruitmentapi.endpoints.candidatetests;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import recruitmentapi.endpoints.candidatetests.model.CandidateTest;
 import recruitmentapi.util.ErrorMessage;
 import recruitmentapi.util.GatewayRequest;
 import recruitmentapi.util.GatewayResponse;
 import recruitmentapi.util.KwakException;
-import recruitmentapi.endpoints.tests.model.Answer;
-import recruitmentapi.endpoints.tests.model.Question;
+import recruitmentapi.model.Answer;
+import recruitmentapi.model.CandidateTest;
+import recruitmentapi.model.Question;
 import recruitmentapi.services.ServiceContainer;
 
 import java.util.ArrayList;

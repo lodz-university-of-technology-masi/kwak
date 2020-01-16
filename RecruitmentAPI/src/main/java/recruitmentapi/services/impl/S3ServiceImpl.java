@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
-import recruitmentapi.services.PresignedURL;
+import recruitmentapi.model.PresignedURL;
 import recruitmentapi.services.S3Service;
 
 import java.net.URL;

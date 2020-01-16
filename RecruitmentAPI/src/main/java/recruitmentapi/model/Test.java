@@ -1,4 +1,4 @@
-package recruitmentapi.endpoints.tests.model;
+package recruitmentapi.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
