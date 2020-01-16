@@ -92,7 +92,10 @@ for (let [k, v] of Object.entries(dataProviderCSV)) {
         try {
             return await v(resource, params)
         } catch (err) {
-            throw new Error(err.response.data.message)
+            if (err.response && err.response.data && err.res.data.message) {
+                throw new Error(err.response.data.message)
+            }
+
         }
     }
 }
