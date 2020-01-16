@@ -28,7 +28,7 @@ import {
     required
 } from 'react-admin';
 import { makeStyles } from '@material-ui/core/styles';
-import {dataProviderCSV} from "../../../utils/APIDataProvider";
+import {apiDataProvider } from "../../../utils/APIDataProvider";
 import {authProvider} from "../../../utils/AuthProvider";
 import {customRoutes} from "../../../utils/CustomRoutes";
 import {TestActions} from "./TestActions";
@@ -122,7 +122,7 @@ export const TestCreate = props => (
                     ]}/>
 
                     <FormDataConsumer>
-                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData.type === 'W' ? (
+                        {({formData, scopedFormData, getSource, ...rest}) => scopedFormData && scopedFormData.type === 'W' ? (
                             <ArrayInput source={getSource('answers')} label="Answers">
                                 <SimpleFormIterator>
                                     <TextInput source="content" multiline label="Content"/>
@@ -277,7 +277,7 @@ export const CandidateTestCreate = props => (
 
 export default function AdminHome(props) {
     return (
-        <Admin dataProvider={dataProviderCSV} authProvider={authProvider} customRoutes={customRoutes}>
+        <Admin dataProvider={apiDataProvider} authProvider={authProvider} customRoutes={customRoutes}>
             <Resource name="tests" list={TestList} edit={TestEdit} create={TestCreate}/>
             <Resource name="candidates" list={CandidateList} create={CandidateCreate} show={CandidateShow}/>
             <Resource name="candidatetests" options={{label: 'Candidate Tests'}} list={CandidateTestList}

@@ -1,6 +1,6 @@
 import {API} from "aws-amplify";
 
-export const dataProvider = {
+const dataProvider = {
     getList: async (resource, params) => {
         const data = await API.get('kwakApi', `/${resource}`, {});
         return {
@@ -61,8 +61,7 @@ export const dataProvider = {
     },
 };
 
-
-export const dataProviderCSV = {
+const dataProviderCSV = {
     ...dataProvider,
     create: async (resource, params) => {
         if (resource !== 'tests' || !params.data.file) {
@@ -75,18 +74,27 @@ export const dataProviderCSV = {
             body:  params.data.file.rawFile
         });
 
-        try {
-            const test = await API.post('kwakApi', `/tests/import`, {
-                body: {
-                    testTitle: params.data.title,
-                    fileKey: key
-                }
-            });
-            return {
-                data: test
+        const test = await API.post('kwakApi', `/tests/import`, {
+            body: {
+                testTitle: params.data.title,
+                fileKey: key
             }
-        } catch (error) {
-            throw new Error(error.response.data.message)
+        });
+        return {
+            data: test
         }
     }
 };
+
+const errorHandlingDataProvider = {};
+for (let [k, v] of Object.entries(dataProviderCSV)) {
+    errorHandlingDataProvider[k] = async (resource, params) => {
+        try {
+            return await v(resource, params)
+        } catch (err) {
+            throw new Error(err.response.data.message)
+        }
+    }
+}
+
+export const apiDataProvider = {...errorHandlingDataProvider};
