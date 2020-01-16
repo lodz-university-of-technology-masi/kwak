@@ -209,9 +209,9 @@ Resources:
                   application/json:
                     schema:
                       $ref: '#/components/schemas/CandidateTest'
-                responses:
-                  '200':
-                    description: solve candidate test
+              responses:
+                '200':
+                  description: solve candidate test
           "/candidatetests/{id}":
             get:
               x-amazon-apigateway-integration:
