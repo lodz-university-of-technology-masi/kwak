@@ -18,10 +18,10 @@ import recruitmentapi.model.Question;
 import recruitmentapi.model.Test;
 import recruitmentapi.services.ServiceContainer;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ImportTest extends ServiceContainer implements RequestHandler<GatewayRequest, GatewayResponse<Test>> {
     private String testLanguage = null;
@@ -31,8 +31,8 @@ public class ImportTest extends ServiceContainer implements RequestHandler<Gatew
         ImportTestRequest importTestRequest = request.getTypedBody(ImportTestRequest.class);
         Test test = new Test();
         test.setTitle(importTestRequest.getTestTitle());
-        try {
-            test.setQuestions(new ArrayList<>(loadQuestions(importTestRequest.getFileKey())));
+        try (S3Object object = s3Service.openFile(importTestRequest.getFileKey())) {
+            test.setQuestions(new ArrayList<>(loadQuestions(object.getObjectContent())));
             test.setLang(testLanguage);
             testService.create(request.getUserSub(), test);
         } catch (KwakException e) {
@@ -44,14 +44,14 @@ public class ImportTest extends ServiceContainer implements RequestHandler<Gatew
         return new GatewayResponse<>(test, 200);
     }
 
-    private List<Question> loadQuestions(String fileKey) throws IOException {
-        try (S3Object testObject = s3Service.openFile(fileKey)) {
-            CsvToBean<Question> csvToBean = new CsvToBeanBuilder<Question>(new InputStreamReader(testObject.getObjectContent()))
+    public List<Question> loadQuestions(InputStream inputStream) {
+        try {
+            CsvToBean<Question> csvToBean = new CsvToBeanBuilder<Question>(new InputStreamReader(inputStream))
                     .withSeparator(';')
                     .withMappingStrategy(
                             new QuestionMappingStrategy()
                     ).build();
-            return csvToBean.parse();
+            return csvToBean.parse().stream().filter(q -> q.getTitle() != null).collect(Collectors.toList());
         } catch (RuntimeException e){
             throw new KwakException(e);
         }
@@ -80,8 +80,26 @@ public class ImportTest extends ServiceContainer implements RequestHandler<Gatew
     }
 
     private class QuestionMappingStrategy implements MappingStrategy<Question> {
+        private String[] preprocess(String[] line) throws CsvValidationException {
+            if (line.length < 2) {
+                throw new CsvValidationException("Should have question data in first column and empty second");
+            }
+
+            if (line[0].isEmpty()) {
+                return null;
+            } else if (line[1].isEmpty()) {
+                line = line[0].split(";");
+            }
+
+            return line;
+        }
+
         @Override
         public Question populateNewBean(String[] line) throws CsvBeanIntrospectionException, CsvDataTypeMismatchException, CsvConstraintViolationException, CsvValidationException {
+            line = preprocess(line);
+            if (line == null) {
+                return new Question();
+            }
             if (line.length < 5) {
                 throw new CsvValidationException("Line does not have enough fields got " + line.length + " fields.");
             }

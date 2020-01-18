@@ -18,7 +18,8 @@ public class DynamoDBAdapter {
                     new AwsClientBuilder.EndpointConfiguration("http://docker.for.mac.localhost:8000", "eu-central-1")
             );
         } else {
-            builder.withRegion(System.getenv("AWS_REGION"));
+            String region = System.getenv("AWS_REGION");
+            builder.withRegion(region == null ? "eu-central-1" : region);
         }
 
         AmazonDynamoDB amazonDynamoDB = builder.build();
