@@ -16,9 +16,7 @@ import recruitmentapi.services.KwakException;
 import recruitmentapi.model.Answer;
 import recruitmentapi.model.Question;
 import recruitmentapi.model.Test;
-import recruitmentapi.services.S3Service;
 import recruitmentapi.services.ServiceContainer;
-import recruitmentapi.services.impl.S3ServiceImpl;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -27,7 +25,6 @@ import java.util.stream.Collectors;
 
 public class ImportTest extends ServiceContainer implements RequestHandler<GatewayRequest, GatewayResponse<Test>> {
     private String testLanguage = null;
-    private S3Service s3Service = new S3ServiceImpl();
 
     @Override
     public GatewayResponse<Test> handleRequest(GatewayRequest request, Context context) {
