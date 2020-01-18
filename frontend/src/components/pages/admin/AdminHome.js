@@ -24,6 +24,7 @@ import {
     BooleanInput,
     Toolbar,
     SaveButton,
+    BulkDeleteWithConfirmButton,
     email,
     required
 } from 'react-admin';
@@ -37,8 +38,14 @@ const TestTitle = ({record}) => {
     return <span>{record ? `${record.title}` : ''}</span>;
 };
 
+const BulkDelete = props => (
+    <>
+        <BulkDeleteWithConfirmButton {...props}/>
+    </>
+);
+
 export const TestList = props => (
-    <List {...props} actions={<TestActions/>}>
+    <List {...props} bulkActionButtons={<BulkDelete/>} actions={<TestActions/>}>
         <Datagrid rowClick="edit">
             <TextField sortable={false} source="title"/>
             <TextField sortable={false} source="lang"/>
@@ -173,7 +180,7 @@ export const CandidateShow = props => (
 );
 
 export const CandidateList = props => (
-    <List {...props} exporter={false}>
+    <List {...props} bulkActionButtons={<BulkDelete/>} exporter={false}>
         <Datagrid rowClick="show">
             <TextField sortable={false} source="name"/>
             <TextField sortable={false} source="surname"/>
@@ -184,7 +191,7 @@ export const CandidateList = props => (
 export const CandidateTestList = props => {
     const postRowClick = (id, basePath, record) => record.solved ? 'edit' : null;
     return (
-        <List {...props} exporter={false}>
+        <List {...props} bulkActionButtons={<BulkDelete/>} exporter={false}>
             <Datagrid rowClick={postRowClick}>
                 <ReferenceField sortable={false} source="candidateId" reference="candidates" link="show">
                     <TextField source="name"/>
