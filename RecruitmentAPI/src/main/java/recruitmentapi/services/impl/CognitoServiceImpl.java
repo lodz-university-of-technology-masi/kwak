@@ -6,6 +6,8 @@ import com.amazonaws.services.cognitoidp.model.*;
 import recruitmentapi.model.Candidate;
 import recruitmentapi.services.CognitoService;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +22,7 @@ public class CognitoServiceImpl implements CognitoService {
                 .withUserPoolId(USER_POOL_ID)
                 .withUsername(candidateId));
 
-        return Candidate.fromAttributes(result.getUsername(), result.getUserAttributes());
+        return fromAttributes(result.getUsername(), result.getUserAttributes());
     }
 
     @Override
@@ -29,11 +31,11 @@ public class CognitoServiceImpl implements CognitoService {
                 .withUserPoolId(USER_POOL_ID)
                 .withUsername(candidate.getEmail())
                 .withUserAttributes(
-                        candidate.createAttributes()
+                        createAttributes(candidate)
                 )
         );
 
-        return Candidate.fromUserType(result.getUser());
+        return fromUserType(result.getUser());
     }
 
     @Override
@@ -41,7 +43,7 @@ public class CognitoServiceImpl implements CognitoService {
         ListUsersResult users = cognito.listUsers(new ListUsersRequest().withUserPoolId(USER_POOL_ID));
         return users.getUsers().stream()
                 .filter(this::isRegularUser)
-                .map(Candidate::fromUserType)
+                .map(this::fromUserType)
                 .collect(Collectors.toList());
     }
 
@@ -58,5 +60,37 @@ public class CognitoServiceImpl implements CognitoService {
     @Override
     public void deleteCandidate(String id) {
         cognito.adminDeleteUser(new AdminDeleteUserRequest().withUserPoolId(USER_POOL_ID).withUsername(id));
+    }
+
+
+
+    private Candidate fromUserType(UserType userType) {
+        return fromAttributes(userType.getUsername(), userType.getAttributes());
+    }
+
+    private Candidate fromAttributes(String id, Collection<AttributeType> attributes) {
+        Candidate candidate = new Candidate();
+        candidate.setId(id);
+        for (AttributeType attribute : attributes) {
+            if (attribute.getName().equals("email")) {
+                candidate.setEmail(attribute.getValue());
+            }
+            if (attribute.getName().equals("given_name")) {
+                candidate.setName(attribute.getValue());
+            }
+            if (attribute.getName().equals("family_name")) {
+                candidate.setSurname(attribute.getValue());
+            }
+        }
+
+        return candidate;
+    }
+
+    private List<AttributeType> createAttributes(Candidate candidate) {
+        List<AttributeType> attributes = new ArrayList<>();
+        attributes.add(new AttributeType().withName("email").withValue(candidate.getEmail()));
+        attributes.add(new AttributeType().withName("given_name").withValue(candidate.getName()));
+        attributes.add(new AttributeType().withName("family_name").withValue(candidate.getSurname()));
+        return attributes;
     }
 }
