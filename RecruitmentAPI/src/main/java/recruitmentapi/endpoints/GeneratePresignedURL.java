@@ -3,8 +3,6 @@ package recruitmentapi.endpoints;
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import recruitmentapi.util.GatewayRequest;
-import recruitmentapi.util.GatewayResponse;
 import recruitmentapi.model.PresignedURL;
 import recruitmentapi.services.ServiceContainer;
 

@@ -2,8 +2,8 @@ package recruitmentapi.endpoints.candidatetests;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import recruitmentapi.util.GatewayRequest;
-import recruitmentapi.util.GatewayResponse;
+import recruitmentapi.endpoints.GatewayRequest;
+import recruitmentapi.endpoints.GatewayResponse;
 import recruitmentapi.services.ServiceContainer;
 import recruitmentapi.model.CandidateTest;
 

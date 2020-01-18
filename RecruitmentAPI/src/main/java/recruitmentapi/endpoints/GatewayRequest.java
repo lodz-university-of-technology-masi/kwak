@@ -1,7 +1,8 @@
-package recruitmentapi.util;
+package recruitmentapi.endpoints;
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import recruitmentapi.services.KwakException;
 
 import java.io.IOException;
 
@@ -21,10 +22,6 @@ public class GatewayRequest extends APIGatewayProxyRequestEvent {
         }
 
         String authProvider = getRequestContext().getIdentity().getCognitoAuthenticationProvider();
-        if (authProvider == null ){
-            throw new KwakException("Tried to get userSub without authenticated user");
-        }
-
         return authProvider.split(":")[2];
     }
 }

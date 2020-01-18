@@ -1,4 +1,4 @@
-package recruitmentapi.util;
+package recruitmentapi.endpoints;
 
 public class ErrorMessage {
     private int statusCode;

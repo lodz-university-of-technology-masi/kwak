@@ -7,7 +7,7 @@ import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import recruitmentapi.services.CandidateTestService;
 import recruitmentapi.services.TestService;
-import recruitmentapi.util.KwakException;
+import recruitmentapi.services.KwakException;
 import recruitmentapi.model.CandidateTest;
 import recruitmentapi.model.Test;
 

@@ -2,10 +2,10 @@ package recruitmentapi.endpoints.candidatetests;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import recruitmentapi.util.ErrorMessage;
-import recruitmentapi.util.GatewayRequest;
-import recruitmentapi.util.GatewayResponse;
-import recruitmentapi.util.KwakException;
+import recruitmentapi.endpoints.ErrorMessage;
+import recruitmentapi.endpoints.GatewayRequest;
+import recruitmentapi.endpoints.GatewayResponse;
+import recruitmentapi.services.KwakException;
 import recruitmentapi.services.ServiceContainer;
 import recruitmentapi.model.CandidateTest;
 
