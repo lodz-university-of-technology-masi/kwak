@@ -362,15 +362,15 @@ Resources:
               properties:
                 id:
                   type: string
-                  minLength: 5
+                  minLength: 2
                   maxLength: 100
                 name:
                   type: string
-                  minLength: 5
+                  minLength: 2
                   maxLength: 100
                 surname:
                   type: string
-                  minLength: 5
+                  minLength: 2
                   maxLength: 100
                 email:
                   type: string
@@ -385,7 +385,7 @@ Resources:
               properties:
                 testTitle:
                   type: string
-                  minLength: 5
+                  minLength: 3
                   maxLength: 80
                 fileKey:
                   type: string
