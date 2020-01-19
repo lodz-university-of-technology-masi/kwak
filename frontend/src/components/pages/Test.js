@@ -8,7 +8,6 @@ import {OpenAnswer} from "../OpenAnswer";
 import {API, Auth} from 'aws-amplify';
 import {NumericAnswer} from "../NumericAnswer";
 import {Redirect} from "react-router-dom";
-import Skeleton from "@material-ui/lab/Skeleton";
 
 export class Test extends React.Component {
     constructor(props) {
@@ -19,6 +18,7 @@ export class Test extends React.Component {
             responses: [],
             toDashboard: false,
             loading: false,
+            failed: false,
         };
 
         this.prevQuestion = this.prevQuestion.bind(this);
@@ -40,9 +40,14 @@ export class Test extends React.Component {
 
     async getCandidateTest(id) {
         this.setState({loading: true});
-        const test = await API.get('kwakApi', `/candidatetests/${id}?candidate=1`, {});
-        this.setState({loading: false});
-        return test;
+        try {
+            const test = await API.get('kwakApi', `/candidatetests/${id}?candidate=1`, {});
+            this.setState({loading: false});
+            return test;
+        } catch (e) {
+            this.setState({failed: true});
+            throw(e)
+        }
     }
 
     changeQuestion(idx) {
@@ -125,7 +130,13 @@ export class Test extends React.Component {
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={300}>
 
-                {this.state.test && this.state.test.solved ? (
+                {this.state.failed ? (
+                    <div className="card">
+                        <div className="card-body">
+                            <span>This test doesn't exist</span>
+                        </div>
+                    </div>
+                ) : this.state.test && !this.state.toDashboard && !this.state.saving && this.state.test.solved ? (
                     <div className="card">
                         <div className="card-body">
                             <span>You have already solved this test</span>
