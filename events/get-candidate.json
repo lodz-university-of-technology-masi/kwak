@@ -1,7 +1,7 @@
 {
   "body": "",
   "resource": "/{proxy+}",
-  "path": "/candidates/accdbd86-d529-4184-b7f4-3b2357b521a7",
+  "path": "/candidates/02209450-53fc-46b4-8b3e-35f4eef2e0a0",
   "httpMethod": "GET",
   "isBase64Encoded": true,
   "queryStringParameters": {
@@ -13,7 +13,7 @@
     ]
   },
   "pathParameters": {
-    "candidateId": "accdbd86-d529-4184-b7f4-3b2357b521a7"
+    "candidateId": "02209450-53fc-46b4-8b3e-35f4eef2e0a0"
   },
   "stageVariables": {
     "baz": "qux"

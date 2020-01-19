@@ -14,13 +14,16 @@ import java.util.stream.Collectors;
 public class CognitoServiceImpl implements CognitoService {
     private final String USER_POOL_ID = "eu-central-1_9wfYARgNE";
     private final String ADMIN_GROUP_NAME = "Admin";
+    private final String CANDIDATE_GROUP_NAME = "Candidate";
     private AWSCognitoIdentityProvider cognito = AWSCognitoIdentityProviderClientBuilder.defaultClient();
 
     @Override
     public Candidate findCandidateById(String candidateId) {
-        AdminGetUserResult result = cognito.adminGetUser(new AdminGetUserRequest()
+        AdminGetUserResult result = cognito.adminGetUser(
+                new AdminGetUserRequest()
                 .withUserPoolId(USER_POOL_ID)
-                .withUsername(candidateId));
+                .withUsername(candidateId)
+        );
 
         return fromAttributes(result.getUsername(), result.getUserAttributes());
     }
@@ -35,34 +38,31 @@ public class CognitoServiceImpl implements CognitoService {
                 )
         );
 
+        cognito.adminAddUserToGroup(
+                new AdminAddUserToGroupRequest()
+                .withUserPoolId(USER_POOL_ID)
+                .withUsername(candidate.getEmail())
+                .withGroupName(CANDIDATE_GROUP_NAME)
+        );
+
         return fromUserType(result.getUser());
     }
 
     @Override
     public List<Candidate> findAllCandidates() {
-        ListUsersResult users = cognito.listUsers(new ListUsersRequest().withUserPoolId(USER_POOL_ID));
-        return users.getUsers().stream()
-                .filter(this::isRegularUser)
+        return cognito.listUsersInGroup(
+                new ListUsersInGroupRequest()
+                .withUserPoolId(USER_POOL_ID)
+                .withGroupName(CANDIDATE_GROUP_NAME)
+        ).getUsers().stream()
                 .map(this::fromUserType)
                 .collect(Collectors.toList());
-    }
-
-    private boolean isRegularUser(UserType userType) {
-        AdminListGroupsForUserResult result = cognito.adminListGroupsForUser(
-                new AdminListGroupsForUserRequest()
-                        .withUserPoolId(USER_POOL_ID)
-                        .withUsername(userType.getUsername())
-        );
-
-        return result.getGroups().stream().noneMatch(groupType -> groupType.getGroupName().equals(ADMIN_GROUP_NAME));
     }
 
     @Override
     public void deleteCandidate(String id) {
         cognito.adminDeleteUser(new AdminDeleteUserRequest().withUserPoolId(USER_POOL_ID).withUsername(id));
     }
-
-
 
     private Candidate fromUserType(UserType userType) {
         return fromAttributes(userType.getUsername(), userType.getAttributes());
