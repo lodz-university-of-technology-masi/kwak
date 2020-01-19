@@ -22,13 +22,20 @@ export default class CandidateHome extends Component {
             loading: true
         });
 
-        const candidateTests = await API.get('kwakApi', `/candidatetests?candidate=1`, {});
-        if (this._isMounted) {
-            this.setState({
-                candidateTests,
-                loading: false
-            });
-        }
+        const refreshTests = async () => {
+            const candidateTests = await API.get('kwakApi', `/candidatetests?candidate=1`, {});
+            if (this._isMounted) {
+                this.setState({
+                    candidateTests,
+                    loading: false
+                });
+            }
+        };
+
+        await refreshTests();
+        setInterval(async () => {
+            await refreshTests();
+        }, 3000);
     }
     logOut(){
        Auth.signOut({ global: true }).then();
