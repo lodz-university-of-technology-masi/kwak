@@ -1,9 +1,18 @@
 import React from 'react';
+import Skeleton from "@material-ui/lab/Skeleton";
 
 export class QuestionCounter extends React.Component {
     render() {
         return (
-            <small>Pytanie {this.props.current}/{this.props.total}</small>
-        );
+            <>
+                {!this.props.loading ? (
+                    <small>Pytanie
+                        {this.props.current}/{this.props.total}
+                    </small>
+                ) : (
+                    <Skeleton variant="text"/>
+                )}
+            </>
+        )
     }
 }

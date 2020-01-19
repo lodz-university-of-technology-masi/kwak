@@ -8,6 +8,7 @@ import {OpenAnswer} from "../OpenAnswer";
 import {API, Auth} from 'aws-amplify';
 import {NumericAnswer} from "../NumericAnswer";
 import {Redirect} from "react-router-dom";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 export class Test extends React.Component {
     constructor(props) {
@@ -16,7 +17,8 @@ export class Test extends React.Component {
             currentQuestion: 0,
             test: null,
             responses: [],
-            toDashboard: false
+            toDashboard: false,
+            loading: false,
         };
 
         this.prevQuestion = this.prevQuestion.bind(this);
@@ -37,7 +39,9 @@ export class Test extends React.Component {
 
 
     async getCandidateTest(id) {
+        this.setState({ loading: true });
         const test = await API.get('kwakApi', `/candidatetests/${id}?candidate=1`, {});
+        this.setState({ loading: false });
         return test;
     }
 
@@ -124,13 +128,14 @@ export class Test extends React.Component {
                 <div id="question" key={this.state.currentQuestion}>
                     <div className="card">
                         <div className="card-body">
-                            <Question title={question.title || "Loading question"}
-                                      description={question.description || "..."}/>
+                            <Question loading={this.state.loading} title={question.title}
+                                      description={question.description}/>
                         </div>
                     </div>
 
                     <div className="card" id="questionStatus">
                         <QuestionCounter
+                            loading={this.state.loading}
                             current={this.state.currentQuestion + 1}
                             total={this.state.test ? this.state.test.questions.length : 0}/>
                     </div>
