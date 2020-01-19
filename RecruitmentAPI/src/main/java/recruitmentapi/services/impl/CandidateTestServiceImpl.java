@@ -1,7 +1,9 @@
 package recruitmentapi.services.impl;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMappingException;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
@@ -75,7 +77,11 @@ public class CandidateTestServiceImpl implements CandidateTestService {
 
     @Override
     public CandidateTest findByRecruiterId(String recruiterId, String candidateTestId) {
-        return mapper.load(CandidateTest.class, recruiterId, candidateTestId);
+        try {
+            return mapper.load(CandidateTest.class, recruiterId, candidateTestId);
+        } catch (RuntimeException e) {
+            throw new KwakException("Candidate not found");
+        }
     }
 
     @Override
@@ -83,7 +89,7 @@ public class CandidateTestServiceImpl implements CandidateTestService {
         CandidateTest candidateTest = new CandidateTest();
         candidateTest.setCandidateId(candidateId);
 
-        return mapper.query(
+        List<CandidateTest> candidateTests = mapper.query(
                 CandidateTest.class,
                 new DynamoDBQueryExpression<CandidateTest>()
                         .withIndexName("CandidateIdIndex")
@@ -96,7 +102,13 @@ public class CandidateTestServiceImpl implements CandidateTestService {
                                         .withAttributeValueList(new AttributeValue().withS(candidateTestId))
                         )
                         .withLimit(1)
-        ).get(0);
+        );
+
+        if (candidateTests.size() == 0) {
+            throw new KwakException("Candidate test not found");
+        }
+
+        return candidateTests.get(0);
     }
 
     @Override
