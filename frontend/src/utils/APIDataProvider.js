@@ -54,7 +54,7 @@ const dataProvider = {
     },
 
     deleteMany: async (resource, params) => {
-        params.ids.map(id => API.del('kwakApi', `/${resource}/${id}`, {}));
+        await Promise.all(params.ids.map(id => API.del('kwakApi', `/${resource}/${id}`, {})));
         return {
             data: params.ids
         }
