@@ -24,7 +24,6 @@ import {
     BooleanInput,
     Toolbar,
     SaveButton,
-    BulkDeleteWithConfirmButton,
     email,
     required
 } from 'react-admin';
@@ -33,6 +32,7 @@ import {apiDataProvider } from "../../../utils/APIDataProvider";
 import {authProvider} from "../../../utils/AuthProvider";
 import {customRoutes} from "../../../utils/CustomRoutes";
 import {TestActions} from "./TestActions";
+import BulkDeleteWithConfirmButton from "./BulkDeleteWithConfirmButton";
 
 const TestTitle = ({record}) => {
     return <span>{record ? `${record.title}` : ''}</span>;
