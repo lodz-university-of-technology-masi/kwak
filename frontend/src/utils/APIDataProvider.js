@@ -17,12 +17,12 @@ const dataProvider = {
     },
 
     getMany: async (resource, params) => {
-        const objects = params.ids.map(async function(x) {
+        const objects = Promise.all(params.ids.map(async function(x) {
             return await API.get('kwakApi', `/${resource}/${x}`, {});
-        });
+        }));
 
         return {
-            data: objects
+            data: await objects
         };
     },
 
