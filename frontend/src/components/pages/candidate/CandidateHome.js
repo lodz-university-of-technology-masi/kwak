@@ -62,10 +62,6 @@ export default class CandidateHome extends Component {
                             </Route>
                         </Switch>
                     </main>
-
-                    <footer>
-                        Recruiter v0.1
-                    </footer>
                 </div>
         );
     }
