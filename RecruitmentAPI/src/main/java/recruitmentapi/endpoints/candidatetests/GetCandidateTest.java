@@ -12,28 +12,19 @@ import recruitmentapi.model.CandidateTest;
 public class GetCandidateTest extends ServiceContainer implements RequestHandler<GatewayRequest, GatewayResponse<CandidateTest>> {
     @Override
     public GatewayResponse<CandidateTest> handleRequest(GatewayRequest request, Context context) {
-        try {
-            if (request.getQueryStringParameters() != null
-                    && "1".equals(request.getQueryStringParameters().get("candidate"))) {
-                return new GatewayResponse<>(
-                        candidateTestService.findByCandidateId(
-                                request.getUserSub(),
-                                request.getPathParameters().get("id")
-                        ),
-                        200
-                );
-            }
-
-            return new GatewayResponse<>(
-                    candidateTestService.findByRecruiterId(
-                            request.getUserSub(),
-                            request.getPathParameters().get("id")
-                    ),
-                    200
-            );
-        } catch (KwakException e) {
-            return new GatewayResponse<>(new ErrorMessage(404, "Candidate Test not found"));
+        CandidateTest test;
+        if (request.getQueryStringParameters() != null
+                && "1".equals(request.getQueryStringParameters().get("candidate"))) {
+            test = candidateTestService.findByCandidateId(request.getUserSub(), request.getPathParameters().get("id"));
+        } else {
+            test = candidateTestService.findByRecruiterId(request.getUserSub(), request.getPathParameters().get("id"));
         }
+
+        if (test == null) {
+            return new GatewayResponse<>(new ErrorMessage(404, "CandidateTest not found"));
+        }
+
+        return new GatewayResponse<>(test, 200);
     }
 
 }

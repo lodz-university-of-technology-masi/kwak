@@ -80,7 +80,7 @@ public class CandidateTestServiceImpl implements CandidateTestService {
         try {
             return mapper.load(CandidateTest.class, recruiterId, candidateTestId);
         } catch (RuntimeException e) {
-            throw new KwakException("Candidate not found");
+            return null;
         }
     }
 
@@ -105,7 +105,7 @@ public class CandidateTestServiceImpl implements CandidateTestService {
         );
 
         if (candidateTests.size() == 0) {
-            throw new KwakException("Candidate test not found");
+            return null;
         }
 
         return candidateTests.get(0);
