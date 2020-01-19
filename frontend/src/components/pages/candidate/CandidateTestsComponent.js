@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Skeleton from '@material-ui/lab/Skeleton';
 import {Link} from "react-router-dom";
 
 export default class CandidateTestsComponent extends Component {
@@ -38,7 +39,14 @@ export default class CandidateTestsComponent extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.props.candidateTests.length !== 0 ? this.props.candidateTests.map((candidateTest, key) => (
+                    {this.props.loading ? [...Array(5)].map((e, i) => (
+                        <tr>
+                            <td><Skeleton variant="text"/></td>
+                            <td><Skeleton variant="text"/></td>
+                            <td><Skeleton variant="text"/></td>
+                            <td><Skeleton variant="text"/></td>
+                        </tr>
+                    )) : this.props.candidateTests.length !== 0 ? this.props.candidateTests.map((candidateTest, key) => (
                         <tr key={key}>
                             <td><span>
                                        {candidateTest.title}

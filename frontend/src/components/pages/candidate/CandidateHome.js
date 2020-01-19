@@ -45,11 +45,6 @@ export default class CandidateHome extends Component {
                     <header className="mb-3">
                         <nav className="navbar navbar-light">
                             <a href="/" className="navbar-brand">Recruiter</a>
-                            {loading && <div className="d-flex justify-content-center">
-                                <div className="spinner-border" role="status">
-                                    <span className="sr-only">Loading...</span>
-                                </div>
-                            </div>}
                             <button type="button" className="btn btn-secondary" onClick={this.logOut}>Logout</button>
                         </nav>
                     </header>
@@ -58,7 +53,7 @@ export default class CandidateHome extends Component {
                         <Switch>
                             <Route path="/tests/:candidateTestId" component={Test}/>
                             <Route path="/">
-                                <CandidateTestsComponent candidateTests={candidateTests}/>
+                                <CandidateTestsComponent loading={loading} candidateTests={candidateTests}/>
                             </Route>
                         </Switch>
                     </main>
