@@ -8,7 +8,6 @@ import {OpenAnswer} from "../OpenAnswer";
 import {API, Auth} from 'aws-amplify';
 import {NumericAnswer} from "../NumericAnswer";
 import {Redirect} from "react-router-dom";
-import Skeleton from "@material-ui/lab/Skeleton";
 
 export class Test extends React.Component {
     constructor(props) {
@@ -137,7 +136,7 @@ export class Test extends React.Component {
                             <span>This test doesn't exist</span>
                         </div>
                     </div>
-                ) : this.state.test && this.state.test.solved ? (
+                ) : this.state.test && !this.state.toDashboard && !this.state.saving && this.state.test.solved ? (
                     <div className="card">
                         <div className="card-body">
                             <span>You have already solved this test</span>
