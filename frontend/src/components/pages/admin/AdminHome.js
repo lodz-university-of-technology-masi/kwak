@@ -162,7 +162,7 @@ const validateEmail = email();
 export const CandidateCreate = props => (
     <Create {...props}>
         <SimpleForm>
-            <TextInput source="email" validate={validateEmail}/>
+            <TextInput source="email" validate={[validateEmail, required()]}/>
             <TextInput source="name" validate={[required()]}/>
             <TextInput source="surname" validate={[required()]}/>
         </SimpleForm>
