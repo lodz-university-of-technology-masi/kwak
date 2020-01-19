@@ -257,7 +257,10 @@ export const CandidateTestEdit = props => {
                                 </FormDataConsumer>
                             </SimpleFormIterator>
                         </ArrayInput>
-                        <NullableBooleanInput label="Correct" source="correct" validate={[required()]} defaultValue={false}/>
+                        <SelectInput label="Correct" source="correct" validate={[required()]} choices={[
+                            { id: false, name: 'No' },
+                            { id: true, name: 'Yes' },
+                        ]} />
                     </SimpleFormIterator>
                 </ArrayInput>
             </SimpleForm>
