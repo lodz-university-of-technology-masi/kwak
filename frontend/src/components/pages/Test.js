@@ -39,9 +39,9 @@ export class Test extends React.Component {
 
 
     async getCandidateTest(id) {
-        this.setState({ loading: true });
+        this.setState({loading: true});
         const test = await API.get('kwakApi', `/candidatetests/${id}?candidate=1`, {});
-        this.setState({ loading: false });
+        this.setState({loading: false});
         return test;
     }
 
@@ -93,14 +93,14 @@ export class Test extends React.Component {
             candidateTest
         }).then(() => this.setState(() => ({
             toDashboard: true,
-            saving:false
+            saving: false
         })));
     }
 
 
     render() {
         if (this.state.toDashboard === true) {
-            return <Redirect to='/' />
+            return <Redirect to='/'/>
         }
 
         const question = this.state.test ? this.state.test.questions[this.state.currentQuestion] : {
@@ -113,10 +113,10 @@ export class Test extends React.Component {
         let buttonContent;
         if (this.state.saving) {
             buttonContent = <div className="spinner-border" role="status"/>;
-        }else if(isLastQuestion){
+        } else if (isLastQuestion) {
             buttonContent = "Zakończ";
 
-        }else{
+        } else {
             buttonContent = "Następne pytanie";
         }
         return (
@@ -143,13 +143,15 @@ export class Test extends React.Component {
                     {this.renderQuestion()}
 
                     <div className="btn-group w-100" role="group">
-                        <button onClick={this.prevQuestion} disabled={isFirstQuestion}
+                        <button onClick={this.prevQuestion} disabled={isFirstQuestion || this.state.loading}
                                 className="btn btn-primary btn btn-block mt-2" type="button">
                             Poprzednie pytanie
                         </button>
 
-                        <button onClick={isLastQuestion ? this.sendResult.bind(this) : this.nextQuestion}
-                                className="btn btn-primary btn btn-block mt-2" type="button">
+                        <button
+                            disabled={this.state.loading}
+                            onClick={isLastQuestion ? this.sendResult.bind(this) : this.nextQuestion}
+                            className="btn btn-primary btn btn-block mt-2" type="button">
                             {buttonContent}
                         </button>
                     </div>
