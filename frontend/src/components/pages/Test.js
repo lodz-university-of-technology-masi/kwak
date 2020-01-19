@@ -125,37 +125,45 @@ export class Test extends React.Component {
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={300}>
 
-                <div id="question" key={this.state.currentQuestion}>
+                {this.state.test && this.state.test.solved ? (
                     <div className="card">
                         <div className="card-body">
-                            <Question loading={this.state.loading} title={question.title}
-                                      description={question.description}/>
+                            <span>You have already solved this test</span>
                         </div>
                     </div>
+                ) : (
+                    <div id="question" key={this.state.currentQuestion}>
+                        <div className="card">
+                            <div className="card-body">
+                                <Question loading={this.state.loading} title={question.title}
+                                          description={question.description}/>
+                            </div>
+                        </div>
 
-                    <div className="card" id="questionStatus">
-                        <QuestionCounter
-                            loading={this.state.loading}
-                            current={this.state.currentQuestion + 1}
-                            total={this.state.test ? this.state.test.questions.length : 0}/>
-                    </div>
+                        <div className="card" id="questionStatus">
+                            <QuestionCounter
+                                loading={this.state.loading}
+                                current={this.state.currentQuestion + 1}
+                                total={this.state.test ? this.state.test.questions.length : 0}/>
+                        </div>
 
-                    {this.renderQuestion()}
+                        {this.renderQuestion()}
 
-                    <div className="btn-group w-100" role="group">
-                        <button onClick={this.prevQuestion} disabled={isFirstQuestion || this.state.loading}
+                        <div className="btn-group w-100" role="group">
+                            <button onClick={this.prevQuestion} disabled={isFirstQuestion || this.state.loading}
+                                    className="btn btn-primary btn btn-block mt-2" type="button">
+                                Poprzednie pytanie
+                            </button>
+
+                            <button
+                                disabled={this.state.loading}
+                                onClick={isLastQuestion ? this.sendResult.bind(this) : this.nextQuestion}
                                 className="btn btn-primary btn btn-block mt-2" type="button">
-                            Poprzednie pytanie
-                        </button>
-
-                        <button
-                            disabled={this.state.loading}
-                            onClick={isLastQuestion ? this.sendResult.bind(this) : this.nextQuestion}
-                            className="btn btn-primary btn btn-block mt-2" type="button">
-                            {buttonContent}
-                        </button>
+                                {buttonContent}
+                            </button>
+                        </div>
                     </div>
-                </div>
+                )}
             </ReactCSSTransitionGroup>
         )
     }
