@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Skeleton from '@material-ui/lab/Skeleton';
 import {Link} from "react-router-dom";
 
 export default class CandidateTestsComponent extends Component {
@@ -8,19 +9,19 @@ export default class CandidateTestsComponent extends Component {
     }
 
     isFilled(candidateTest) {
-        return candidateTest.solved===true;
+        return candidateTest.solved === true;
     };
 
     getResult(candidateTest) {
         if (this.isFilled(candidateTest)) {
-            if(candidateTest.questions.filter(e=> e.correct===null).length===0){
+            if (candidateTest.questions.filter(e => e.correct === null).length === 0) {
                 let result = 0;
                 candidateTest.questions.forEach(e => e.correct === true && result++);
-                return result+"/"+candidateTest.questions.length;
-            }else{
+                return result + "/" + candidateTest.questions.length;
+            } else {
                 return "Waiting for rating";
             }
-        }else{
+        } else {
             return "-";
         }
     };
@@ -38,7 +39,14 @@ export default class CandidateTestsComponent extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.props.candidateTests.map((candidateTest, key) => (
+                    {this.props.loading ? [...Array(5)].map((e, i) => (
+                        <tr>
+                            <td><Skeleton variant="text"/></td>
+                            <td><Skeleton variant="text"/></td>
+                            <td><Skeleton variant="text"/></td>
+                            <td><Skeleton variant="text"/></td>
+                        </tr>
+                    )) : this.props.candidateTests.length !== 0 ? this.props.candidateTests.map((candidateTest, key) => (
                         <tr key={key}>
                             <td><span>
                                        {candidateTest.title}
@@ -55,7 +63,11 @@ export default class CandidateTestsComponent extends Component {
                                 </Link>
                             </td>
                         </tr>
-                    ))}
+                    )) : (
+                        <tr>
+                            <td className="text-center" colSpan={4}>You have no tests available</td>
+                        </tr>
+                    )}
                     </tbody>
                 </table>
             </div>
