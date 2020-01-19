@@ -24,6 +24,7 @@ import {
     BooleanInput,
     Toolbar,
     SaveButton,
+    NullableBooleanInput,
     BulkDeleteWithConfirmButton,
     email,
     required
@@ -202,7 +203,7 @@ export const CandidateTestList = props => {
                                    if (!record.questions) return "Unknown result";
                                    const correctAnswers = record.questions.filter(e => e.correct);
                                    if (!record.solved) return "Not solved";
-                                   if (record.questions.filter(e => !e.correct).length !== 0) return "Waiting for rating";
+                                   if (record.questions.filter(e => e.correct === undefined).length !== 0) return "Waiting for rating";
                                    return `${correctAnswers.length}/${record.questions.length}`
                                }}/>
             </Datagrid>
@@ -256,7 +257,7 @@ export const CandidateTestEdit = props => {
                                 </FormDataConsumer>
                             </SimpleFormIterator>
                         </ArrayInput>
-                        <BooleanInput label="Correct" source="correct" defaultValue={false}/>
+                        <NullableBooleanInput label="Correct" source="correct" validate={[required()]} defaultValue={false}/>
                     </SimpleFormIterator>
                 </ArrayInput>
             </SimpleForm>

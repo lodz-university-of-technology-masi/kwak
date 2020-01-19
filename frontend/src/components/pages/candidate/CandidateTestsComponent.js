@@ -13,6 +13,7 @@ export default class CandidateTestsComponent extends Component {
     };
 
     getResult(candidateTest) {
+        console.log(candidateTest);
         if (this.isFilled(candidateTest)) {
             if (candidateTest.questions.filter(e => e.correct === undefined).length === 0) {
                 let result = 0;
