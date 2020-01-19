@@ -68,6 +68,12 @@ public class CandidateTestServiceImpl implements CandidateTestService {
     }
 
     @Override
+    public void deleteByCandidateId(String candidateId) {
+        List<CandidateTest> tests = findAllByCandidateId(candidateId);
+        mapper.batchDelete(tests);
+    }
+
+    @Override
     public CandidateTest findByRecruiterId(String recruiterId, String candidateTestId) {
         return mapper.load(CandidateTest.class, recruiterId, candidateTestId);
     }

@@ -17,5 +17,7 @@ public interface CandidateTestService {
 
     CandidateTest findByCandidateId(String candidateId, String candidateTestId);
 
+    void deleteByCandidateId(String candidateId);
+
     void update(CandidateTest candidateTest);
 }

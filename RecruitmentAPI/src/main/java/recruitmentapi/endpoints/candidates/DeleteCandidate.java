@@ -10,7 +10,9 @@ import recruitmentapi.services.ServiceContainer;
 public class DeleteCandidate extends ServiceContainer implements RequestHandler<GatewayRequest, GatewayResponse<Candidate>> {
     @Override
     public GatewayResponse<Candidate> handleRequest(GatewayRequest request, Context context) {
-        cognitoService.deleteCandidate(request.getPathParameters().get("candidateId"));
+        String candidateId = request.getPathParameters().get("candidateId");
+        candidateTestService.deleteByCandidateId(candidateId);
+        cognitoService.deleteCandidate(candidateId);
         return new GatewayResponse<>(204);
     }
 }
