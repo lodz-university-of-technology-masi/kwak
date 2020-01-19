@@ -634,6 +634,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Policies:
+        - AmazonDynamoDBFullAccess
         - Statement:
             - Sid: AllowCognito
               Effect: "Allow"
