@@ -54,7 +54,7 @@ export const TestList = props => (
 );
 
 export const TestEdit = props => (
-    <Edit {...props} title={<TestTitle/>}>
+    <Edit {...props} undoable={false} title={<TestTitle/>}>
         <SimpleForm>
             <TextInput disabled source="id"/>
             <TextInput source="title" validate={[required()]}/>
@@ -225,7 +225,7 @@ const useStyles = makeStyles({
 export const CandidateTestEdit = props => {
     const classes = useStyles();
     return (
-        <Edit {...props} className={classes.input}>
+        <Edit {...props} undoable={false} className={classes.input}>
             <SimpleForm toolbar={<TestRatingToolbar/>} >
                 <ArrayInput source="questions" >
                     <SimpleFormIterator disableAdd disableRemove>
@@ -285,8 +285,8 @@ export const CandidateTestCreate = props => (
 export default function AdminHome(props) {
     return (
         <Admin dataProvider={apiDataProvider} authProvider={authProvider} customRoutes={customRoutes}>
-            <Resource name="tests" list={TestList} edit={TestEdit} create={TestCreate}/>
             <Resource name="candidates" list={CandidateList} create={CandidateCreate} show={CandidateShow}/>
+            <Resource name="tests" list={TestList} edit={TestEdit} create={TestCreate}/>
             <Resource name="candidatetests" options={{label: 'Candidate Tests'}} list={CandidateTestList}
                       edit={CandidateTestEdit} create={CandidateTestCreate}/>
         </Admin>
